@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Our Little Universe</title>
+
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+
+    <main class="login-page">
+
+        <section class="login-card">
+
+            <div class="stars">✦ · ✧</div>
+
+            <p class="eyebrow">WELCOME TO</p>
+
+            <h1>Our Little Universe</h1>
+
+            <p class="subtitle">
+                A little place for everything that is us.
+            </p>
+
+            <form id="loginForm">
+
+                <label for="email">Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Your email"
+                    required
+                >
+
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Your password"
+                    required
+                >
+
+                <button type="submit">
+                    Enter our universe ✦
+                </button>
+
+                <p id="loginMessage"></p>
+
+            </form>
+
+            <p class="private-note">
+                🔒 This universe is private.
+            </p>
+
+        </section>
+
+    </main>
+
+    <!-- Supabase library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Our Supabase configuration -->
+    <script src="js/supabase.js"></script>
+
+    <!-- Login logic -->
+    <script src="js/auth.js"></script>
+
+</body>
+</html>

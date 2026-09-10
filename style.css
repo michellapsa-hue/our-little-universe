@@ -1,0 +1,300 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    color: #f7f5ff;
+
+    background:
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(107, 83, 190, 0.35),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(52, 83, 170, 0.35),
+            transparent 35%
+        ),
+        #080b24;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 25px 6%;
+
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.logo {
+    color: white;
+    text-decoration: none;
+
+    font-family: Georgia, serif;
+    font-size: 20px;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 28px;
+}
+
+.navbar nav a {
+    color: rgba(255,255,255,0.65);
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: 0.3s;
+}
+
+.navbar nav a:hover {
+    color: white;
+}
+
+.logout-btn {
+    border: 1px solid rgba(255,255,255,0.15);
+
+    background: rgba(255,255,255,0.05);
+
+    color: white;
+
+    padding: 9px 15px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   HOME
+========================= */
+
+.home {
+    max-width: 1150px;
+
+    margin: auto;
+
+    padding: 80px 30px;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    max-width: 750px;
+
+    margin: 50px auto 100px;
+
+    text-align: center;
+}
+
+.small-title {
+    font-size: 11px;
+
+    letter-spacing: 5px;
+
+    color: #aaa2df;
+
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-family: Georgia, serif;
+
+    font-size: clamp(45px, 7vw, 78px);
+
+    font-weight: normal;
+
+    line-height: 1.05;
+
+    margin-bottom: 30px;
+}
+
+.hero-text {
+    max-width: 580px;
+
+    margin: auto;
+
+    color: rgba(255,255,255,0.65);
+
+    font-size: 16px;
+
+    line-height: 1.8;
+}
+
+.enter-button {
+    margin-top: 35px;
+
+    padding: 14px 24px;
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    border-radius: 30px;
+
+    background: linear-gradient(
+        135deg,
+        #5d69c9,
+        #8062bd
+    );
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.universe-menu {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.universe-card {
+
+    min-height: 190px;
+
+    padding: 28px;
+
+    text-decoration: none;
+
+    color: white;
+
+    border: 1px solid rgba(255,255,255,0.09);
+
+    border-radius: 20px;
+
+    background: rgba(255,255,255,0.045);
+
+    backdrop-filter: blur(12px);
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease;
+}
+
+.universe-card:hover {
+
+    transform: translateY(-6px);
+
+    background: rgba(255,255,255,0.08);
+}
+
+.card-icon {
+    display: block;
+
+    font-size: 27px;
+
+    margin-bottom: 25px;
+}
+
+.universe-card h2 {
+
+    font-family: Georgia, serif;
+
+    font-size: 22px;
+
+    font-weight: normal;
+
+    margin-bottom: 9px;
+}
+
+.universe-card p {
+
+    color: rgba(255,255,255,0.5);
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   CLOSING
+========================= */
+
+.closing {
+
+    text-align: center;
+
+    margin-top: 120px;
+
+    padding-bottom: 60px;
+}
+
+.closing span {
+
+    display: block;
+
+    color: #aaa2df;
+
+    margin-bottom: 20px;
+}
+
+.closing p {
+
+    font-family: Georgia, serif;
+
+    font-size: 24px;
+
+    margin-bottom: 10px;
+}
+
+.closing small {
+
+    color: rgba(255,255,255,0.4);
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 800px) {
+
+    .navbar nav {
+        display: none;
+    }
+
+    .universe-menu {
+        grid-template-columns: 1fr;
+    }
+
+    .home {
+        padding: 50px 20px;
+    }
+
+    .hero {
+        margin-top: 30px;
+    }
+}
