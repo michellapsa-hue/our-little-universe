@@ -4,65 +4,25 @@
     padding: 0;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     min-height: 100vh;
 
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
 
     color: #f7f5ff;
 
     background:
         radial-gradient(
-            circle at 15% 10%,
-            rgba(111, 91, 210, 0.28),
-            transparent 32%
-        ),
-        radial-gradient(
-            circle at 85% 25%,
-            rgba(67, 93, 190, 0.20),
+            circle at 20% 10%,
+            rgba(107, 83, 190, 0.35),
             transparent 30%
         ),
         radial-gradient(
-            circle at 50% 100%,
-            rgba(116, 75, 180, 0.18),
-            transparent 38%
+            circle at 80% 80%,
+            rgba(52, 83, 170, 0.35),
+            transparent 35%
         ),
-        #07091f;
-
-    overflow-x: hidden;
-}
-
-
-/* =========================
-   BACKGROUND STARS
-========================= */
-
-.stars {
-    position: fixed;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    opacity: 0.35;
-
-    background-image:
-        radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px),
-        radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px);
-
-    background-size:
-        90px 90px,
-        140px 140px;
-
-    background-position:
-        10px 20px,
-        50px 70px;
-
-    z-index: 0;
+        #080b24;
 }
 
 
@@ -71,95 +31,56 @@ body {
 ========================= */
 
 .navbar {
-    position: relative;
-
-    z-index: 10;
-
     width: 100%;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
-    gap: 30px;
-
-    padding: 22px 6%;
+    padding: 25px 6%;
 
     border-bottom: 1px solid rgba(255,255,255,0.08);
-
-    background: rgba(7, 9, 31, 0.55);
-
-    backdrop-filter: blur(18px);
 }
 
 .logo {
-    flex-shrink: 0;
-
-    color: #ffffff;
-
+    color: white;
     text-decoration: none;
 
-    font-family: Georgia, "Times New Roman", serif;
-
-    font-size: 21px;
-
-    letter-spacing: 0.3px;
+    font-family: Georgia, serif;
+    font-size: 20px;
 }
 
 .navbar nav {
     display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 30px;
-
-    flex: 1;
+    gap: 28px;
 }
 
 .navbar nav a {
-    color: rgba(255,255,255,0.62);
+    color: rgba(255,255,255,0.65);
 
     text-decoration: none;
 
     font-size: 13px;
 
-    transition: color 0.25s ease;
+    transition: 0.3s;
 }
 
 .navbar nav a:hover {
-    color: #ffffff;
+    color: white;
 }
 
 .logout-btn {
-    flex-shrink: 0;
-
     border: 1px solid rgba(255,255,255,0.15);
 
     background: rgba(255,255,255,0.05);
 
-    color: rgba(255,255,255,0.85);
+    color: white;
 
-    padding: 9px 17px;
+    padding: 9px 15px;
 
-    border-radius: 20px;
+    border-radius: 10px;
 
     cursor: pointer;
-
-    font-size: 12px;
-
-    transition:
-        background 0.25s ease,
-        border-color 0.25s ease;
-}
-
-.logout-btn:hover {
-    background: rgba(255,255,255,0.10);
-
-    border-color: rgba(255,255,255,0.25);
 }
 
 
@@ -168,17 +89,11 @@ body {
 ========================= */
 
 .home {
-    position: relative;
+    max-width: 1150px;
 
-    z-index: 1;
+    margin: auto;
 
-    width: 100%;
-
-    max-width: 1180px;
-
-    margin: 0 auto;
-
-    padding: 0 30px 80px;
+    padding: 80px 30px;
 }
 
 
@@ -187,101 +102,67 @@ body {
 ========================= */
 
 .hero {
-    max-width: 780px;
+    max-width: 750px;
 
-    margin: 0 auto;
-
-    padding: 120px 20px 105px;
+    margin: 50px auto 100px;
 
     text-align: center;
 }
 
 .small-title {
-    margin-bottom: 22px;
-
-    color: #aaa3df;
-
     font-size: 11px;
 
-    font-weight: 500;
+    letter-spacing: 5px;
 
-    letter-spacing: 6px;
+    color: #aaa2df;
+
+    margin-bottom: 20px;
 }
 
 .hero h1 {
-    margin-bottom: 30px;
+    font-family: Georgia, serif;
 
-    font-family: Georgia, "Times New Roman", serif;
-
-    font-size: clamp(46px, 7vw, 76px);
+    font-size: clamp(45px, 7vw, 78px);
 
     font-weight: normal;
 
-    line-height: 1.08;
+    line-height: 1.05;
 
-    letter-spacing: -1px;
+    margin-bottom: 30px;
 }
 
 .hero-text {
-    max-width: 570px;
+    max-width: 580px;
 
-    margin: 0 auto;
+    margin: auto;
 
-    color: rgba(255,255,255,0.60);
+    color: rgba(255,255,255,0.65);
 
-    font-size: 15px;
+    font-size: 16px;
 
-    line-height: 1.9;
+    line-height: 1.8;
 }
 
 .enter-button {
-    margin-top: 36px;
+    margin-top: 35px;
 
-    padding: 14px 27px;
+    padding: 14px 24px;
 
-    border: 1px solid rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.15);
 
     border-radius: 30px;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(91, 105, 201, 0.95),
-            rgba(128, 98, 189, 0.95)
-        );
+    background: linear-gradient(
+        135deg,
+        #5d69c9,
+        #8062bd
+    );
 
     color: white;
 
     cursor: pointer;
 
     font-size: 13px;
-
-    box-shadow:
-        0 10px 35px rgba(83, 74, 170, 0.20);
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
-}
-
-.enter-button:hover {
-    transform: translateY(-3px);
-
-    box-shadow:
-        0 15px 40px rgba(83, 74, 170, 0.30);
-}
-
-
-/* =========================
-   UNIVERSE MENU
-========================= */
-
-.universe-menu {
-    display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 20px;
 }
 
 
@@ -289,108 +170,70 @@ body {
    CARDS
 ========================= */
 
+.universe-menu {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
 .universe-card {
-    position: relative;
 
-    min-height: 205px;
+    min-height: 190px;
 
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: flex-end;
-
-    padding: 30px;
-
-    overflow: hidden;
-
-    border: 1px solid rgba(255,255,255,0.09);
-
-    border-radius: 22px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,0.065),
-            rgba(255,255,255,0.025)
-        );
-
-    backdrop-filter: blur(16px);
-
-    color: white;
+    padding: 28px;
 
     text-decoration: none;
 
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.04);
+    color: white;
+
+    border: 1px solid rgba(255,255,255,0.09);
+
+    border-radius: 20px;
+
+    background: rgba(255,255,255,0.045);
+
+    backdrop-filter: blur(12px);
 
     transition:
         transform 0.3s ease,
-        border-color 0.3s ease,
         background 0.3s ease;
 }
 
-.universe-card::before {
-    content: "";
-
-    position: absolute;
-
-    width: 120px;
-
-    height: 120px;
-
-    top: -50px;
-
-    right: -40px;
-
-    border-radius: 50%;
-
-    background: rgba(116, 94, 205, 0.16);
-
-    filter: blur(15px);
-
-    pointer-events: none;
-}
-
 .universe-card:hover {
-    transform: translateY(-7px);
 
-    border-color: rgba(174,164,255,0.22);
+    transform: translateY(-6px);
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,0.09),
-            rgba(255,255,255,0.04)
-        );
+    background: rgba(255,255,255,0.08);
 }
 
 .card-icon {
-    position: absolute;
+    display: block;
 
-    top: 27px;
+    font-size: 27px;
 
-    left: 30px;
-
-    font-size: 28px;
+    margin-bottom: 25px;
 }
 
 .universe-card h2 {
-    margin-bottom: 9px;
 
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: Georgia, serif;
 
     font-size: 22px;
 
     font-weight: normal;
+
+    margin-bottom: 9px;
 }
 
 .universe-card p {
-    color: rgba(255,255,255,0.48);
+
+    color: rgba(255,255,255,0.5);
 
     font-size: 13px;
-
-    line-height: 1.5;
 }
 
 
@@ -399,66 +242,37 @@ body {
 ========================= */
 
 .closing {
-    padding: 120px 20px 60px;
 
     text-align: center;
+
+    margin-top: 120px;
+
+    padding-bottom: 60px;
 }
 
 .closing span {
+
     display: block;
 
-    margin-bottom: 22px;
+    color: #aaa2df;
 
-    color: #aaa3df;
-
-    font-size: 17px;
+    margin-bottom: 20px;
 }
 
 .closing p {
+
+    font-family: Georgia, serif;
+
+    font-size: 24px;
+
     margin-bottom: 10px;
-
-    font-family: Georgia, "Times New Roman", serif;
-
-    font-size: 25px;
-
-    font-weight: normal;
 }
 
 .closing small {
-    color: rgba(255,255,255,0.38);
+
+    color: rgba(255,255,255,0.4);
 
     font-size: 12px;
-
-    letter-spacing: 1px;
-}
-
-
-/* =========================
-   TABLET
-========================= */
-
-@media (max-width: 950px) {
-
-    .navbar {
-        padding: 20px 4%;
-    }
-
-    .navbar nav {
-        gap: 18px;
-    }
-
-    .navbar nav a {
-        font-size: 12px;
-    }
-
-    .home {
-        padding-left: 22px;
-        padding-right: 22px;
-    }
-
-    .universe-menu {
-        grid-template-columns: repeat(2, 1fr);
-    }
 }
 
 
@@ -466,69 +280,21 @@ body {
    MOBILE
 ========================= */
 
-@media (max-width: 650px) {
-
-    .navbar {
-        padding: 18px 20px;
-    }
+@media (max-width: 800px) {
 
     .navbar nav {
         display: none;
     }
 
-    .logo {
-        font-size: 18px;
-    }
-
-    .logout-btn {
-        padding: 8px 14px;
+    .universe-menu {
+        grid-template-columns: 1fr;
     }
 
     .home {
-        padding:
-            0 18px 50px;
+        padding: 50px 20px;
     }
 
     .hero {
-        padding:
-            85px 8px 75px;
-    }
-
-    .small-title {
-        font-size: 10px;
-
-        letter-spacing: 4px;
-    }
-
-    .hero h1 {
-        font-size: clamp(40px, 13vw, 58px);
-
-        letter-spacing: -0.5px;
-    }
-
-    .hero-text {
-        font-size: 14px;
-
-        line-height: 1.8;
-    }
-
-    .universe-menu {
-        grid-template-columns: 1fr;
-
-        gap: 15px;
-    }
-
-    .universe-card {
-        min-height: 185px;
-
-        padding: 27px;
-    }
-
-    .closing {
-        padding-top: 90px;
-    }
-
-    .closing p {
-        font-size: 21px;
+        margin-top: 30px;
     }
 }
