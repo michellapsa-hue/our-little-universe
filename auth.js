@@ -14,22 +14,23 @@ if (loginForm) {
 
         event.preventDefault();
 
-        const email =
-            document.getElementById("email").value.trim();
+        const email = document
+            .getElementById("email")
+            .value
+            .trim();
 
-        const password =
-            document.getElementById("password").value;
+        const password = document
+            .getElementById("password")
+            .value;
 
         loginMessage.textContent =
             "Entering our universe...";
-
 
         const { data, error } =
             await supabaseClient.auth.signInWithPassword({
                 email: email,
                 password: password
             });
-
 
         if (error) {
 
@@ -41,12 +42,10 @@ if (loginForm) {
             return;
         }
 
-
         console.log("Login successful:", data.user);
 
         loginMessage.textContent =
             "Welcome back ✦";
-
 
         window.location.href = "index.html";
 
@@ -65,13 +64,10 @@ async function checkUser() {
         data: { user }
     } = await supabaseClient.auth.getUser();
 
-
     console.log("Current user:", user);
 
 
-    /* =========================
-       NOT LOGGED IN
-    ========================= */
+    /* NOT LOGGED IN */
 
     if (!user && !loginForm) {
 
@@ -81,9 +77,7 @@ async function checkUser() {
     }
 
 
-    /* =========================
-       ALREADY LOGGED IN
-    ========================= */
+    /* ALREADY LOGGED IN */
 
     if (user && loginForm) {
 
@@ -93,9 +87,7 @@ async function checkUser() {
     }
 
 
-    /* =========================
-       GET PROFILE NAME
-    ========================= */
+    /* GET PROFILE NAME */
 
     if (user && userName) {
 
@@ -106,10 +98,8 @@ async function checkUser() {
                 .eq("id", user.id)
                 .single();
 
-
         console.log("Profile:", profile);
         console.log("Profile error:", error);
-
 
         if (profile && profile.display_name) {
 
@@ -122,9 +112,7 @@ async function checkUser() {
                 user.email.split("@")[0];
 
         }
-
     }
-
 }
 
 
@@ -139,14 +127,12 @@ if (logoutButton) {
         const { error } =
             await supabaseClient.auth.signOut();
 
-
         if (error) {
 
             console.error("Logout error:", error);
 
             return;
         }
-
 
         window.location.href = "login.html";
 
@@ -160,5 +146,3 @@ if (logoutButton) {
 ========================= */
 
 checkUser();
-   START
-========================= */
