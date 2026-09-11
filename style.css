@@ -144,7 +144,9 @@ body {
 }
 
 .enter-button {
-    margin-top: 35px;
+    display: inline-block;
+
+    margin-top: 55px;
 
     padding: 14px 24px;
 
@@ -160,11 +162,15 @@ body {
 
     color: white;
 
+    text-decoration: none;
+
     cursor: pointer;
 
     font-size: 13px;
-}
 
+    position: relative;
+    z-index: 10;
+}
 
 /* =========================
    CARDS
