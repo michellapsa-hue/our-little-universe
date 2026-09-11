@@ -12,8 +12,9 @@
 
 <body>
 
-    <!-- Background stars -->
+    <!-- Background -->
     <div class="stars"></div>
+
 
     <!-- Navigation -->
     <header class="navbar">
@@ -23,23 +24,43 @@
         </a>
 
         <nav>
-            <a href="#">Our Story</a>
-            <a href="#">Memories</a>
-            <a href="#">Diary</a>
-            <a href="#">Letters</a>
-            <a href="#">Our Songs</a>
+
+            <a href="index.html">
+                Our Story
+            </a>
+
+            <a href="memories.html">
+                Memories
+            </a>
+
+            <a href="#">
+                Diary
+            </a>
+
+            <a href="#">
+                Letters
+            </a>
+
+            <a href="#">
+                Our Songs
+            </a>
+
         </nav>
 
-        <button id="logoutButton" class="logout-btn">
+        <button
+            id="logoutButton"
+            class="logout-btn">
             Logout
         </button>
 
     </header>
 
 
-    <!-- Main Hero -->
+    <!-- Main -->
     <main class="home">
 
+
+        <!-- Hero -->
         <section class="hero">
 
             <p class="small-title">
@@ -47,69 +68,174 @@
             </p>
 
             <h1>
-                <span id="userName">You</span>,
+
+                <span id="userName">
+                    You
+                </span>,
+
                 welcome home.
+
             </h1>
 
             <p class="hero-text">
+
                 This is our little universe —
                 a place for the moments, stories,
                 and little things we never want to forget.
+
             </p>
 
-            <button class="enter-button">
+
+            <a
+                href="memories.html"
+                class="enter-button">
+
                 Explore our universe ✦
-            </button>
+
+            </a>
 
         </section>
 
 
-        <!-- Quick navigation -->
+
+        <!-- Quick Navigation -->
         <section class="universe-menu">
 
-            <a href="#" class="universe-card">
-                <span class="card-icon">📖</span>
-                <h2>Our Story</h2>
-                <p>Where it all began.</p>
+
+            <!-- Our Story -->
+            <a
+                href="#"
+                class="universe-card">
+
+                <span class="card-icon">
+                    📖
+                </span>
+
+                <h2>
+                    Our Story
+                </h2>
+
+                <p>
+                    Where it all began.
+                </p>
+
             </a>
 
-            <a href="#" class="universe-card">
-                <span class="card-icon">📸</span>
-                <h2>Memories</h2>
-                <p>Little moments worth keeping.</p>
+
+
+            <!-- Memories -->
+            <a
+                href="memories.html"
+                class="universe-card">
+
+                <span class="card-icon">
+                    📸
+                </span>
+
+                <h2>
+                    Memories
+                </h2>
+
+                <p>
+                    Little moments worth keeping.
+                </p>
+
             </a>
 
-            <a href="#" class="universe-card">
-                <span class="card-icon">🕰️</span>
-                <h2>Timeline</h2>
-                <p>Every moment led us here.</p>
+
+
+            <!-- Timeline -->
+            <a
+                href="#"
+                class="universe-card">
+
+                <span class="card-icon">
+                    🕰️
+                </span>
+
+                <h2>
+                    Timeline
+                </h2>
+
+                <p>
+                    Every moment led us here.
+                </p>
+
             </a>
 
-            <a href="#" class="universe-card">
-                <span class="card-icon">💌</span>
-                <h2>Letters</h2>
-                <p>Words meant only for you.</p>
+
+
+            <!-- Letters -->
+            <a
+                href="#"
+                class="universe-card">
+
+                <span class="card-icon">
+                    💌
+                </span>
+
+                <h2>
+                    Letters
+                </h2>
+
+                <p>
+                    Words meant only for you.
+                </p>
+
             </a>
 
-            <a href="#" class="universe-card">
-                <span class="card-icon">📔</span>
-                <h2>Diary</h2>
-                <p>Things we couldn't say out loud.</p>
+
+
+            <!-- Diary -->
+            <a
+                href="#"
+                class="universe-card">
+
+                <span class="card-icon">
+                    📔
+                </span>
+
+                <h2>
+                    Diary
+                </h2>
+
+                <p>
+                    Things we couldn't say out loud.
+                </p>
+
             </a>
 
-            <a href="#" class="universe-card">
-                <span class="card-icon">🎧</span>
-                <h2>Our Songs</h2>
-                <p>Songs that somehow became ours.</p>
+
+
+            <!-- Songs -->
+            <a
+                href="#"
+                class="universe-card">
+
+                <span class="card-icon">
+                    🎧
+                </span>
+
+                <h2>
+                    Our Songs
+                </h2>
+
+                <p>
+                    Songs that somehow became ours.
+                </p>
+
             </a>
 
         </section>
+
 
 
         <!-- Closing -->
         <section class="closing">
 
-            <span>✦</span>
+            <span>
+                ✦
+            </span>
 
             <p>
                 Our story is still being written.
@@ -124,11 +250,14 @@
     </main>
 
 
+
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script src="supabase.js"></script>
+
     <script src="auth.js"></script>
+
 
 </body>
 
