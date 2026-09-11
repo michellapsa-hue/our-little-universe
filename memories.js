@@ -1,27 +1,13 @@
-const memoryContainer =
-    document.getElementById("memoryContainer");
+const memoryContainer = document.getElementById("memoryContainer");
 
-const addMemoryButton =
-    document.getElementById("addMemoryButton");
+const addMemoryButton = document.getElementById("addMemoryButton");
+const memoryModal = document.getElementById("memoryModal");
+const closeMemoryModal = document.getElementById("closeMemoryModal");
+const memoryForm = document.getElementById("memoryForm");
 
-const memoryModal =
-    document.getElementById("memoryModal");
-
-const closeMemoryModal =
-    document.getElementById("closeMemoryModal");
-
-const memoryForm =
-    document.getElementById("memoryForm");
-
-const memoryDetailModal =
-    document.getElementById("memoryDetailModal");
-
-const closeMemoryDetail =
-    document.getElementById("closeMemoryDetail");
-
-const memoryDetailContent =
-    document.getElementById("memoryDetailContent");
-
+const memoryDetailModal = document.getElementById("memoryDetailModal");
+const closeMemoryDetail = document.getElementById("closeMemoryDetail");
+const memoryDetailContent = document.getElementById("memoryDetailContent");
 
 const UNIVERSE_ID =
     "e6df9aea-780d-4784-a4ef-12710647444d";
@@ -32,10 +18,11 @@ const UNIVERSE_ID =
 ========================= */
 
 function escapeHtml(value) {
+    if (value === null || value === undefined) {
+        return "";
+    }
 
-    if (!value) return "";
-
-    return value
+    return String(value)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
@@ -49,130 +36,94 @@ function escapeHtml(value) {
 ========================= */
 
 function formatDate(date) {
-
     if (!date) {
         return "A special day";
     }
 
-    const formatted =
-        new Date(date + "T00:00:00")
-            .toLocaleDateString(
-                "en-US",
-                {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric"
-                }
-            );
-
-    return formatted;
+    return new Date(date + "T00:00:00").toLocaleDateString(
+        "en-US",
+        {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        }
+    );
 }
 
 
 /* =========================
-   OPEN ADD MEMORY
+   ADD MEMORY MODAL
 ========================= */
 
 if (addMemoryButton) {
-
-    addMemoryButton.addEventListener(
-        "click",
-        () => {
-
-            memoryModal.classList.add("active");
-
-        }
-    );
-
+    addMemoryButton.addEventListener("click", function () {
+        memoryModal.classList.add("active");
+    });
 }
 
-
-/* =========================
-   CLOSE ADD MEMORY
-========================= */
 
 if (closeMemoryModal) {
-
-    closeMemoryModal.addEventListener(
-        "click",
-        () => {
-
-            memoryModal.classList.remove("active");
-
-        }
-    );
-
+    closeMemoryModal.addEventListener("click", function () {
+        memoryModal.classList.remove("active");
+    });
 }
 
-
-/* =========================
-   CLOSE ADD MEMORY
-   CLICK OUTSIDE
-========================= */
 
 if (memoryModal) {
+    memoryModal.addEventListener("click", function (event) {
 
-    memoryModal.addEventListener(
-        "click",
-        (event) => {
-
-            if (event.target === memoryModal) {
-
-                memoryModal.classList.remove("active");
-
-            }
-
+        if (event.target === memoryModal) {
+            memoryModal.classList.remove("active");
         }
-    );
 
+    });
 }
 
 
 /* =========================
-   SHOW MEMORY DETAIL
+   MEMORY DETAIL
 ========================= */
 
-function showMemoryDetail(
-    memory,
-    imageUrl
-) {
+function showMemoryDetail(memory, imageUrl) {
 
-    const formattedDate =
-        formatDate(memory.memory_date);
+    let imageHtml = "";
 
-
-    const imageHtml = imageUrl
-        ? `
+    if (imageUrl) {
+        imageHtml = `
             <img
                 src="${imageUrl}"
                 class="memory-detail-image"
                 alt="${escapeHtml(memory.title)}">
-          `
-        : "";
+        `;
+    }
 
 
-    const locationHtml =
-        memory.location
-            ? `
-                <div class="memory-detail-location">
-                    📍 ${escapeHtml(memory.location)}
-                </div>
-              `
-            : "";
+    let locationHtml = "";
+
+    if (memory.location) {
+        locationHtml = `
+            <div class="memory-detail-location">
+                📍 ${escapeHtml(memory.location)}
+            </div>
+        `;
+    }
 
 
-    const storyHtml =
-        memory.description
-            ? `
-                <div class="memory-detail-story">
-                    ${escapeHtml(memory.description)}
-                </div>
-              `
-            : `
-                <div class="memory-detail-story">
-                    No story written yet.
-                </div>
-              `;
+    let storyHtml = "";
+
+    if (memory.description) {
+        storyHtml = `
+            <div class="memory-detail-story">
+                ${escapeHtml(memory.description)}
+            </div>
+        `;
+    } else {
+        storyHtml = `
+            <div class="memory-detail-story">
+                No story written yet.
+            </div>
+        `;
+    }
 
 
     memoryDetailContent.innerHTML = `
@@ -180,7 +131,7 @@ function showMemoryDetail(
         ${imageHtml}
 
         <div class="memory-detail-date">
-            ${escapeHtml(formattedDate)}
+            ${escapeHtml(formatDate(memory.memory_date))}
         </div>
 
         <h2 class="memory-detail-title">
@@ -201,51 +152,52 @@ function showMemoryDetail(
 
 
 /* =========================
-   CLOSE MEMORY DETAIL
+   CLOSE DETAIL MODAL
 ========================= */
 
-function closeMemoryDetailModal() {
+function closeDetailModal() {
 
     memoryDetailModal.classList.remove("active");
 
     document.body.style.overflow = "";
-
 }
 
 
+/*
+   IMPORTANT:
+   Use onclick directly so the X button
+   cannot get blocked by another listener.
+*/
+
 if (closeMemoryDetail) {
 
-    closeMemoryDetail.addEventListener(
-        "click",
-        closeMemoryDetailModal
-    );
+    closeMemoryDetail.onclick = function (event) {
 
+        event.preventDefault();
+        event.stopPropagation();
+
+        closeDetailModal();
+
+    };
 }
 
 
 /* =========================
-   CLOSE DETAIL
-   CLICK OUTSIDE
+   CLICK OUTSIDE DETAIL
 ========================= */
 
 if (memoryDetailModal) {
 
     memoryDetailModal.addEventListener(
         "click",
-        (event) => {
+        function (event) {
 
-            if (
-                event.target ===
-                memoryDetailModal
-            ) {
-
-                closeMemoryDetailModal();
-
+            if (event.target === memoryDetailModal) {
+                closeDetailModal();
             }
 
         }
     );
-
 }
 
 
@@ -255,30 +207,23 @@ if (memoryDetailModal) {
 
 document.addEventListener(
     "keydown",
-    (event) => {
+    function (event) {
 
         if (event.key === "Escape") {
 
             if (
-                memoryDetailModal.classList.contains(
-                    "active"
-                )
+                memoryDetailModal &&
+                memoryDetailModal.classList.contains("active")
             ) {
-
-                closeMemoryDetailModal();
-
+                closeDetailModal();
             }
 
+
             if (
-                memoryModal.classList.contains(
-                    "active"
-                )
+                memoryModal &&
+                memoryModal.classList.contains("active")
             ) {
-
-                memoryModal.classList.remove(
-                    "active"
-                );
-
+                memoryModal.classList.remove("active");
             }
 
         }
@@ -301,37 +246,26 @@ async function loadMemories() {
 
 
     const {
-        data: {
-            user
-        },
+        data: { user },
         error: userError
-    } =
-        await supabaseClient.auth.getUser();
+    } = await supabaseClient.auth.getUser();
 
 
     if (userError || !user) {
-
         window.location.href = "login.html";
-
         return;
-
     }
 
 
     const {
         data: memories,
         error
-    } =
-        await supabaseClient
-            .rpc("get_my_memories");
+    } = await supabaseClient.rpc("get_my_memories");
 
 
     if (error) {
 
-        console.error(
-            "Load memories error:",
-            error
-        );
+        console.error("Load memories error:", error);
 
         memoryContainer.innerHTML = `
             <div class="memory-card-empty">
@@ -340,7 +274,6 @@ async function loadMemories() {
         `;
 
         return;
-
     }
 
 
@@ -354,7 +287,6 @@ async function loadMemories() {
         `;
 
         return;
-
     }
 
 
@@ -373,18 +305,14 @@ async function loadMemories() {
         const {
             data: photos,
             error: photoError
-        } =
-            await supabaseClient
-                .from("memory_photos")
-                .select("*")
-                .eq("memory_id", memory.id)
-                .order(
-                    "display_order",
-                    {
-                        ascending: true
-                    }
-                )
-                .limit(1);
+        } = await supabaseClient
+            .from("memory_photos")
+            .select("*")
+            .eq("memory_id", memory.id)
+            .order("display_order", {
+                ascending: true
+            })
+            .limit(1);
 
 
         if (
@@ -393,33 +321,24 @@ async function loadMemories() {
             photos.length > 0
         ) {
 
-            const filePath =
-                photos[0].file_path;
+            const filePath = photos[0].file_path;
 
 
             const {
                 data: signedData,
                 error: signedError
-            } =
-                await supabaseClient
-                    .storage
-                    .from("memory-photos")
-                    .createSignedUrl(
-                        filePath,
-                        60 * 60
-                    );
+            } = await supabaseClient
+                .storage
+                .from("memory-photos")
+                .createSignedUrl(
+                    filePath,
+                    60 * 60
+                );
 
 
-            if (
-                !signedError &&
-                signedData
-            ) {
-
-                imageUrl =
-                    signedData.signedUrl;
-
+            if (!signedError && signedData) {
+                imageUrl = signedData.signedUrl;
             }
-
         }
 
 
@@ -427,32 +346,28 @@ async function loadMemories() {
            CREATE CARD
         ========================= */
 
-        const card =
-            document.createElement("article");
+        const card = document.createElement("article");
 
-        card.className =
-            "memory-card";
+        card.className = "memory-card";
 
 
-        const imageHtml =
-            imageUrl
-                ? `
-                    <img
-                        src="${imageUrl}"
-                        class="memory-card-image"
-                        alt="${escapeHtml(memory.title)}">
-                  `
-                : "";
+        const imageHtml = imageUrl
+            ? `
+                <img
+                    src="${imageUrl}"
+                    class="memory-card-image"
+                    alt="${escapeHtml(memory.title)}">
+            `
+            : "";
 
 
-        const locationHtml =
-            memory.location
-                ? `
-                    <div class="memory-card-location">
-                        📍 ${escapeHtml(memory.location)}
-                    </div>
-                  `
-                : "";
+        const locationHtml = memory.location
+            ? `
+                <div class="memory-card-location">
+                    📍 ${escapeHtml(memory.location)}
+                </div>
+            `
+            : "";
 
 
         card.innerHTML = `
@@ -461,9 +376,7 @@ async function loadMemories() {
 
             <div class="memory-card-date">
                 ${escapeHtml(
-                    formatDate(
-                        memory.memory_date
-                    )
+                    formatDate(memory.memory_date)
                 )}
             </div>
 
@@ -477,26 +390,21 @@ async function loadMemories() {
 
 
         /* =========================
-           CLICK CARD
+           CLICK MEMORY CARD
         ========================= */
 
-        card.addEventListener(
-            "click",
-            () => {
+        card.onclick = function () {
 
-                showMemoryDetail(
-                    memory,
-                    imageUrl
-                );
+            showMemoryDetail(
+                memory,
+                imageUrl
+            );
 
-            }
-        );
+        };
 
 
         memoryContainer.appendChild(card);
-
     }
-
 }
 
 
@@ -508,50 +416,40 @@ if (memoryForm) {
 
     memoryForm.addEventListener(
         "submit",
-        async (event) => {
+        async function (event) {
 
             event.preventDefault();
 
 
             const title =
                 document
-                    .getElementById(
-                        "memoryTitle"
-                    )
+                    .getElementById("memoryTitle")
                     .value
                     .trim();
 
 
             const date =
                 document
-                    .getElementById(
-                        "memoryDate"
-                    )
+                    .getElementById("memoryDate")
                     .value;
 
 
             const location =
                 document
-                    .getElementById(
-                        "memoryLocation"
-                    )
+                    .getElementById("memoryLocation")
                     .value
                     .trim();
 
 
             const description =
                 document
-                    .getElementById(
-                        "memoryDescription"
-                    )
+                    .getElementById("memoryDescription")
                     .value
                     .trim();
 
 
             const photoInput =
-                document.getElementById(
-                    "memoryPhoto"
-                );
+                document.getElementById("memoryPhoto");
 
 
             const photo =
@@ -559,9 +457,7 @@ if (memoryForm) {
 
 
             if (!title) {
-
                 return;
-
             }
 
 
@@ -572,9 +468,7 @@ if (memoryForm) {
 
 
             saveButton.disabled = true;
-
-            saveButton.textContent =
-                "Saving memory...";
+            saveButton.textContent = "Saving memory...";
 
 
             try {
@@ -584,25 +478,13 @@ if (memoryForm) {
                 ========================= */
 
                 const {
-                    data: {
-                        user
-                    },
+                    data: { user },
                     error: userError
-                } =
-                    await supabaseClient
-                        .auth
-                        .getUser();
+                } = await supabaseClient.auth.getUser();
 
 
-                if (
-                    userError ||
-                    !user
-                ) {
-
-                    throw new Error(
-                        "User not logged in"
-                    );
-
+                if (userError || !user) {
+                    throw new Error("User not logged in");
                 }
 
 
@@ -613,30 +495,22 @@ if (memoryForm) {
                 const {
                     data: memory,
                     error: memoryError
-                } =
-                    await supabaseClient
-                        .rpc(
-                            "create_my_memory",
-                            {
-                                p_title:
-                                    title,
-
-                                p_description:
-                                    description || null,
-
-                                p_memory_date:
-                                    date || null,
-
-                                p_location:
-                                    location || null
-                            }
-                        );
+                } = await supabaseClient.rpc(
+                    "create_my_memory",
+                    {
+                        p_title: title,
+                        p_description:
+                            description || null,
+                        p_memory_date:
+                            date || null,
+                        p_location:
+                            location || null
+                    }
+                );
 
 
                 if (memoryError) {
-
                     throw memoryError;
-
                 }
 
 
@@ -658,31 +532,22 @@ if (memoryForm) {
 
 
                     const {
-                        error:
-                            uploadError
-                    } =
-                        await supabaseClient
-                            .storage
-                            .from(
-                                "memory-photos"
-                            )
-                            .upload(
-                                filePath,
-                                photo,
-                                {
-                                    contentType:
-                                        photo.type,
-
-                                    upsert:
-                                        false
-                                }
-                            );
+                        error: uploadError
+                    } = await supabaseClient
+                        .storage
+                        .from("memory-photos")
+                        .upload(
+                            filePath,
+                            photo,
+                            {
+                                contentType: photo.type,
+                                upsert: false
+                            }
+                        );
 
 
                     if (uploadError) {
-
                         throw uploadError;
-
                     }
 
 
@@ -691,43 +556,29 @@ if (memoryForm) {
                     ========================= */
 
                     const {
-                        error:
-                            photoRowError
-                    } =
-                        await supabaseClient
-                            .from(
-                                "memory_photos"
-                            )
-                            .insert({
-                                memory_id:
-                                    memory.id,
-
-                                file_path:
-                                    filePath,
-
-                                display_order:
-                                    0
-                            });
+                        error: photoRowError
+                    } = await supabaseClient
+                        .from("memory_photos")
+                        .insert({
+                            memory_id: memory.id,
+                            file_path: filePath,
+                            display_order: 0
+                        });
 
 
                     if (photoRowError) {
-
                         throw photoRowError;
-
                     }
-
                 }
 
 
                 /* =========================
-                   RESET FORM
+                   RESET
                 ========================= */
 
                 memoryForm.reset();
 
-                memoryModal.classList.remove(
-                    "active"
-                );
+                memoryModal.classList.remove("active");
 
 
                 /* =========================
@@ -748,10 +599,10 @@ if (memoryForm) {
                     "Something went wrong while saving this memory."
                 );
 
+
             } finally {
 
                 saveButton.disabled = false;
-
                 saveButton.textContent =
                     "Save Memory ✦";
 
@@ -759,7 +610,6 @@ if (memoryForm) {
 
         }
     );
-
 }
 
 
