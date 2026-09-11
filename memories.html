@@ -12,6 +12,7 @@
 
 <body>
 
+    <!-- Navigation -->
     <header class="navbar">
 
         <a href="index.html" class="logo">
@@ -33,8 +34,10 @@
     </header>
 
 
+    <!-- Main Content -->
     <main class="home">
 
+        <!-- Header -->
         <section class="hero">
 
             <p class="small-title">
@@ -53,49 +56,14 @@
         </section>
 
 
-        <section class="universe-menu">
-
-            <a href="#" class="universe-card">
-                <span class="card-icon">📸</span>
-
-                <h2>
-                    Our First Memory
-                </h2>
-
-                <p>
-                    A little moment that started everything.
-                </p>
-            </a>
-
-
-            <a href="#" class="universe-card">
-                <span class="card-icon">💙</span>
-
-                <h2>
-                    Favorite Moments
-                </h2>
-
-                <p>
-                    The moments that still make us smile.
-                </p>
-            </a>
-
-
-            <a href="#" class="universe-card">
-                <span class="card-icon">🌙</span>
-
-                <h2>
-                    Late Night Stories
-                </h2>
-
-                <p>
-                    Conversations we wished could last forever.
-                </p>
-            </a>
-
+        <!-- Memories -->
+        <section
+            class="universe-menu"
+            id="memoryContainer">
         </section>
 
 
+        <!-- Closing -->
         <section class="closing">
 
             <span>✦</span>
@@ -113,10 +81,12 @@
     </main>
 
 
+    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script src="supabase.js"></script>
     <script src="auth.js"></script>
+    <script src="memories.js"></script>
 
 </body>
 
