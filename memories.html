@@ -8,11 +8,194 @@
     <title>Memories — Our Little Universe</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =========================
+           MEMORIES PAGE
+        ========================= */
+
+        .memory-header {
+            max-width: 750px;
+            margin: 50px auto 60px;
+            text-align: center;
+        }
+
+        .add-memory-button {
+            display: inline-block;
+            margin-top: 35px;
+            padding: 14px 24px;
+
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 30px;
+
+            background: linear-gradient(
+                135deg,
+                #5d69c9,
+                #8062bd
+            );
+
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            cursor: pointer;
+
+            transition: 0.3s ease;
+        }
+
+        .add-memory-button:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        #memoryContainer {
+            min-height: 100px;
+        }
+
+        .empty-memory {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(255,255,255,0.55);
+        }
+
+        /* =========================
+           MODAL
+        ========================= */
+
+        .memory-modal {
+            position: fixed;
+            inset: 0;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background: rgba(3,5,20,0.75);
+
+            backdrop-filter: blur(10px);
+
+            z-index: 999;
+        }
+
+        .memory-modal.active {
+            display: flex;
+        }
+
+        .memory-form {
+            width: 100%;
+            max-width: 520px;
+
+            padding: 35px;
+
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 24px;
+
+            background: rgba(20,22,60,0.95);
+
+            box-shadow: 0 25px 80px rgba(0,0,0,0.45);
+        }
+
+        .memory-form-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+        }
+
+        .memory-form-header h2 {
+            font-family: Georgia, serif;
+            font-size: 28px;
+            font-weight: normal;
+        }
+
+        .close-modal {
+            width: 35px;
+            height: 35px;
+
+            padding: 0;
+            margin: 0;
+
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.05);
+
+            color: white;
+            font-size: 18px;
+
+            cursor: pointer;
+        }
+
+        .memory-form label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 13px;
+        }
+
+        .memory-form input,
+        .memory-form textarea {
+            width: 100%;
+
+            padding: 13px 15px;
+
+            margin-bottom: 20px;
+
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+
+            background: rgba(255,255,255,0.06);
+
+            color: white;
+
+            outline: none;
+
+            font-family: Arial, sans-serif;
+        }
+
+        .memory-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .memory-form input:focus,
+        .memory-form textarea:focus {
+            border-color: #8e7de8;
+        }
+
+        .save-memory-button {
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+            border-radius: 12px;
+
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #8e6de8
+            );
+
+            color: white;
+
+            font-size: 14px;
+
+            cursor: pointer;
+        }
+    </style>
+
 </head>
 
 <body>
 
+
     <!-- Navigation -->
+
     <header class="navbar">
 
         <a href="index.html" class="logo">
@@ -20,25 +203,46 @@
         </a>
 
         <nav>
-            <a href="index.html">Our Story</a>
-            <a href="memories.html">Memories</a>
-            <a href="#">Diary</a>
-            <a href="#">Letters</a>
-            <a href="#">Our Songs</a>
+
+            <a href="index.html">
+                Our Story
+            </a>
+
+            <a href="memories.html">
+                Memories
+            </a>
+
+            <a href="#">
+                Diary
+            </a>
+
+            <a href="#">
+                Letters
+            </a>
+
+            <a href="#">
+                Our Songs
+            </a>
+
         </nav>
 
-        <button id="logoutButton" class="logout-btn">
+        <button
+            id="logoutButton"
+            class="logout-btn">
             Logout
         </button>
 
     </header>
 
 
-    <!-- Main Content -->
+    <!-- Main -->
+
     <main class="home">
 
+
         <!-- Header -->
-        <section class="hero">
+
+        <section class="memory-header">
 
             <p class="small-title">
                 OUR MEMORIES
@@ -53,20 +257,33 @@
                 A collection of the moments we never want to forget.
             </p>
 
+            <button
+                id="addMemoryButton"
+                class="add-memory-button">
+
+                ＋ Add Memory
+
+            </button>
+
         </section>
 
 
         <!-- Memories -->
+
         <section
             class="universe-menu"
             id="memoryContainer">
+
         </section>
 
 
         <!-- Closing -->
+
         <section class="closing">
 
-            <span>✦</span>
+            <span>
+                ✦
+            </span>
 
             <p>
                 More memories are waiting to be written.
@@ -81,12 +298,156 @@
     </main>
 
 
+    <!-- Add Memory Modal -->
+
+    <div
+        id="memoryModal"
+        class="memory-modal">
+
+        <form
+            id="memoryForm"
+            class="memory-form">
+
+
+            <div class="memory-form-header">
+
+                <h2>
+                    New Memory
+                </h2>
+
+                <button
+                    type="button"
+                    id="closeMemoryModal"
+                    class="close-modal">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <label for="memoryTitle">
+                Title
+            </label>
+
+            <input
+                type="text"
+                id="memoryTitle"
+                placeholder="Give this memory a name"
+                required
+            >
+
+
+            <label for="memoryDate">
+                Date
+            </label>
+
+            <input
+                type="date"
+                id="memoryDate"
+            >
+
+
+            <label for="memoryLocation">
+                Location
+            </label>
+
+            <input
+                type="text"
+                id="memoryLocation"
+                placeholder="Where did it happen?"
+            >
+
+
+            <label for="memoryDescription">
+                Our story
+            </label>
+
+            <textarea
+                id="memoryDescription"
+                placeholder="Tell the story behind this memory..."
+            ></textarea>
+
+
+            <button
+                type="submit"
+                class="save-memory-button">
+
+                Save Memory ✦
+
+            </button>
+
+        </form>
+
+    </div>
+
+
     <!-- Supabase -->
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script src="supabase.js"></script>
+
     <script src="auth.js"></script>
+
     <script src="memories.js"></script>
+
+
+    <!-- Modal -->
+
+    <script>
+
+        const addMemoryButton =
+            document.getElementById("addMemoryButton");
+
+        const memoryModal =
+            document.getElementById("memoryModal");
+
+        const closeMemoryModal =
+            document.getElementById("closeMemoryModal");
+
+        const memoryForm =
+            document.getElementById("memoryForm");
+
+
+        addMemoryButton.addEventListener("click", () => {
+
+            memoryModal.classList.add("active");
+
+        });
+
+
+        closeMemoryModal.addEventListener("click", () => {
+
+            memoryModal.classList.remove("active");
+
+        });
+
+
+        memoryModal.addEventListener("click", (event) => {
+
+            if (event.target === memoryModal) {
+
+                memoryModal.classList.remove("active");
+
+            }
+
+        });
+
+
+        memoryForm.addEventListener("submit", (event) => {
+
+            event.preventDefault();
+
+            alert(
+                "The memory form is ready ✦"
+            );
+
+        });
+
+    </script>
+
 
 </body>
 
