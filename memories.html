@@ -265,7 +265,7 @@
 
 
         /* =========================
-           PHOTO INPUT
+           FILE INPUT
         ========================= */
 
         .memory-form input[type="file"] {
@@ -277,7 +277,8 @@
         }
 
 
-        .memory-form input[type="file"]::file-selector-button {
+        .memory-form
+        input[type="file"]::file-selector-button {
 
             margin-right: 12px;
 
@@ -455,6 +456,7 @@
 
 
             <button
+                type="button"
                 id="addMemoryButton"
                 class="add-memory-button"
             >
@@ -468,7 +470,7 @@
 
 
         <!-- =========================
-             MEMORY CONTAINER
+             MEMORY LIST
         ========================= -->
 
         <section
@@ -516,14 +518,11 @@
         class="memory-modal"
     >
 
-
         <form
             id="memoryForm"
             class="memory-form"
         >
 
-
-            <!-- HEADER -->
 
             <div class="memory-form-header">
 
@@ -537,9 +536,7 @@
                     id="closeMemoryModal"
                     class="close-modal"
                 >
-
                     ×
-
                 </button>
 
             </div>
@@ -551,7 +548,6 @@
             <label for="memoryTitle">
                 Title
             </label>
-
 
             <input
                 type="text"
@@ -568,7 +564,6 @@
                 Date
             </label>
 
-
             <input
                 type="date"
                 id="memoryDate"
@@ -581,7 +576,6 @@
             <label for="memoryLocation">
                 Location
             </label>
-
 
             <input
                 type="text"
@@ -597,7 +591,6 @@
                 Photo
             </label>
 
-
             <input
                 type="file"
                 id="memoryPhoto"
@@ -612,7 +605,6 @@
                 Our story
             </label>
 
-
             <textarea
                 id="memoryDescription"
                 placeholder="Tell the story behind this memory..."
@@ -626,9 +618,7 @@
                 type="submit"
                 class="save-memory-button"
             >
-
                 Save Memory ✦
-
             </button>
 
 
@@ -649,118 +639,6 @@
     <script src="auth.js"></script>
 
     <script src="memories.js"></script>
-
-
-
-    <!-- =========================
-         MODAL SCRIPT
-    ========================= -->
-
-    <script>
-
-        const addMemoryButton =
-            document.getElementById(
-                "addMemoryButton"
-            );
-
-
-        const memoryModal =
-            document.getElementById(
-                "memoryModal"
-            );
-
-
-        const closeMemoryModal =
-            document.getElementById(
-                "closeMemoryModal"
-            );
-
-
-        const memoryForm =
-            document.getElementById(
-                "memoryForm"
-            );
-
-
-
-        /* OPEN MODAL */
-
-        addMemoryButton.addEventListener(
-            "click",
-            () => {
-
-                memoryModal.classList.add(
-                    "active"
-                );
-
-            }
-        );
-
-
-
-        /* CLOSE MODAL */
-
-        closeMemoryModal.addEventListener(
-            "click",
-            () => {
-
-                memoryModal.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-
-        /* CLOSE WHEN CLICKING OUTSIDE */
-
-        memoryModal.addEventListener(
-            "click",
-            (event) => {
-
-                if (
-                    event.target ===
-                    memoryModal
-                ) {
-
-                    memoryModal.classList.remove(
-                        "active"
-                    );
-
-                }
-
-            }
-        );
-
-
-        /* ESCAPE KEY */
-
-        document.addEventListener(
-            "keydown",
-            (event) => {
-
-                if (
-                    event.key === "Escape"
-                ) {
-
-                    memoryModal.classList.remove(
-                        "active"
-                    );
-
-                }
-
-            }
-        );
-
-
-        /*
-         * IMPORTANT:
-         * Form submission is handled
-         * by memories.js
-         */
-
-    </script>
 
 
 </body>
