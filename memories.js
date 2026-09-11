@@ -1,17 +1,29 @@
-const memoryContainer =
-    document.getElementById("memoryContainer");
+// =====================================================
+// OUR LITTLE UNIVERSE
+// memories.js
+// =====================================================
 
-const addMemoryButton =
-    document.getElementById("addMemoryButton");
 
-const memoryModal =
-    document.getElementById("memoryModal");
+// =====================================================
+// ELEMENTS
+// =====================================================
 
-const closeMemoryModal =
-    document.getElementById("closeMemoryModal");
+const memoryContainer = document.getElementById("memoryContainer");
 
-const memoryForm =
-    document.getElementById("memoryForm");
+const addMemoryButton = document.getElementById("addMemoryButton");
+const addMemoryModal = document.getElementById("addMemoryModal");
+const closeMemoryModal = document.getElementById("closeMemoryModal");
+
+const memoryForm = document.getElementById("memoryForm");
+
+const memoryTitle = document.getElementById("memoryTitle");
+const memoryDate = document.getElementById("memoryDate");
+const memoryLocation = document.getElementById("memoryLocation");
+const memoryPhoto = document.getElementById("memoryPhoto");
+const memoryDescription = document.getElementById("memoryDescription");
+
+
+// DETAIL MODAL
 
 const memoryDetailModal =
     document.getElementById("memoryDetailModal");
@@ -22,847 +34,73 @@ const closeMemoryDetail =
 const memoryDetailContent =
     document.getElementById("memoryDetailContent");
 
-const UNIVERSE_ID =
-    "e6df9aea-780d-4784-a4ef-12710647444d";
 
+// =====================================================
+// STATE
+// =====================================================
 
-/* =========================
-   ESCAPE HTML
-========================= */
+let currentMemory = null;
+let currentMemoryImageUrl = "";
 
-function escapeHtml(value) {
 
-    if (value === null || value === undefined) {
-        return "";
-    }
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-
-/* =========================
-   FORMAT DATE
-========================= */
-
-function formatDate(date) {
-
-    if (!date) {
-        return "A special day";
-    }
-
-    return new Date(date + "T00:00:00")
-        .toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-        });
-}
-
-
-/* =========================
-   ADD MEMORY MODAL
-========================= */
-
-if (addMemoryButton) {
-
-    addMemoryButton.onclick = function () {
-        memoryModal.classList.add("active");
-    };
-
-}
-
-
-if (closeMemoryModal) {
-
-    closeMemoryModal.onclick = function () {
-        memoryModal.classList.remove("active");
-    };
-
-}
-
-
-if (memoryModal) {
-
-    memoryModal.addEventListener("click", function (event) {
-
-        if (event.target === memoryModal) {
-            memoryModal.classList.remove("active");
-        }
-
-    });
-
-}
-
-
-/* =========================
-   DETAIL MODAL
-========================= */
-
-function closeDetailModal() {
-
-    memoryDetailModal.classList.remove("active");
-
-    document.body.style.overflow = "";
-
-}
-
-
-if (closeMemoryDetail) {
-
-    closeMemoryDetail.onclick = function (event) {
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        closeDetailModal();
-
-    };
-
-}
-
-
-if (memoryDetailModal) {
-
-    memoryDetailModal.addEventListener(
-        "click",
-        function (event) {
-
-            if (event.target === memoryDetailModal) {
-                closeDetailModal();
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================
-   DETAIL STYLE
-========================= */
-
-const editDeleteStyle =
-    document.createElement("style");
-
-editDeleteStyle.textContent = `
-
-    .memory-detail-actions {
-        display: flex;
-        gap: 10px;
-        margin-top: 30px;
-    }
-
-    .memory-edit-button,
-    .memory-delete-button {
-        flex: 1;
-        padding: 12px 18px;
-        border-radius: 12px;
-        cursor: pointer;
-        font-size: 13px;
-        color: white;
-    }
-
-    .memory-edit-button {
-        border: 1px solid rgba(255,255,255,0.15);
-        background: rgba(255,255,255,0.08);
-    }
-
-    .memory-delete-button {
-        border: 1px solid rgba(255,100,120,0.25);
-        background: rgba(180,50,80,0.18);
-    }
-
-    .memory-edit-button:hover,
-    .memory-delete-button:hover {
-        opacity: 0.8;
-    }
-
-    .edit-memory-form {
-        margin-top: 20px;
-    }
-
-    .edit-memory-form label {
-        display: block;
-        margin: 15px 0 7px;
-        font-size: 12px;
-        color: rgba(255,255,255,0.65);
-    }
-
-    .edit-memory-form input,
-    .edit-memory-form textarea {
-        width: 100%;
-        padding: 12px 14px;
-        border-radius: 12px;
-        border: 1px solid rgba(255,255,255,0.1);
-        background: rgba(255,255,255,0.06);
-        color: white;
-        outline: none;
-        font-family: Arial, sans-serif;
-    }
-
-    .edit-memory-form textarea {
-        min-height: 130px;
-        resize: vertical;
-    }
-
-    .edit-memory-buttons {
-        display: flex;
-        gap: 10px;
-        margin-top: 20px;
-    }
-
-    .edit-save-button,
-    .edit-cancel-button {
-        flex: 1;
-        padding: 12px;
-        border-radius: 12px;
-        cursor: pointer;
-        color: white;
-    }
-
-    .edit-save-button {
-        border: none;
-        background: linear-gradient(
-            135deg,
-            #5d69c9,
-            #8062bd
-        );
-    }
-
-    .edit-cancel-button {
-        border: 1px solid rgba(255,255,255,0.15);
-        background: rgba(255,255,255,0.06);
-    }
-
-    .delete-confirm-box {
-        text-align: center;
-        padding: 25px 5px 10px;
-    }
-
-    .delete-confirm-box h2 {
-        font-family: Georgia, serif;
-        font-weight: normal;
-        font-size: 28px;
-        margin-bottom: 12px;
-    }
-
-    .delete-confirm-box p {
-        color: rgba(255,255,255,0.55);
-        font-size: 14px;
-        line-height: 1.7;
-    }
-
-    .delete-confirm-buttons {
-        display: flex;
-        gap: 10px;
-        margin-top: 25px;
-    }
-
-    .confirm-delete-button,
-    .cancel-delete-button {
-        flex: 1;
-        padding: 12px;
-        border-radius: 12px;
-        cursor: pointer;
-        color: white;
-    }
-
-    .confirm-delete-button {
-        border: none;
-        background: #9b4059;
-    }
-
-    .cancel-delete-button {
-        border: 1px solid rgba(255,255,255,0.15);
-        background: rgba(255,255,255,0.06);
-    }
-
-    @media (max-width: 600px) {
-
-        .memory-detail-actions,
-        .edit-memory-buttons,
-        .delete-confirm-buttons {
-            flex-direction: column;
-        }
-
-    }
-
-`;
-
-document.head.appendChild(editDeleteStyle);
-
-
-/* =========================
-   SHOW MEMORY DETAIL
-========================= */
-
-function showMemoryDetail(memory, imageUrl) {
-
-    const imageHtml = imageUrl
-        ? `
-            <img
-                src="${imageUrl}"
-                class="memory-detail-image"
-                alt="${escapeHtml(memory.title)}">
-        `
-        : "";
-
-
-    const locationHtml = memory.location
-        ? `
-            <div class="memory-detail-location">
-                📍 ${escapeHtml(memory.location)}
-            </div>
-        `
-        : "";
-
-
-    const storyHtml = memory.description
-        ? `
-            <div class="memory-detail-story">
-                ${escapeHtml(memory.description)}
-            </div>
-        `
-        : `
-            <div class="memory-detail-story">
-                No story written yet.
-            </div>
-        `;
-
-
-    memoryDetailContent.innerHTML = `
-
-        ${imageHtml}
-
-        <div class="memory-detail-date">
-            ${escapeHtml(
-                formatDate(memory.memory_date)
-            )}
-        </div>
-
-        <h2 class="memory-detail-title">
-            ${escapeHtml(memory.title)}
-        </h2>
-
-        ${locationHtml}
-
-        ${storyHtml}
-
-        <div class="memory-detail-actions">
-
-            <button
-                type="button"
-                class="memory-edit-button"
-                id="editMemoryButton">
-
-                ✎ Edit Memory
-
-            </button>
-
-            <button
-                type="button"
-                class="memory-delete-button"
-                id="deleteMemoryButton">
-
-                🗑 Delete
-
-            </button>
-
-        </div>
-    `;
-
-
-    memoryDetailModal.classList.add("active");
-
-    document.body.style.overflow = "hidden";
-
-
-    document.getElementById(
-        "editMemoryButton"
-    ).onclick = function () {
-
-        showEditForm(memory);
-
-    };
-
-
-    document.getElementById(
-        "deleteMemoryButton"
-    ).onclick = function () {
-
-        showDeleteConfirmation(memory);
-
-    };
-
-}
-
-
-/* =========================
-   EDIT FORM
-========================= */
-
-function showEditForm(memory) {
-
-    memoryDetailContent.innerHTML = `
-
-        <h2 class="memory-detail-title">
-            Edit Memory
-        </h2>
-
-        <form
-            id="editMemoryForm"
-            class="edit-memory-form">
-
-            <label for="editMemoryTitle">
-                Title
-            </label>
-
-            <input
-                type="text"
-                id="editMemoryTitle"
-                value="${escapeHtml(memory.title)}"
-                required>
-
-
-            <label for="editMemoryDate">
-                Date
-            </label>
-
-            <input
-                type="date"
-                id="editMemoryDate"
-                value="${memory.memory_date || ""}">
-
-
-            <label for="editMemoryLocation">
-                Location
-            </label>
-
-            <input
-                type="text"
-                id="editMemoryLocation"
-                value="${escapeHtml(memory.location || "")}"
-                placeholder="Where did it happen?">
-
-
-            <label for="editMemoryDescription">
-                Our story
-            </label>
-
-            <textarea
-                id="editMemoryDescription"
-                placeholder="Tell the story...">${escapeHtml(
-                    memory.description || ""
-                )}</textarea>
-
-
-            <div class="edit-memory-buttons">
-
-                <button
-                    type="button"
-                    id="cancelEditButton"
-                    class="edit-cancel-button">
-
-                    Cancel
-
-                </button>
-
-                <button
-                    type="submit"
-                    class="edit-save-button">
-
-                    Save Changes ✦
-
-                </button>
-
-            </div>
-
-        </form>
-    `;
-
-
-    document.getElementById(
-        "cancelEditButton"
-    ).onclick = function () {
-
-        closeDetailModal();
-
-        showMemoryDetail(
-            memory,
-            ""
-        );
-
-    };
-
-
-    document.getElementById(
-        "editMemoryForm"
-    ).onsubmit = async function (event) {
-
-        event.preventDefault();
-
-
-        const title =
-            document
-                .getElementById("editMemoryTitle")
-                .value
-                .trim();
-
-
-        const date =
-            document
-                .getElementById("editMemoryDate")
-                .value;
-
-
-        const location =
-            document
-                .getElementById("editMemoryLocation")
-                .value
-                .trim();
-
-
-        const description =
-            document
-                .getElementById("editMemoryDescription")
-                .value
-                .trim();
-
-
-        const saveButton =
-            this.querySelector(
-                ".edit-save-button"
-            );
-
-
-        saveButton.disabled = true;
-        saveButton.textContent =
-            "Saving...";
-
-
-        try {
-
-            const {
-                error
-            } = await supabaseClient
-                .from("memories")
-                .update({
-
-                    title: title,
-
-                    memory_date:
-                        date || null,
-
-                    location:
-                        location || null,
-
-                    description:
-                        description || null
-
-                })
-                .eq("id", memory.id);
-
-
-            if (error) {
-                throw error;
-            }
-
-
-            closeDetailModal();
-
-            await loadMemories();
-
-
-        } catch (error) {
-
-            console.error(
-                "Edit memory error:",
-                error
-            );
-
-            alert(
-                "Failed to update this memory."
-            );
-
-
-        } finally {
-
-            saveButton.disabled = false;
-            saveButton.textContent =
-                "Save Changes ✦";
-
-        }
-
-    };
-
-}
-
-
-/* =========================
-   DELETE CONFIRMATION
-========================= */
-
-function showDeleteConfirmation(memory) {
-
-    memoryDetailContent.innerHTML = `
-
-        <div class="delete-confirm-box">
-
-            <h2>
-                Delete this memory?
-            </h2>
-
-            <p>
-                Are you sure you want to delete
-                <strong>
-                    ${escapeHtml(memory.title)}
-                </strong>?
-                <br>
-                This cannot be undone.
-            </p>
-
-
-            <div class="delete-confirm-buttons">
-
-                <button
-                    type="button"
-                    id="cancelDeleteButton"
-                    class="cancel-delete-button">
-
-                    Cancel
-
-                </button>
-
-
-                <button
-                    type="button"
-                    id="confirmDeleteButton"
-                    class="confirm-delete-button">
-
-                    Yes, Delete
-
-                </button>
-
-            </div>
-
-        </div>
-    `;
-
-
-    document.getElementById(
-        "cancelDeleteButton"
-    ).onclick = function () {
-
-        closeDetailModal();
-
-    };
-
-
-    document.getElementById(
-        "confirmDeleteButton"
-    ).onclick = async function () {
-
-        const button = this;
-
-        button.disabled = true;
-        button.textContent =
-            "Deleting...";
-
-
-        try {
-
-            /* =========================
-               GET PHOTOS
-            ========================= */
-
-            const {
-                data: photos,
-                error: photosError
-            } = await supabaseClient
-                .from("memory_photos")
-                .select("id, file_path")
-                .eq("memory_id", memory.id);
-
-
-            if (photosError) {
-                throw photosError;
-            }
-
-
-            /* =========================
-               DELETE STORAGE FILES
-            ========================= */
-
-            if (photos && photos.length > 0) {
-
-                const filePaths =
-                    photos.map(
-                        photo => photo.file_path
-                    );
-
-
-                const {
-                    error: storageError
-                } = await supabaseClient
-                    .storage
-                    .from("memory-photos")
-                    .remove(filePaths);
-
-
-                if (storageError) {
-                    throw storageError;
-                }
-
-            }
-
-
-            /* =========================
-               DELETE PHOTO RECORDS
-            ========================= */
-
-            const {
-                error: photoDeleteError
-            } = await supabaseClient
-                .from("memory_photos")
-                .delete()
-                .eq("memory_id", memory.id);
-
-
-            if (photoDeleteError) {
-                throw photoDeleteError;
-            }
-
-
-            /* =========================
-               DELETE MEMORY
-            ========================= */
-
-            const {
-                error: memoryDeleteError
-            } = await supabaseClient
-                .from("memories")
-                .delete()
-                .eq("id", memory.id);
-
-
-            if (memoryDeleteError) {
-                throw memoryDeleteError;
-            }
-
-
-            /* =========================
-               CLOSE + RELOAD
-            ========================= */
-
-            closeDetailModal();
-
-            await loadMemories();
-
-
-        } catch (error) {
-
-            console.error(
-                "Delete memory error:",
-                error
-            );
-
-            alert(
-                "Failed to delete this memory."
-            );
-
-
-            button.disabled = false;
-            button.textContent =
-                "Yes, Delete";
-
-        }
-
-    };
-
-}
-
-
-/* =========================
-   LOAD MEMORIES
-========================= */
+// =====================================================
+// LOAD MEMORIES
+// =====================================================
 
 async function loadMemories() {
 
+    if (!memoryContainer) return;
+
     memoryContainer.innerHTML = `
-        <div class="memory-card-empty">
-            Loading our memories... ✦
-        </div>
+        <p style="
+            text-align:center;
+            color:#aaa;
+            padding:40px;
+        ">
+            Loading our memories...
+        </p>
     `;
 
-
-    const {
-        data: { user },
-        error: userError
-    } = await supabaseClient.auth.getUser();
-
-
-    if (userError || !user) {
-
-        window.location.href =
-            "login.html";
-
-        return;
-    }
-
-
-    const {
-        data: memories,
-        error
-    } = await supabaseClient
-        .rpc("get_my_memories");
-
+    const { data, error } =
+        await supabaseClient.rpc("get_my_memories");
 
     if (error) {
 
-        console.error(
-            "Load memories error:",
-            error
-        );
+        console.error("Load memories error:", error);
 
         memoryContainer.innerHTML = `
-            <div class="memory-card-empty">
+            <p style="
+                text-align:center;
+                color:#ff8a8a;
+                padding:40px;
+            ">
                 Failed to load memories.
-            </div>
+            </p>
         `;
 
         return;
     }
 
-
-    if (!memories || memories.length === 0) {
+    if (!data || data.length === 0) {
 
         memoryContainer.innerHTML = `
-            <div class="memory-card-empty">
-                No memories yet.<br>
-                Create your first little moment ✦
-            </div>
+            <p style="
+                text-align:center;
+                color:#aaa;
+                padding:40px;
+            ">
+                No memories yet ✦
+            </p>
         `;
 
         return;
     }
-
 
     memoryContainer.innerHTML = "";
 
-
-    for (const memory of memories) {
+    for (const memory of data) {
 
         let imageUrl = "";
-
-
-        /* =========================
-           GET PHOTO
-        ========================= */
 
         const {
             data: photos,
@@ -876,20 +114,17 @@ async function loadMemories() {
             })
             .limit(1);
 
+        if (photoError) {
+            console.error("Photo error:", photoError);
+        }
 
-        if (
-            !photoError &&
-            photos &&
-            photos.length > 0
-        ) {
+        if (photos && photos.length > 0) {
 
-            const filePath =
-                photos[0].file_path;
-
+            const filePath = photos[0].file_path;
 
             const {
-                data: signedData,
-                error: signedError
+                data: signedUrlData,
+                error: signedUrlError
             } = await supabaseClient
                 .storage
                 .from("memory-photos")
@@ -898,307 +133,794 @@ async function loadMemories() {
                     60 * 60
                 );
 
-
-            if (
-                !signedError &&
-                signedData
-            ) {
-
-                imageUrl =
-                    signedData.signedUrl;
-
+            if (!signedUrlError && signedUrlData) {
+                imageUrl = signedUrlData.signedUrl;
             }
-
         }
 
-
-        /* =========================
-           CARD
-        ========================= */
-
-        const card =
-            document.createElement("article");
-
-
-        card.className =
-            "memory-card";
-
-
-        const imageHtml =
-            imageUrl
-                ? `
-                    <img
-                        src="${imageUrl}"
-                        class="memory-card-image"
-                        alt="${escapeHtml(
-                            memory.title
-                        )}">
-                `
-                : "";
-
-
-        const locationHtml =
-            memory.location
-                ? `
-                    <div class="memory-card-location">
-                        📍 ${escapeHtml(
-                            memory.location
-                        )}
-                    </div>
-                `
-                : "";
-
-
-        card.innerHTML = `
-
-            ${imageHtml}
-
-            <div class="memory-card-date">
-                ${escapeHtml(
-                    formatDate(
-                        memory.memory_date
-                    )
-                )}
-            </div>
-
-            <h2>
-                ${escapeHtml(
-                    memory.title
-                )}
-            </h2>
-
-            ${locationHtml}
-
-        `;
-
-
-        card.onclick = function () {
-
-            showMemoryDetail(
-                memory,
-                imageUrl
-            );
-
-        };
-
-
-        memoryContainer.appendChild(card);
+        createMemoryCard(memory, imageUrl);
     }
-
 }
 
 
-/* =========================
-   SAVE NEW MEMORY
-========================= */
+// =====================================================
+// CREATE MEMORY CARD
+// =====================================================
+
+function createMemoryCard(memory, imageUrl) {
+
+    const card = document.createElement("article");
+
+    card.className = "memory-card";
+
+    const formattedDate =
+        formatMemoryDate(memory.memory_date);
+
+    card.innerHTML = `
+
+        ${
+            imageUrl
+            ? `
+                <img
+                    src="${imageUrl}"
+                    class="memory-card-image"
+                    alt="${escapeHTML(memory.title)}"
+                >
+            `
+            : ""
+        }
+
+        <div class="memory-card-content">
+
+            <div class="memory-card-date">
+                ${formattedDate}
+            </div>
+
+            <h2 class="memory-card-title">
+                ${escapeHTML(memory.title)}
+            </h2>
+
+            ${
+                memory.location
+                ? `
+                    <div class="memory-card-location">
+                        📍 ${escapeHTML(memory.location)}
+                    </div>
+                `
+                : ""
+            }
+
+        </div>
+    `;
+
+    card.addEventListener("click", () => {
+
+        showMemoryDetail(
+            memory,
+            imageUrl
+        );
+
+    });
+
+    memoryContainer.appendChild(card);
+}
+
+
+// =====================================================
+// SHOW MEMORY DETAIL
+// =====================================================
+
+function showMemoryDetail(memory, imageUrl) {
+
+    currentMemory = memory;
+    currentMemoryImageUrl = imageUrl || "";
+
+    const formattedDate =
+        formatMemoryDate(memory.memory_date);
+
+    memoryDetailContent.innerHTML = `
+
+        ${
+            imageUrl
+            ? `
+                <img
+                    src="${imageUrl}"
+                    class="memory-detail-image"
+                    alt="${escapeHTML(memory.title)}"
+                >
+            `
+            : ""
+        }
+
+        <div class="memory-detail-date">
+            ${formattedDate}
+        </div>
+
+        <h2 class="memory-detail-title">
+            ${escapeHTML(memory.title)}
+        </h2>
+
+        ${
+            memory.location
+            ? `
+                <div class="memory-detail-location">
+                    📍 ${escapeHTML(memory.location)}
+                </div>
+            `
+            : ""
+        }
+
+        ${
+            memory.description
+            ? `
+                <div class="memory-detail-story">
+                    ${escapeHTML(memory.description)}
+                </div>
+            `
+            : `
+                <div class="memory-detail-story">
+                    No story written yet.
+                </div>
+            `
+        }
+
+        <div class="memory-detail-actions">
+
+            <button
+                type="button"
+                id="editMemoryButton"
+                class="memory-edit-button"
+            >
+                ✎ Edit Memory
+            </button>
+
+            <button
+                type="button"
+                id="deleteMemoryButton"
+                class="memory-delete-button"
+            >
+                🗑 Delete
+            </button>
+
+        </div>
+    `;
+
+    memoryDetailModal.classList.add("active");
+
+
+    // =================================================
+    // EDIT BUTTON
+    // =================================================
+
+    document
+        .getElementById("editMemoryButton")
+        .addEventListener("click", () => {
+
+            showEditForm(memory);
+
+        });
+
+
+    // =================================================
+    // DELETE BUTTON
+    // =================================================
+
+    document
+        .getElementById("deleteMemoryButton")
+        .addEventListener("click", () => {
+
+            deleteMemory(memory);
+
+        });
+}
+
+
+// =====================================================
+// EDIT FORM
+// =====================================================
+
+function showEditForm(memory) {
+
+    memoryDetailContent.innerHTML = `
+
+        <div class="memory-edit-form">
+
+            <h2>Edit Memory</h2>
+
+            <label>
+                Title
+            </label>
+
+            <input
+                type="text"
+                id="editTitle"
+                value="${escapeAttribute(memory.title)}"
+            >
+
+            <label>
+                Date
+            </label>
+
+            <input
+                type="date"
+                id="editDate"
+                value="${memory.memory_date || ""}"
+            >
+
+            <label>
+                Location
+            </label>
+
+            <input
+                type="text"
+                id="editLocation"
+                value="${escapeAttribute(memory.location || "")}"
+            >
+
+            <label>
+                Story
+            </label>
+
+            <textarea
+                id="editDescription"
+                rows="6"
+            >${escapeHTML(memory.description || "")}</textarea>
+
+            <div class="memory-detail-actions">
+
+                <button
+                    type="button"
+                    id="saveEditButton"
+                    class="memory-edit-button"
+                >
+                    Save Changes
+                </button>
+
+                <button
+                    type="button"
+                    id="cancelEditButton"
+                    class="memory-delete-button"
+                >
+                    Cancel
+                </button>
+
+            </div>
+
+        </div>
+    `;
+
+
+    document
+        .getElementById("saveEditButton")
+        .addEventListener(
+            "click",
+            () => updateMemory(memory)
+        );
+
+
+    document
+        .getElementById("cancelEditButton")
+        .addEventListener(
+            "click",
+            () => showMemoryDetail(
+                memory,
+                currentMemoryImageUrl
+            )
+        );
+}
+
+
+// =====================================================
+// UPDATE MEMORY
+// =====================================================
+
+async function updateMemory(memory) {
+
+    const title =
+        document
+            .getElementById("editTitle")
+            .value
+            .trim();
+
+    const date =
+        document
+            .getElementById("editDate")
+            .value;
+
+    const location =
+        document
+            .getElementById("editLocation")
+            .value
+            .trim();
+
+    const description =
+        document
+            .getElementById("editDescription")
+            .value
+            .trim();
+
+
+    if (!title) {
+
+        alert("Memory title cannot be empty.");
+
+        return;
+    }
+
+
+    const saveButton =
+        document.getElementById(
+            "saveEditButton"
+        );
+
+    saveButton.disabled = true;
+    saveButton.textContent = "Saving...";
+
+
+    const {
+        data,
+        error
+    } = await supabaseClient.rpc(
+        "update_my_memory",
+        {
+            p_memory_id: memory.id,
+            p_title: title,
+            p_description: description || null,
+            p_memory_date: date || null,
+            p_location: location || null
+        }
+    );
+
+
+    if (error) {
+
+        console.error(
+            "Update memory error:",
+            error
+        );
+
+        alert(
+            "Failed to update memory."
+        );
+
+        saveButton.disabled = false;
+        saveButton.textContent = "Save Changes";
+
+        return;
+    }
+
+
+    console.log(
+        "Memory updated:",
+        data
+    );
+
+
+    alert("Memory updated ✦");
+
+
+    closeDetailModal();
+
+    await loadMemories();
+}
+
+
+// =====================================================
+// DELETE MEMORY
+// =====================================================
+
+async function deleteMemory(memory) {
+
+    const confirmed =
+        confirm(
+            `Delete "${memory.title}"?\n\nThis memory and its photos will be permanently deleted.`
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+        // =============================================
+        // GET MEMORY PHOTOS
+        // =============================================
+
+        const {
+            data: photos,
+            error: photoError
+        } = await supabaseClient
+            .from("memory_photos")
+            .select("id, file_path")
+            .eq("memory_id", memory.id);
+
+
+        if (photoError) {
+
+            console.error(
+                "Get memory photos error:",
+                photoError
+            );
+
+            alert(
+                "Failed to prepare memory deletion."
+            );
+
+            return;
+        }
+
+
+        // =============================================
+        // DELETE FILES FROM STORAGE
+        // =============================================
+
+        if (photos && photos.length > 0) {
+
+            const filePaths =
+                photos
+                    .map(photo => photo.file_path)
+                    .filter(Boolean);
+
+
+            if (filePaths.length > 0) {
+
+                const {
+                    error: storageError
+                } = await supabaseClient
+                    .storage
+                    .from("memory-photos")
+                    .remove(filePaths);
+
+
+                if (storageError) {
+
+                    console.error(
+                        "Storage delete error:",
+                        storageError
+                    );
+
+                    alert(
+                        "Failed to delete memory photo."
+                    );
+
+                    return;
+                }
+            }
+        }
+
+
+        // =============================================
+        // DELETE MEMORY USING RPC
+        // =============================================
+
+        const {
+            data,
+            error
+        } = await supabaseClient.rpc(
+            "delete_my_memory",
+            {
+                p_memory_id: memory.id
+            }
+        );
+
+
+        if (error) {
+
+            console.error(
+                "Delete memory error:",
+                error
+            );
+
+            alert(
+                "Failed to delete memory."
+            );
+
+            return;
+        }
+
+
+        if (!data) {
+
+            alert(
+                "Memory was not found or you do not have permission to delete it."
+            );
+
+            return;
+        }
+
+
+        console.log(
+            "Memory deleted successfully:",
+            memory.id
+        );
+
+
+        alert("Memory deleted ✦");
+
+
+        closeDetailModal();
+
+        await loadMemories();
+
+
+    } catch (error) {
+
+        console.error(
+            "Unexpected delete error:",
+            error
+        );
+
+        alert(
+            "Something went wrong while deleting the memory."
+        );
+    }
+}
+
+
+// =====================================================
+// ADD MEMORY
+// =====================================================
+
+if (addMemoryButton) {
+
+    addMemoryButton.addEventListener(
+        "click",
+        () => {
+
+            addMemoryModal.classList.add(
+                "active"
+            );
+
+        }
+    );
+}
+
+
+// =====================================================
+// CLOSE ADD MEMORY MODAL
+// =====================================================
+
+if (closeMemoryModal) {
+
+    closeMemoryModal.addEventListener(
+        "click",
+        () => {
+
+            addMemoryModal.classList.remove(
+                "active"
+            );
+
+        }
+    );
+}
+
+
+// =====================================================
+// ADD MEMORY FORM
+// =====================================================
 
 if (memoryForm) {
 
     memoryForm.addEventListener(
         "submit",
-        async function (event) {
+        async (event) => {
 
             event.preventDefault();
 
 
             const title =
-                document
-                    .getElementById("memoryTitle")
-                    .value
-                    .trim();
-
+                memoryTitle.value.trim();
 
             const date =
-                document
-                    .getElementById("memoryDate")
-                    .value;
-
+                memoryDate.value;
 
             const location =
-                document
-                    .getElementById("memoryLocation")
-                    .value
-                    .trim();
-
+                memoryLocation.value.trim();
 
             const description =
-                document
-                    .getElementById("memoryDescription")
-                    .value
-                    .trim();
+                memoryDescription.value.trim();
 
-
-            const photoInput =
-                document.getElementById(
-                    "memoryPhoto"
-                );
-
-
-            const photo =
-                photoInput.files[0];
+            const photoFile =
+                memoryPhoto.files[0];
 
 
             if (!title) {
+
+                alert(
+                    "Please enter a memory title."
+                );
+
                 return;
             }
 
 
-            const saveButton =
+            const submitButton =
                 memoryForm.querySelector(
-                    ".save-memory-button"
+                    'button[type="submit"]'
                 );
 
 
-            saveButton.disabled = true;
+            submitButton.disabled = true;
 
-            saveButton.textContent =
-                "Saving memory...";
+            submitButton.textContent =
+                "Saving...";
 
 
             try {
 
-                /* =========================
-                   USER
-                ========================= */
-
-                const {
-                    data: { user },
-                    error: userError
-                } = await supabaseClient
-                    .auth
-                    .getUser();
-
-
-                if (
-                    userError ||
-                    !user
-                ) {
-
-                    throw new Error(
-                        "User not logged in"
-                    );
-
-                }
-
-
-                /* =========================
-                   CREATE MEMORY
-                ========================= */
+                // =====================================
+                // CREATE MEMORY
+                // =====================================
 
                 const {
                     data: memory,
                     error: memoryError
-                } =
-                    await supabaseClient
-                        .rpc(
-                            "create_my_memory",
-                            {
-                                p_title:
-                                    title,
-
-                                p_description:
-                                    description ||
-                                    null,
-
-                                p_memory_date:
-                                    date ||
-                                    null,
-
-                                p_location:
-                                    location ||
-                                    null
-                            }
-                        );
+                } = await supabaseClient.rpc(
+                    "create_my_memory",
+                    {
+                        p_title: title,
+                        p_description:
+                            description || null,
+                        p_memory_date:
+                            date || null,
+                        p_location:
+                            location || null
+                    }
+                );
 
 
                 if (memoryError) {
-                    throw memoryError;
+
+                    console.error(
+                        "Create memory error:",
+                        memoryError
+                    );
+
+                    alert(
+                        "Failed to create memory."
+                    );
+
+                    return;
                 }
 
 
-                /* =========================
-                   UPLOAD PHOTO
-                ========================= */
+                // =====================================
+                // UPLOAD PHOTO
+                // =====================================
 
-                if (photo) {
+                if (photoFile) {
 
-                    const extension =
-                        photo.name
-                            .split(".")
-                            .pop()
-                            .toLowerCase();
+                    const {
+                        data: {
+                            user
+                        }
+                    } =
+                        await supabaseClient.auth.getUser();
 
 
-                    const filePath =
-                        `${UNIVERSE_ID}/${user.id}/${crypto.randomUUID()}.${extension}`;
+                    if (!user) {
+
+                        alert(
+                            "You are not logged in."
+                        );
+
+                        return;
+                    }
 
 
                     const {
-                        error:
-                            uploadError
+                        data: universeId,
+                        error: universeError
+                    } = await supabaseClient.rpc(
+                        "get_my_universe_id"
+                    );
+
+
+                    if (universeError) {
+
+                        console.error(
+                            "Universe error:",
+                            universeError
+                        );
+
+                        alert(
+                            "Failed to find your universe."
+                        );
+
+                        return;
+                    }
+
+
+                    const fileExtension =
+                        photoFile.name
+                            .split(".")
+                            .pop();
+
+
+                    const fileName =
+                        `${crypto.randomUUID()}.${fileExtension}`;
+
+
+                    const filePath =
+                        `${universeId}/${user.id}/${memory.id}/${fileName}`;
+
+
+                    const {
+                        error: uploadError
                     } =
                         await supabaseClient
                             .storage
-                            .from(
-                                "memory-photos"
-                            )
+                            .from("memory-photos")
                             .upload(
                                 filePath,
-                                photo,
-                                {
-                                    contentType:
-                                        photo.type,
-
-                                    upsert:
-                                        false
-                                }
+                                photoFile
                             );
 
 
                     if (uploadError) {
-                        throw uploadError;
+
+                        console.error(
+                            "Upload error:",
+                            uploadError
+                        );
+
+                        alert(
+                            "Memory created, but photo upload failed."
+                        );
+
+                    } else {
+
+                        // =================================
+                        // SAVE PHOTO RECORD
+                        // =================================
+
+                        const {
+                            error: photoInsertError
+                        } =
+                            await supabaseClient
+                                .from("memory_photos")
+                                .insert({
+                                    memory_id:
+                                        memory.id,
+
+                                    file_path:
+                                        filePath,
+
+                                    display_order:
+                                        0
+                                });
+
+
+                        if (photoInsertError) {
+
+                            console.error(
+                                "Photo record error:",
+                                photoInsertError
+                            );
+
+                            alert(
+                                "Memory created, but photo record failed."
+                            );
+                        }
                     }
-
-
-                    /* =========================
-                       PHOTO RECORD
-                    ========================= */
-
-                    const {
-                        error:
-                            photoRowError
-                    } =
-                        await supabaseClient
-                            .from(
-                                "memory_photos"
-                            )
-                            .insert({
-                                memory_id:
-                                    memory.id,
-
-                                file_path:
-                                    filePath,
-
-                                display_order:
-                                    0
-                            });
-
-
-                    if (photoRowError) {
-                        throw photoRowError;
-                    }
-
                 }
 
 
-                /* =========================
-                   RESET
-                ========================= */
+                // =====================================
+                // RESET
+                // =====================================
 
                 memoryForm.reset();
 
-                memoryModal.classList.remove(
+                addMemoryModal.classList.remove(
                     "active"
+                );
+
+
+                alert(
+                    "Memory saved ✦"
                 );
 
 
@@ -1208,72 +930,242 @@ if (memoryForm) {
             } catch (error) {
 
                 console.error(
-                    "Save memory error:",
+                    "Unexpected add memory error:",
                     error
                 );
 
                 alert(
-                    "Something went wrong while saving this memory."
+                    "Something went wrong."
                 );
-
 
             } finally {
 
-                saveButton.disabled = false;
+                submitButton.disabled = false;
 
-                saveButton.textContent =
-                    "Save Memory ✦";
-
+                submitButton.textContent =
+                    "Save Memory";
             }
 
         }
     );
-
 }
 
 
-/* =========================
-   ESC
-========================= */
+// =====================================================
+// CLOSE DETAIL MODAL
+// =====================================================
 
-document.addEventListener(
-    "keydown",
-    function (event) {
+function closeDetailModal() {
 
-        if (event.key === "Escape") {
+    if (!memoryDetailModal) return;
+
+    memoryDetailModal.classList.remove(
+        "active"
+    );
+
+    currentMemory = null;
+    currentMemoryImageUrl = "";
+}
+
+
+if (closeMemoryDetail) {
+
+    closeMemoryDetail.addEventListener(
+        "click",
+        closeDetailModal
+    );
+}
+
+
+// Close when clicking outside box
+
+if (memoryDetailModal) {
+
+    memoryDetailModal.addEventListener(
+        "click",
+        (event) => {
 
             if (
-                memoryDetailModal &&
-                memoryDetailModal.classList.contains(
-                    "active"
-                )
+                event.target ===
+                memoryDetailModal
             ) {
 
                 closeDetailModal();
 
             }
 
-            if (
-                memoryModal &&
-                memoryModal.classList.contains(
-                    "active"
-                )
-            ) {
-
-                memoryModal.classList.remove(
-                    "active"
-                );
-
-            }
-
         }
+    );
+}
 
+
+// =====================================================
+// FORMAT DATE
+// =====================================================
+
+function formatMemoryDate(dateString) {
+
+    if (!dateString) {
+        return "DATE UNKNOWN";
     }
+
+
+    const date =
+        new Date(
+            `${dateString}T00:00:00`
+        );
+
+
+    return date.toLocaleDateString(
+        "en-US",
+        {
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+        }
+    ).toUpperCase();
+}
+
+
+// =====================================================
+// SECURITY HELPERS
+// =====================================================
+
+function escapeHTML(value) {
+
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+
+function escapeAttribute(value) {
+
+    return escapeHTML(value);
+}
+
+
+// =====================================================
+// EXTRA CSS
+// =====================================================
+
+const memoryActionStyle =
+    document.createElement("style");
+
+memoryActionStyle.textContent = `
+
+.memory-detail-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+}
+
+.memory-edit-button,
+.memory-delete-button {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.memory-edit-button {
+    background: linear-gradient(
+        135deg,
+        #6f72d8,
+        #8662c7
+    );
+    color: white;
+}
+
+.memory-delete-button {
+    background: rgba(
+        180,
+        70,
+        100,
+        0.18
+    );
+    color: #ff9aae;
+}
+
+.memory-edit-button:hover,
+.memory-delete-button:hover {
+    transform: translateY(-2px);
+}
+
+.memory-edit-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.memory-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.memory-edit-form h2 {
+    margin-bottom: 12px;
+}
+
+.memory-edit-form label {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #aaa;
+}
+
+.memory-edit-form input,
+.memory-edit-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(
+        255,
+        255,
+        255,
+        0.12
+    );
+    background: rgba(
+        255,
+        255,
+        255,
+        0.05
+    );
+    color: white;
+    font-family: inherit;
+    outline: none;
+}
+
+.memory-edit-form textarea {
+    resize: vertical;
+}
+
+.memory-edit-form input:focus,
+.memory-edit-form textarea:focus {
+    border-color: #8174dc;
+}
+
+`;
+
+
+document.head.appendChild(
+    memoryActionStyle
 );
 
 
-/* =========================
-   START
-========================= */
+// =====================================================
+// START
+// =====================================================
 
 loadMemories();
