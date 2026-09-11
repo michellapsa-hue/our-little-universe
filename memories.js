@@ -6,10 +6,11 @@ const memoryForm = document.getElementById("memoryForm");
 
 
 /* =========================
-   GET CURRENT USER
+   CURRENT USER
 ========================= */
 
 async function getCurrentUser() {
+
     const {
         data: { user },
         error
@@ -26,7 +27,7 @@ async function getCurrentUser() {
 
 
 /* =========================
-   GET USER'S UNIVERSE
+   GET UNIVERSE
 ========================= */
 
 async function getUniverseId() {
@@ -35,12 +36,7 @@ async function getUniverseId() {
         .rpc("get_my_universe_id");
 
     if (error) {
-        console.error("Universe RPC error:", error);
-        return null;
-    }
-
-    if (!data) {
-        console.error("No universe found for this user.");
+        console.error("Universe error:", error);
         return null;
     }
 
@@ -53,9 +49,11 @@ async function getUniverseId() {
 ========================= */
 
 if (addMemoryButton) {
+
     addMemoryButton.addEventListener("click", () => {
         memoryModal.classList.add("active");
     });
+
 }
 
 
@@ -64,17 +62,20 @@ if (addMemoryButton) {
 ========================= */
 
 if (closeMemoryModal) {
+
     closeMemoryModal.addEventListener("click", () => {
         memoryModal.classList.remove("active");
     });
+
 }
 
 
 /* =========================
-   CLOSE WHEN CLICK OUTSIDE
+   CLICK OUTSIDE MODAL
 ========================= */
 
 if (memoryModal) {
+
     memoryModal.addEventListener("click", (event) => {
 
         if (event.target === memoryModal) {
@@ -82,6 +83,7 @@ if (memoryModal) {
         }
 
     });
+
 }
 
 
@@ -103,37 +105,16 @@ async function loadMemories() {
         </p>
     `;
 
+
     const user = await getCurrentUser();
 
     if (!user) return;
 
-    const universeId = await getUniverseId();
 
-    if (!universeId) {
+    const { data: memories, error } =
+        await supabaseClient
+            .rpc("get_my_memories");
 
-        memoryContainer.innerHTML = `
-            <p style="
-                grid-column: 1 / -1;
-                text-align: center;
-                opacity: 0.6;
-            ">
-                Your universe could not be found.
-            </p>
-        `;
-
-        return;
-    }
-
-
-    /* GET MEMORIES */
-
-    const { data: memories, error } = await supabaseClient
-        .from("memories")
-        .select("*")
-        .eq("universe_id", universeId)
-        .order("memory_date", {
-            ascending: false
-        });
 
     if (error) {
 
@@ -153,7 +134,7 @@ async function loadMemories() {
     }
 
 
-    /* EMPTY STATE */
+    /* EMPTY */
 
     if (!memories || memories.length === 0) {
 
@@ -164,6 +145,7 @@ async function loadMemories() {
                 padding: 60px 20px;
                 opacity: 0.7;
             ">
+
                 <div style="
                     font-size: 40px;
                     margin-bottom: 20px;
@@ -182,6 +164,7 @@ async function loadMemories() {
                 <p>
                     Add your first memory together.
                 </p>
+
             </div>
         `;
 
@@ -193,7 +176,7 @@ async function loadMemories() {
 
 
     /* =========================
-       RENDER EACH MEMORY
+       RENDER MEMORIES
     ========================= */
 
     for (const memory of memories) {
@@ -218,8 +201,6 @@ async function loadMemories() {
 
         if (!photoError && photos && photos.length > 0) {
 
-            const filePath = photos[0].file_path;
-
             const {
                 data: signedUrlData,
                 error: signedUrlError
@@ -227,17 +208,19 @@ async function loadMemories() {
                 .storage
                 .from("memory-photos")
                 .createSignedUrl(
-                    filePath,
-                    60 * 60
+                    photos[0].file_path,
+                    3600
                 );
+
 
             if (!signedUrlError && signedUrlData) {
                 imageUrl = signedUrlData.signedUrl;
             }
+
         }
 
 
-        /* FORMAT DATE */
+        /* DATE */
 
         let formattedDate = "";
 
@@ -258,7 +241,7 @@ async function loadMemories() {
         }
 
 
-        /* CREATE CARD */
+        /* CARD */
 
         const card = document.createElement("article");
 
@@ -271,7 +254,7 @@ async function loadMemories() {
                 imageUrl
                     ? `
                         <img
-                            src="${imageUrl}"
+                            src="${escapeHtml(imageUrl)}"
                             alt="${escapeHtml(memory.title)}"
                             style="
                                 width: 100%;
@@ -304,7 +287,6 @@ async function loadMemories() {
                     `
             }
 
-
             <span style="
                 display: block;
                 font-size: 11px;
@@ -316,11 +298,9 @@ async function loadMemories() {
                 ${escapeHtml(formattedDate)}
             </span>
 
-
             <h2>
                 ${escapeHtml(memory.title)}
             </h2>
-
 
             ${
                 memory.location
@@ -334,7 +314,6 @@ async function loadMemories() {
                     `
                     : ""
             }
-
 
             ${
                 memory.description
@@ -375,22 +354,6 @@ if (memoryForm) {
             if (!user) return;
 
 
-            const universeId =
-                await getUniverseId();
-
-
-            if (!universeId) {
-
-                alert(
-                    "Your universe could not be found."
-                );
-
-                return;
-            }
-
-
-            /* GET FORM DATA */
-
             const title =
                 document
                     .getElementById("memoryTitle")
@@ -415,15 +378,11 @@ if (memoryForm) {
                     .trim();
 
             const photoInput =
-                document.getElementById(
-                    "memoryPhoto"
-                );
+                document.getElementById("memoryPhoto");
 
             const photo =
                 photoInput.files[0];
 
-
-            /* DISABLE BUTTON */
 
             const saveButton =
                 memoryForm.querySelector(
@@ -442,37 +401,25 @@ if (memoryForm) {
             try {
 
                 /* =========================
-                   CREATE MEMORY
+                   CREATE MEMORY VIA RPC
                 ========================= */
 
                 const {
                     data: memory,
                     error: memoryError
                 } = await supabaseClient
-                    .from("memories")
-                    .insert({
-
-                        universe_id:
-                            universeId,
-
-                        title:
-                            title,
-
-                        description:
-                            description,
-
-                        memory_date:
-                            date || null,
-
-                        location:
-                            location || null,
-
-                        created_by:
-                            user.id
-
-                    })
-                    .select()
-                    .single();
+                    .rpc(
+                        "create_my_memory",
+                        {
+                            p_title: title,
+                            p_description:
+                                description || null,
+                            p_memory_date:
+                                date || null,
+                            p_location:
+                                location || null
+                        }
+                    );
 
 
                 if (memoryError) {
@@ -485,6 +432,17 @@ if (memoryForm) {
                 ========================= */
 
                 if (photo) {
+
+                    const universeId =
+                        await getUniverseId();
+
+
+                    if (!universeId) {
+                        throw new Error(
+                            "Universe not found."
+                        );
+                    }
+
 
                     const extension =
                         photo.name
@@ -513,9 +471,7 @@ if (memoryForm) {
                     }
 
 
-                    /* =========================
-                       SAVE PHOTO RECORD
-                    ========================= */
+                    /* SAVE PHOTO RECORD */
 
                     const {
                         error: photoRecordError
@@ -538,12 +494,11 @@ if (memoryForm) {
                     if (photoRecordError) {
                         throw photoRecordError;
                     }
+
                 }
 
 
-                /* =========================
-                   SUCCESS
-                ========================= */
+                /* SUCCESS */
 
                 memoryForm.reset();
 
@@ -572,9 +527,12 @@ if (memoryForm) {
 
                 saveButton.textContent =
                     originalText;
+
             }
+
         }
     );
+
 }
 
 
@@ -584,9 +542,11 @@ if (memoryForm) {
 
 function escapeHtml(value) {
 
-    if (!value) return "";
+    if (value === null || value === undefined) {
+        return "";
+    }
 
-    return value
+    return String(value)
         .replaceAll("&", "&amp;")
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;")
