@@ -2,205 +2,388 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Memories — Our Little Universe</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="style.css">
+    <title>
+        Memories — Our Little Universe
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
     <style>
+
         /* =========================
-           MEMORIES PAGE
+           MEMORIES HEADER
         ========================= */
 
         .memory-header {
+
             max-width: 750px;
+
             margin: 50px auto 60px;
+
             text-align: center;
+
         }
 
+
         .add-memory-button {
+
             display: inline-block;
+
             margin-top: 35px;
+
             padding: 14px 24px;
 
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid
+                rgba(255,255,255,0.15);
+
             border-radius: 30px;
 
-            background: linear-gradient(
-                135deg,
-                #5d69c9,
-                #8062bd
-            );
+            background:
+                linear-gradient(
+                    135deg,
+                    #5d69c9,
+                    #8062bd
+                );
 
             color: white;
-            text-decoration: none;
+
             font-size: 13px;
+
             cursor: pointer;
 
             transition: 0.3s ease;
+
         }
+
 
         .add-memory-button:hover {
+
             transform: translateY(-2px);
+
             opacity: 0.9;
+
         }
+
 
         #memoryContainer {
+
             min-height: 100px;
+
         }
 
+
         .empty-memory {
+
             grid-column: 1 / -1;
+
             text-align: center;
+
             padding: 60px 20px;
-            color: rgba(255,255,255,0.55);
+
+            color:
+                rgba(255,255,255,0.55);
+
         }
+
 
         /* =========================
            MODAL
         ========================= */
 
         .memory-modal {
+
             position: fixed;
+
             inset: 0;
 
             display: none;
+
             align-items: center;
+
             justify-content: center;
 
             padding: 20px;
 
-            background: rgba(3,5,20,0.75);
+            background:
+                rgba(3,5,20,0.75);
 
             backdrop-filter: blur(10px);
 
             z-index: 999;
+
         }
+
 
         .memory-modal.active {
+
             display: flex;
+
         }
 
+
         .memory-form {
+
             width: 100%;
+
             max-width: 520px;
+
+            max-height: 90vh;
+
+            overflow-y: auto;
 
             padding: 35px;
 
-            border: 1px solid rgba(255,255,255,0.12);
+            border: 1px solid
+                rgba(255,255,255,0.12);
+
             border-radius: 24px;
 
-            background: rgba(20,22,60,0.95);
+            background:
+                rgba(20,22,60,0.95);
 
-            box-shadow: 0 25px 80px rgba(0,0,0,0.45);
+            box-shadow:
+                0 25px 80px
+                rgba(0,0,0,0.45);
+
         }
 
+
         .memory-form-header {
+
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
 
             margin-bottom: 25px;
+
         }
+
 
         .memory-form-header h2 {
+
             font-family: Georgia, serif;
+
             font-size: 28px;
+
             font-weight: normal;
+
         }
 
+
         .close-modal {
+
             width: 35px;
+
             height: 35px;
 
             padding: 0;
+
             margin: 0;
 
-            border: 1px solid rgba(255,255,255,0.12);
+            border: 1px solid
+                rgba(255,255,255,0.12);
+
             border-radius: 50%;
 
-            background: rgba(255,255,255,0.05);
+            background:
+                rgba(255,255,255,0.05);
 
             color: white;
+
             font-size: 18px;
 
             cursor: pointer;
+
         }
 
+
         .memory-form label {
+
             display: block;
 
             margin-bottom: 8px;
 
             font-size: 13px;
+
         }
+
 
         .memory-form input,
         .memory-form textarea {
+
             width: 100%;
 
             padding: 13px 15px;
 
             margin-bottom: 20px;
 
-            border: 1px solid rgba(255,255,255,0.12);
+            border: 1px solid
+                rgba(255,255,255,0.12);
+
             border-radius: 12px;
 
-            background: rgba(255,255,255,0.06);
+            background:
+                rgba(255,255,255,0.06);
 
             color: white;
 
             outline: none;
 
             font-family: Arial, sans-serif;
+
         }
 
-        .memory-form textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
 
         .memory-form input:focus,
         .memory-form textarea:focus {
+
             border-color: #8e7de8;
+
         }
 
+
+        .memory-form textarea {
+
+            min-height: 120px;
+
+            resize: vertical;
+
+        }
+
+
+        /* =========================
+           PHOTO INPUT
+        ========================= */
+
+        .memory-form input[type="file"] {
+
+            padding: 10px;
+
+            cursor: pointer;
+
+        }
+
+
+        .memory-form input[type="file"]::file-selector-button {
+
+            margin-right: 12px;
+
+            padding: 8px 12px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background:
+                rgba(255,255,255,0.12);
+
+            color: white;
+
+            cursor: pointer;
+
+        }
+
+
+        /* =========================
+           SAVE BUTTON
+        ========================= */
+
         .save-memory-button {
+
             width: 100%;
 
             padding: 14px;
 
             border: none;
+
             border-radius: 12px;
 
-            background: linear-gradient(
-                135deg,
-                #667eea,
-                #8e6de8
-            );
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #8e6de8
+                );
 
             color: white;
 
             font-size: 14px;
 
             cursor: pointer;
+
         }
+
+
+        .save-memory-button:hover {
+
+            opacity: 0.9;
+
+        }
+
+
+        .save-memory-button:disabled {
+
+            opacity: 0.6;
+
+            cursor: not-allowed;
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .memory-form {
+
+                padding: 25px;
+
+            }
+
+            .memory-form-header h2 {
+
+                font-size: 24px;
+
+            }
+
+        }
+
     </style>
 
 </head>
 
+
 <body>
 
 
-    <!-- Navigation -->
+    <!-- =========================
+         NAVIGATION
+    ========================= -->
 
     <header class="navbar">
 
-        <a href="index.html" class="logo">
+        <a
+            href="index.html"
+            class="logo"
+        >
             Our Little Universe
         </a>
+
 
         <nav>
 
@@ -226,21 +409,26 @@
 
         </nav>
 
+
         <button
             id="logoutButton"
-            class="logout-btn">
+            class="logout-btn"
+        >
             Logout
         </button>
 
     </header>
 
 
-    <!-- Main -->
+
+    <!-- =========================
+         MAIN
+    ========================= -->
 
     <main class="home">
 
 
-        <!-- Header -->
+        <!-- MEMORY HEADER -->
 
         <section class="memory-header">
 
@@ -248,18 +436,28 @@
                 OUR MEMORIES
             </p>
 
+
             <h1>
+
                 Little moments,<br>
+
                 forever ours.
+
             </h1>
 
+
             <p class="hero-text">
-                A collection of the moments we never want to forget.
+
+                A collection of the moments
+                we never want to forget.
+
             </p>
+
 
             <button
                 id="addMemoryButton"
-                class="add-memory-button">
+                class="add-memory-button"
+            >
 
                 ＋ Add Memory
 
@@ -268,16 +466,23 @@
         </section>
 
 
-        <!-- Memories -->
+
+        <!-- =========================
+             MEMORY CONTAINER
+        ========================= -->
 
         <section
             class="universe-menu"
-            id="memoryContainer">
+            id="memoryContainer"
+        >
 
         </section>
 
 
-        <!-- Closing -->
+
+        <!-- =========================
+             CLOSING
+        ========================= -->
 
         <section class="closing">
 
@@ -285,9 +490,12 @@
                 ✦
             </span>
 
+
             <p>
-                More memories are waiting to be written.
+                More memories are waiting
+                to be written.
             </p>
+
 
             <small>
                 Our little universe is growing.
@@ -298,16 +506,24 @@
     </main>
 
 
-    <!-- Add Memory Modal -->
+
+    <!-- =========================
+         ADD MEMORY MODAL
+    ========================= -->
 
     <div
         id="memoryModal"
-        class="memory-modal">
+        class="memory-modal"
+    >
+
 
         <form
             id="memoryForm"
-            class="memory-form">
+            class="memory-form"
+        >
 
+
+            <!-- HEADER -->
 
             <div class="memory-form-header">
 
@@ -315,10 +531,12 @@
                     New Memory
                 </h2>
 
+
                 <button
                     type="button"
                     id="closeMemoryModal"
-                    class="close-modal">
+                    class="close-modal"
+                >
 
                     ×
 
@@ -327,9 +545,13 @@
             </div>
 
 
+
+            <!-- TITLE -->
+
             <label for="memoryTitle">
                 Title
             </label>
+
 
             <input
                 type="text"
@@ -339,9 +561,13 @@
             >
 
 
+
+            <!-- DATE -->
+
             <label for="memoryDate">
                 Date
             </label>
+
 
             <input
                 type="date"
@@ -349,9 +575,13 @@
             >
 
 
+
+            <!-- LOCATION -->
+
             <label for="memoryLocation">
                 Location
             </label>
+
 
             <input
                 type="text"
@@ -360,9 +590,28 @@
             >
 
 
+
+            <!-- PHOTO -->
+
+            <label for="memoryPhoto">
+                Photo
+            </label>
+
+
+            <input
+                type="file"
+                id="memoryPhoto"
+                accept="image/*"
+            >
+
+
+
+            <!-- DESCRIPTION -->
+
             <label for="memoryDescription">
                 Our story
             </label>
+
 
             <textarea
                 id="memoryDescription"
@@ -370,20 +619,28 @@
             ></textarea>
 
 
+
+            <!-- SAVE -->
+
             <button
                 type="submit"
-                class="save-memory-button">
+                class="save-memory-button"
+            >
 
                 Save Memory ✦
 
             </button>
+
 
         </form>
 
     </div>
 
 
-    <!-- Supabase -->
+
+    <!-- =========================
+         SUPABASE
+    ========================= -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -394,57 +651,114 @@
     <script src="memories.js"></script>
 
 
-    <!-- Modal -->
+
+    <!-- =========================
+         MODAL SCRIPT
+    ========================= -->
 
     <script>
 
         const addMemoryButton =
-            document.getElementById("addMemoryButton");
-
-        const memoryModal =
-            document.getElementById("memoryModal");
-
-        const closeMemoryModal =
-            document.getElementById("closeMemoryModal");
-
-        const memoryForm =
-            document.getElementById("memoryForm");
-
-
-        addMemoryButton.addEventListener("click", () => {
-
-            memoryModal.classList.add("active");
-
-        });
-
-
-        closeMemoryModal.addEventListener("click", () => {
-
-            memoryModal.classList.remove("active");
-
-        });
-
-
-        memoryModal.addEventListener("click", (event) => {
-
-            if (event.target === memoryModal) {
-
-                memoryModal.classList.remove("active");
-
-            }
-
-        });
-
-
-        memoryForm.addEventListener("submit", (event) => {
-
-            event.preventDefault();
-
-            alert(
-                "The memory form is ready ✦"
+            document.getElementById(
+                "addMemoryButton"
             );
 
-        });
+
+        const memoryModal =
+            document.getElementById(
+                "memoryModal"
+            );
+
+
+        const closeMemoryModal =
+            document.getElementById(
+                "closeMemoryModal"
+            );
+
+
+        const memoryForm =
+            document.getElementById(
+                "memoryForm"
+            );
+
+
+
+        /* OPEN MODAL */
+
+        addMemoryButton.addEventListener(
+            "click",
+            () => {
+
+                memoryModal.classList.add(
+                    "active"
+                );
+
+            }
+        );
+
+
+
+        /* CLOSE MODAL */
+
+        closeMemoryModal.addEventListener(
+            "click",
+            () => {
+
+                memoryModal.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+
+        /* CLOSE WHEN CLICKING OUTSIDE */
+
+        memoryModal.addEventListener(
+            "click",
+            (event) => {
+
+                if (
+                    event.target ===
+                    memoryModal
+                ) {
+
+                    memoryModal.classList.remove(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* ESCAPE KEY */
+
+        document.addEventListener(
+            "keydown",
+            (event) => {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    memoryModal.classList.remove(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /*
+         * IMPORTANT:
+         * Form submission is handled
+         * by memories.js
+         */
 
     </script>
 
