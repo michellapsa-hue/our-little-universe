@@ -45,7 +45,330 @@ async function getUniverseId() {
 
 
 /* =========================
-   OPEN MODAL
+   MEMORY DETAIL MODAL
+========================= */
+
+function createDetailModal() {
+
+    if (document.getElementById("memoryDetailModal")) {
+        return;
+    }
+
+    const modal = document.createElement("div");
+
+    modal.id = "memoryDetailModal";
+
+    modal.innerHTML = `
+        <div class="memory-detail-box">
+
+            <button
+                type="button"
+                id="closeMemoryDetail"
+                class="memory-detail-close">
+                ×
+            </button>
+
+            <div id="memoryDetailContent"></div>
+
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+
+    /* CSS */
+
+    const style = document.createElement("style");
+
+    style.id = "memory-detail-style";
+
+    style.textContent = `
+
+        #memoryDetailModal {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            padding: 25px;
+
+            background: rgba(3, 5, 20, 0.82);
+
+            backdrop-filter: blur(14px);
+
+            overflow-y: auto;
+        }
+
+        #memoryDetailModal.active {
+            display: flex;
+        }
+
+        .memory-detail-box {
+            position: relative;
+
+            width: 100%;
+            max-width: 720px;
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            padding: 30px;
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(30, 31, 75, 0.96),
+                    rgba(12, 16, 48, 0.96)
+                );
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.5);
+        }
+
+        .memory-detail-close {
+            position: absolute;
+
+            top: 18px;
+            right: 20px;
+
+            width: 38px;
+            height: 38px;
+
+            border: 1px solid rgba(255,255,255,0.15);
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.07);
+
+            color: white;
+
+            font-size: 24px;
+
+            line-height: 1;
+
+            cursor: pointer;
+
+            z-index: 2;
+        }
+
+        .memory-detail-close:hover {
+            background: rgba(255,255,255,0.14);
+        }
+
+        .memory-detail-image {
+            width: 100%;
+
+            max-height: 430px;
+
+            object-fit: cover;
+
+            border-radius: 18px;
+
+            margin-bottom: 28px;
+        }
+
+        .memory-detail-placeholder {
+            width: 100%;
+            height: 260px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 18px;
+
+            margin-bottom: 28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(105,91,180,0.25),
+                    rgba(52,83,170,0.2)
+                );
+
+            font-size: 50px;
+        }
+
+        .memory-detail-date {
+            font-size: 11px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            opacity: 0.5;
+
+            margin-bottom: 10px;
+        }
+
+        .memory-detail-title {
+            font-family: Georgia, serif;
+
+            font-size: 36px;
+
+            font-weight: normal;
+
+            line-height: 1.2;
+
+            margin-bottom: 15px;
+        }
+
+        .memory-detail-location {
+            color: rgba(255,255,255,0.55);
+
+            font-size: 13px;
+
+            margin-bottom: 28px;
+        }
+
+        .memory-detail-story {
+            color: rgba(255,255,255,0.72);
+
+            font-size: 15px;
+
+            line-height: 1.9;
+
+            white-space: pre-wrap;
+        }
+
+        @media (max-width: 600px) {
+
+            #memoryDetailModal {
+                padding: 15px;
+            }
+
+            .memory-detail-box {
+                padding: 22px;
+                border-radius: 20px;
+            }
+
+            .memory-detail-title {
+                font-size: 28px;
+            }
+
+        }
+
+    `;
+
+    document.head.appendChild(style);
+
+
+    /* CLOSE BUTTON */
+
+    document
+        .getElementById("closeMemoryDetail")
+        .addEventListener("click", closeMemoryDetail);
+
+
+    /* CLICK OUTSIDE */
+
+    modal.addEventListener("click", (event) => {
+
+        if (event.target === modal) {
+            closeMemoryDetail();
+        }
+
+    });
+}
+
+
+function closeMemoryDetail() {
+
+    const modal =
+        document.getElementById("memoryDetailModal");
+
+    if (modal) {
+        modal.classList.remove("active");
+    }
+}
+
+
+/* =========================
+   SHOW MEMORY DETAIL
+========================= */
+
+function showMemoryDetail(memory, imageUrl, formattedDate) {
+
+    createDetailModal();
+
+    const modal =
+        document.getElementById("memoryDetailModal");
+
+    const content =
+        document.getElementById("memoryDetailContent");
+
+
+    content.innerHTML = `
+
+        ${
+            imageUrl
+                ? `
+                    <img
+                        src="${escapeHtml(imageUrl)}"
+                        class="memory-detail-image"
+                        alt="${escapeHtml(memory.title)}"
+                    >
+                `
+                : `
+                    <div class="memory-detail-placeholder">
+                        ✦
+                    </div>
+                `
+        }
+
+
+        <div class="memory-detail-date">
+            ${escapeHtml(formattedDate)}
+        </div>
+
+
+        <h2 class="memory-detail-title">
+            ${escapeHtml(memory.title)}
+        </h2>
+
+
+        ${
+            memory.location
+                ? `
+                    <div class="memory-detail-location">
+                        📍 ${escapeHtml(memory.location)}
+                    </div>
+                `
+                : ""
+        }
+
+
+        ${
+            memory.description
+                ? `
+                    <div class="memory-detail-story">
+                        ${escapeHtml(memory.description)}
+                    </div>
+                `
+                : `
+                    <div class="memory-detail-story">
+                        No story has been written for this memory yet.
+                    </div>
+                `
+        }
+
+    `;
+
+
+    modal.classList.add("active");
+}
+
+
+/* =========================
+   ADD MEMORY MODAL
 ========================= */
 
 if (addMemoryButton) {
@@ -57,10 +380,6 @@ if (addMemoryButton) {
 }
 
 
-/* =========================
-   CLOSE MODAL
-========================= */
-
 if (closeMemoryModal) {
 
     closeMemoryModal.addEventListener("click", () => {
@@ -69,10 +388,6 @@ if (closeMemoryModal) {
 
 }
 
-
-/* =========================
-   CLICK OUTSIDE MODAL
-========================= */
 
 if (memoryModal) {
 
@@ -95,6 +410,7 @@ async function loadMemories() {
 
     if (!memoryContainer) return;
 
+
     memoryContainer.innerHTML = `
         <p style="
             grid-column: 1 / -1;
@@ -111,9 +427,11 @@ async function loadMemories() {
     if (!user) return;
 
 
-    const { data: memories, error } =
-        await supabaseClient
-            .rpc("get_my_memories");
+    const {
+        data: memories,
+        error
+    } = await supabaseClient
+        .rpc("get_my_memories");
 
 
     if (error) {
@@ -176,7 +494,7 @@ async function loadMemories() {
 
 
     /* =========================
-       RENDER MEMORIES
+       RENDER
     ========================= */
 
     for (const memory of memories) {
@@ -216,7 +534,6 @@ async function loadMemories() {
             if (!signedUrlError && signedUrlData) {
                 imageUrl = signedUrlData.signedUrl;
             }
-
         }
 
 
@@ -230,22 +547,28 @@ async function loadMemories() {
                 memory.memory_date + "T00:00:00"
             );
 
-            formattedDate = date.toLocaleDateString(
-                "en-US",
-                {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric"
-                }
-            );
+            formattedDate =
+                date.toLocaleDateString(
+                    "en-US",
+                    {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric"
+                    }
+                );
         }
 
 
         /* CARD */
 
-        const card = document.createElement("article");
+        const card =
+            document.createElement("article");
 
-        card.className = "universe-card memory-card";
+        card.className =
+            "universe-card memory-card";
+
+
+        card.style.cursor = "pointer";
 
 
         card.innerHTML = `
@@ -277,8 +600,8 @@ async function loadMemories() {
                             background:
                                 linear-gradient(
                                     135deg,
-                                    rgba(105, 91, 180, 0.25),
-                                    rgba(52, 83, 170, 0.2)
+                                    rgba(105,91,180,0.25),
+                                    rgba(52,83,170,0.2)
                                 );
                             font-size: 38px;
                         ">
@@ -286,6 +609,7 @@ async function loadMemories() {
                         </div>
                     `
             }
+
 
             <span style="
                 display: block;
@@ -298,9 +622,11 @@ async function loadMemories() {
                 ${escapeHtml(formattedDate)}
             </span>
 
+
             <h2>
                 ${escapeHtml(memory.title)}
             </h2>
+
 
             ${
                 memory.location
@@ -315,6 +641,7 @@ async function loadMemories() {
                     : ""
             }
 
+
             ${
                 memory.description
                     ? `
@@ -322,13 +649,30 @@ async function loadMemories() {
                             line-height: 1.7;
                             opacity: 0.6;
                         ">
-                            ${escapeHtml(memory.description)}
+                            ${escapeHtml(
+                                memory.description
+                            )}
                         </p>
                     `
                     : ""
             }
 
         `;
+
+
+        /* =========================
+           CLICK CARD
+        ========================= */
+
+        card.addEventListener("click", () => {
+
+            showMemoryDetail(
+                memory,
+                imageUrl,
+                formattedDate
+            );
+
+        });
 
 
         memoryContainer.appendChild(card);
@@ -378,7 +722,9 @@ if (memoryForm) {
                     .trim();
 
             const photoInput =
-                document.getElementById("memoryPhoto");
+                document.getElementById(
+                    "memoryPhoto"
+                );
 
             const photo =
                 photoInput.files[0];
@@ -392,6 +738,7 @@ if (memoryForm) {
             const originalText =
                 saveButton.textContent;
 
+
             saveButton.disabled = true;
 
             saveButton.textContent =
@@ -400,9 +747,7 @@ if (memoryForm) {
 
             try {
 
-                /* =========================
-                   CREATE MEMORY VIA RPC
-                ========================= */
+                /* CREATE MEMORY */
 
                 const {
                     data: memory,
@@ -427,9 +772,7 @@ if (memoryForm) {
                 }
 
 
-                /* =========================
-                   UPLOAD PHOTO
-                ========================= */
+                /* UPLOAD PHOTO */
 
                 if (photo) {
 
@@ -471,14 +814,13 @@ if (memoryForm) {
                     }
 
 
-                    /* SAVE PHOTO RECORD */
+                    /* PHOTO RECORD */
 
                     const {
                         error: photoRecordError
                     } = await supabaseClient
                         .from("memory_photos")
                         .insert({
-
                             memory_id:
                                 memory.id,
 
@@ -487,7 +829,6 @@ if (memoryForm) {
 
                             display_order:
                                 0
-
                         });
 
 
@@ -527,7 +868,6 @@ if (memoryForm) {
 
                 saveButton.textContent =
                     originalText;
-
             }
 
         }
@@ -542,7 +882,10 @@ if (memoryForm) {
 
 function escapeHtml(value) {
 
-    if (value === null || value === undefined) {
+    if (
+        value === null ||
+        value === undefined
+    ) {
         return "";
     }
 
