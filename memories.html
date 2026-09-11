@@ -2,389 +2,481 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <title>Memories — Our Little Universe</title>
 
-    <title>
-        Memories — Our Little Universe
-    </title>
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    <link rel="stylesheet" href="style.css">
 
     <style>
 
         /* =========================
-           MEMORIES HEADER
+           MEMORY PAGE
         ========================= */
 
         .memory-header {
-
-            max-width: 750px;
-
-            margin: 50px auto 60px;
-
             text-align: center;
-
+            max-width: 750px;
+            margin: 40px auto 60px;
         }
 
+        .memory-small-title {
+            font-size: 11px;
+            letter-spacing: 5px;
+            color: #aaa2df;
+            margin-bottom: 20px;
+        }
+
+        .memory-header h1 {
+            font-family: Georgia, serif;
+            font-size: clamp(42px, 6vw, 70px);
+            font-weight: normal;
+            line-height: 1.05;
+            margin-bottom: 25px;
+        }
+
+        .memory-header p {
+            color: rgba(255,255,255,0.6);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .memory-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
 
         .add-memory-button {
-
-            display: inline-block;
-
-            margin-top: 35px;
-
-            padding: 14px 24px;
-
-            border: 1px solid
-                rgba(255,255,255,0.15);
-
+            border: none;
+            padding: 13px 22px;
             border-radius: 30px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #5d69c9,
-                    #8062bd
-                );
+            background: linear-gradient(
+                135deg,
+                #5d69c9,
+                #8062bd
+            );
 
             color: white;
-
             font-size: 13px;
 
             cursor: pointer;
 
-            transition: 0.3s ease;
-
+            transition: 0.3s;
         }
-
 
         .add-memory-button:hover {
-
             transform: translateY(-2px);
-
             opacity: 0.9;
-
         }
 
+        /* =========================
+           MEMORY CARDS
+        ========================= */
 
         #memoryContainer {
-
-            min-height: 100px;
-
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
         }
 
+        .memory-card {
+            min-height: 260px;
 
-        .empty-memory {
+            padding: 25px;
 
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 20px;
+
+            background: rgba(255,255,255,0.045);
+
+            backdrop-filter: blur(12px);
+
+            cursor: pointer;
+
+            transition:
+                transform 0.3s ease,
+                background 0.3s ease;
+        }
+
+        .memory-card:hover {
+            transform: translateY(-6px);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .memory-card-image {
+            width: 100%;
+            height: 180px;
+
+            object-fit: cover;
+
+            border-radius: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        .memory-card-date {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+
+            color: rgba(255,255,255,0.45);
+
+            margin-bottom: 8px;
+        }
+
+        .memory-card h2 {
+            font-family: Georgia, serif;
+
+            font-size: 22px;
+            font-weight: normal;
+
+            margin-bottom: 8px;
+        }
+
+        .memory-card-location {
+            font-size: 12px;
+
+            color: rgba(255,255,255,0.45);
+        }
+
+        .memory-card-empty {
             grid-column: 1 / -1;
 
             text-align: center;
 
-            padding: 60px 20px;
+            padding: 80px 20px;
 
-            color:
-                rgba(255,255,255,0.55);
-
+            color: rgba(255,255,255,0.45);
         }
 
-
         /* =========================
-           MODAL
+           ADD MEMORY MODAL
         ========================= */
 
         .memory-modal {
-
             position: fixed;
-
             inset: 0;
+
+            z-index: 10000;
 
             display: none;
 
             align-items: center;
-
             justify-content: center;
 
             padding: 20px;
 
-            background:
-                rgba(3,5,20,0.75);
+            background: rgba(3,5,20,0.82);
 
-            backdrop-filter: blur(10px);
-
-            z-index: 999;
-
+            backdrop-filter: blur(14px);
         }
-
 
         .memory-modal.active {
-
             display: flex;
-
         }
 
-
         .memory-form {
-
             width: 100%;
-
-            max-width: 520px;
+            max-width: 550px;
 
             max-height: 90vh;
-
             overflow-y: auto;
 
-            padding: 35px;
-
-            border: 1px solid
-                rgba(255,255,255,0.12);
+            padding: 30px;
 
             border-radius: 24px;
 
-            background:
-                rgba(20,22,60,0.95);
+            border: 1px solid rgba(255,255,255,0.12);
+
+            background: #15183d;
 
             box-shadow:
-                0 25px 80px
-                rgba(0,0,0,0.45);
-
+                0 30px 80px rgba(0,0,0,0.5);
         }
-
 
         .memory-form-header {
-
             display: flex;
 
+            justify-content: space-between;
             align-items: center;
 
-            justify-content: space-between;
-
             margin-bottom: 25px;
-
         }
 
-
         .memory-form-header h2 {
-
             font-family: Georgia, serif;
 
             font-size: 28px;
-
             font-weight: normal;
-
         }
 
-
         .close-modal {
-
-            width: 35px;
-
-            height: 35px;
-
-            padding: 0;
-
-            margin: 0;
-
-            border: 1px solid
-                rgba(255,255,255,0.12);
+            width: 38px;
+            height: 38px;
 
             border-radius: 50%;
 
-            background:
-                rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+
+            background: rgba(255,255,255,0.08);
 
             color: white;
 
-            font-size: 18px;
+            font-size: 24px;
 
             cursor: pointer;
-
         }
-
 
         .memory-form label {
-
             display: block;
 
-            margin-bottom: 8px;
+            margin: 16px 0 7px;
 
-            font-size: 13px;
+            font-size: 12px;
 
+            color: rgba(255,255,255,0.65);
         }
-
 
         .memory-form input,
         .memory-form textarea {
-
             width: 100%;
 
-            padding: 13px 15px;
-
-            margin-bottom: 20px;
-
-            border: 1px solid
-                rgba(255,255,255,0.12);
+            padding: 12px 14px;
 
             border-radius: 12px;
 
-            background:
-                rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+
+            background: rgba(255,255,255,0.06);
 
             color: white;
 
             outline: none;
 
             font-family: Arial, sans-serif;
-
         }
-
-
-        .memory-form input:focus,
-        .memory-form textarea:focus {
-
-            border-color: #8e7de8;
-
-        }
-
 
         .memory-form textarea {
-
-            min-height: 120px;
+            min-height: 130px;
 
             resize: vertical;
-
         }
 
-
-        /* =========================
-           FILE INPUT
-        ========================= */
-
-        .memory-form input[type="file"] {
-
-            padding: 10px;
-
-            cursor: pointer;
-
+        .memory-form input::placeholder,
+        .memory-form textarea::placeholder {
+            color: rgba(255,255,255,0.3);
         }
-
-
-        .memory-form
-        input[type="file"]::file-selector-button {
-
-            margin-right: 12px;
-
-            padding: 8px 12px;
-
-            border: none;
-
-            border-radius: 8px;
-
-            background:
-                rgba(255,255,255,0.12);
-
-            color: white;
-
-            cursor: pointer;
-
-        }
-
-
-        /* =========================
-           SAVE BUTTON
-        ========================= */
 
         .save-memory-button {
-
             width: 100%;
 
-            padding: 14px;
+            margin-top: 25px;
+
+            padding: 13px;
 
             border: none;
 
             border-radius: 12px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #667eea,
-                    #8e6de8
-                );
+            background: linear-gradient(
+                135deg,
+                #5d69c9,
+                #8062bd
+            );
 
             color: white;
 
-            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* =========================
+           MEMORY DETAIL MODAL
+        ========================= */
+
+        .memory-detail-modal {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 99999;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background: rgba(3,5,20,0.88);
+
+            backdrop-filter: blur(16px);
+        }
+
+        .memory-detail-modal.active {
+            display: flex;
+        }
+
+        .memory-detail-box {
+            position: relative;
+
+            width: min(720px, 100%);
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            padding: 30px;
+
+            border-radius: 24px;
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #1e204f,
+                    #0c1030
+                );
+
+            box-shadow:
+                0 30px 100px rgba(0,0,0,0.6);
+
+            animation: memoryDetailAppear 0.25s ease;
+        }
+
+        @keyframes memoryDetailAppear {
+
+            from {
+                opacity: 0;
+                transform: scale(0.96) translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+
+        }
+
+        .memory-detail-close {
+            position: absolute;
+
+            top: 15px;
+            right: 15px;
+
+            width: 40px;
+            height: 40px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(255,255,255,0.15);
+
+            background: rgba(0,0,0,0.3);
+
+            color: white;
+
+            font-size: 25px;
 
             cursor: pointer;
 
+            z-index: 5;
         }
 
+        .memory-detail-image {
+            width: 100%;
 
-        .save-memory-button:hover {
+            max-height: 430px;
 
-            opacity: 0.9;
+            object-fit: cover;
 
+            border-radius: 18px;
+
+            margin-bottom: 25px;
         }
 
+        .memory-detail-date {
+            font-size: 10px;
 
-        .save-memory-button:disabled {
+            letter-spacing: 3px;
 
-            opacity: 0.6;
+            text-transform: uppercase;
 
-            cursor: not-allowed;
+            color: rgba(255,255,255,0.45);
 
+            margin-bottom: 10px;
         }
 
+        .memory-detail-title {
+            font-family: Georgia, serif;
+
+            font-size: 38px;
+
+            font-weight: normal;
+
+            line-height: 1.15;
+
+            margin-bottom: 12px;
+        }
+
+        .memory-detail-location {
+            font-size: 13px;
+
+            color: rgba(255,255,255,0.45);
+
+            margin-bottom: 28px;
+        }
+
+        .memory-detail-story {
+            font-size: 15px;
+
+            line-height: 1.9;
+
+            color: rgba(255,255,255,0.72);
+
+            white-space: pre-wrap;
+        }
 
         /* =========================
            MOBILE
         ========================= */
 
-        @media (max-width: 600px) {
+        @media (max-width: 800px) {
 
-            .memory-form {
-
-                padding: 25px;
-
+            #memoryContainer {
+                grid-template-columns: 1fr;
             }
 
-            .memory-form-header h2 {
+            .memory-header {
+                margin-top: 25px;
+            }
 
-                font-size: 24px;
+            .memory-detail-box {
+                padding: 22px;
+            }
 
+            .memory-detail-title {
+                font-size: 30px;
             }
 
         }
 
     </style>
-
 </head>
-
 
 <body>
 
+    <div class="stars"></div>
 
-    <!-- =========================
-         NAVIGATION
-    ========================= -->
+    <!-- NAVBAR -->
 
     <header class="navbar">
 
-        <a
-            href="index.html"
-            class="logo"
-        >
+        <a href="index.html" class="logo">
             Our Little Universe
         </a>
-
 
         <nav>
 
@@ -410,103 +502,79 @@
 
         </nav>
 
-
         <button
             id="logoutButton"
-            class="logout-btn"
-        >
+            class="logout-btn">
             Logout
         </button>
 
     </header>
 
 
-
-    <!-- =========================
-         MAIN
-    ========================= -->
+    <!-- MAIN -->
 
     <main class="home">
 
-
-        <!-- MEMORY HEADER -->
-
         <section class="memory-header">
 
-            <p class="small-title">
+            <p class="memory-small-title">
                 OUR MEMORIES
             </p>
 
-
             <h1>
-
                 Little moments,<br>
-
                 forever ours.
-
             </h1>
 
-
-            <p class="hero-text">
-
-                A collection of the moments
+            <p>
+                The places we've been,
+                the days we've shared,
+                and the little moments
                 we never want to forget.
-
             </p>
 
+            <div class="memory-actions">
 
-            <button
-                type="button"
-                id="addMemoryButton"
-                class="add-memory-button"
-            >
+                <button
+                    type="button"
+                    id="addMemoryButton"
+                    class="add-memory-button">
 
-                ＋ Add Memory
+                    ＋ Add Memory
 
-            </button>
+                </button>
+
+            </div>
 
         </section>
 
 
-
-        <!-- =========================
-             MEMORY LIST
-        ========================= -->
+        <!-- MEMORY CARDS -->
 
         <section
             class="universe-menu"
-            id="memoryContainer"
-        >
+            id="memoryContainer">
 
         </section>
 
 
-
-        <!-- =========================
-             CLOSING
-        ========================= -->
+        <!-- CLOSING -->
 
         <section class="closing">
 
-            <span>
-                ✦
-            </span>
-
+            <span>✦</span>
 
             <p>
-                More memories are waiting
-                to be written.
+                Our story is still being written.
             </p>
 
-
             <small>
-                Our little universe is growing.
+                To be continued...
             </small>
 
         </section>
 
     </main>
-
 
 
     <!-- =========================
@@ -515,14 +583,11 @@
 
     <div
         id="memoryModal"
-        class="memory-modal"
-    >
+        class="memory-modal">
 
         <form
             id="memoryForm"
-            class="memory-form"
-        >
-
+            class="memory-form">
 
             <div class="memory-form-header">
 
@@ -530,20 +595,17 @@
                     New Memory
                 </h2>
 
-
                 <button
                     type="button"
                     id="closeMemoryModal"
-                    class="close-modal"
-                >
+                    class="close-modal">
+
                     ×
+
                 </button>
 
             </div>
 
-
-
-            <!-- TITLE -->
 
             <label for="memoryTitle">
                 Title
@@ -553,12 +615,8 @@
                 type="text"
                 id="memoryTitle"
                 placeholder="Give this memory a name"
-                required
-            >
+                required>
 
-
-
-            <!-- DATE -->
 
             <label for="memoryDate">
                 Date
@@ -566,12 +624,8 @@
 
             <input
                 type="date"
-                id="memoryDate"
-            >
+                id="memoryDate">
 
-
-
-            <!-- LOCATION -->
 
             <label for="memoryLocation">
                 Location
@@ -580,12 +634,8 @@
             <input
                 type="text"
                 id="memoryLocation"
-                placeholder="Where did it happen?"
-            >
+                placeholder="Where did it happen?">
 
-
-
-            <!-- PHOTO -->
 
             <label for="memoryPhoto">
                 Photo
@@ -594,12 +644,8 @@
             <input
                 type="file"
                 id="memoryPhoto"
-                accept="image/*"
-            >
+                accept="image/*">
 
-
-
-            <!-- DESCRIPTION -->
 
             <label for="memoryDescription">
                 Our story
@@ -607,30 +653,49 @@
 
             <textarea
                 id="memoryDescription"
-                placeholder="Tell the story behind this memory..."
-            ></textarea>
+                placeholder="Tell the story behind this memory..."></textarea>
 
-
-
-            <!-- SAVE -->
 
             <button
                 type="submit"
-                class="save-memory-button"
-            >
-                Save Memory ✦
-            </button>
+                class="save-memory-button">
 
+                Save Memory ✦
+
+            </button>
 
         </form>
 
     </div>
 
 
-
     <!-- =========================
-         SUPABASE
+         MEMORY DETAIL MODAL
     ========================= -->
+
+    <div
+        id="memoryDetailModal"
+        class="memory-detail-modal">
+
+        <div class="memory-detail-box">
+
+            <button
+                type="button"
+                id="closeMemoryDetail"
+                class="memory-detail-close">
+
+                ×
+
+            </button>
+
+            <div id="memoryDetailContent"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SCRIPTS -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -639,7 +704,6 @@
     <script src="auth.js"></script>
 
     <script src="memories.js"></script>
-
 
 </body>
 
