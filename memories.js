@@ -7,6 +7,86 @@ const memoryForm =
 const memoryModal =
     document.getElementById("memoryModal");
 
+const addMemoryButton =
+    document.getElementById("addMemoryButton");
+
+const closeMemoryModal =
+    document.getElementById("closeMemoryModal");
+
+
+/* =========================
+   MODAL
+========================= */
+
+if (addMemoryButton) {
+
+    addMemoryButton.addEventListener(
+        "click",
+        () => {
+
+            memoryModal.classList.add(
+                "active"
+            );
+
+        }
+    );
+
+}
+
+
+if (closeMemoryModal) {
+
+    closeMemoryModal.addEventListener(
+        "click",
+        () => {
+
+            memoryModal.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+}
+
+
+if (memoryModal) {
+
+    memoryModal.addEventListener(
+        "click",
+        (event) => {
+
+            if (
+                event.target === memoryModal
+            ) {
+
+                memoryModal.classList.remove(
+                    "active"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (event.key === "Escape") {
+
+            memoryModal?.classList.remove(
+                "active"
+            );
+
+        }
+
+    }
+);
+
 
 /* =========================
    GET CURRENT USER
@@ -19,10 +99,17 @@ async function getCurrentUser() {
         error
     } = await supabaseClient.auth.getUser();
 
+
     if (error) {
-        console.error("User error:", error);
+
+        console.error(
+            "User error:",
+            error
+        );
+
         return null;
     }
+
 
     return user;
 }
@@ -34,6 +121,13 @@ async function getCurrentUser() {
 
 async function getUniverseId(userId) {
 
+    /*
+     * TEMPORARY:
+     * We will adjust the membership
+     * column after checking your
+     * universe_members structure.
+     */
+
     const {
         data: memberships,
         error
@@ -42,16 +136,56 @@ async function getUniverseId(userId) {
         .select("universe_id")
         .eq("user_id", userId);
 
+
     if (error) {
-        console.error("Member error:", error);
+
+        console.error(
+            "Member error:",
+            error
+        );
+
         return null;
     }
 
-    if (!memberships || memberships.length === 0) {
+
+    if (
+        !memberships ||
+        memberships.length === 0
+    ) {
+
+        console.error(
+            "No universe membership found."
+        );
+
         return null;
     }
+
 
     return memberships[0].universe_id;
+}
+
+
+/* =========================
+   FORMAT DATE
+========================= */
+
+function formatDate(dateString) {
+
+    const date =
+        new Date(
+            dateString + "T00:00:00"
+        );
+
+
+    return date.toLocaleDateString(
+        "en-US",
+        {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        }
+    );
+
 }
 
 
@@ -63,22 +197,33 @@ async function loadMemories() {
 
     if (!memoryContainer) return;
 
+
     const user =
         await getCurrentUser();
 
+
     if (!user) return;
 
+
     const universeId =
-        await getUniverseId(user.id);
+        await getUniverseId(
+            user.id
+        );
+
 
     if (!universeId) {
+
         memoryContainer.innerHTML = `
             <div class="empty-memory">
-                <p>No universe found.</p>
+                <p>
+                    Your universe could not be found.
+                </p>
             </div>
         `;
+
         return;
     }
+
 
     const {
         data: memories,
@@ -86,17 +231,33 @@ async function loadMemories() {
     } = await supabaseClient
         .from("memories")
         .select("*")
-        .eq("universe_id", universeId)
-        .order("memory_date", {
-            ascending: false
-        });
+        .eq(
+            "universe_id",
+            universeId
+        )
+        .order(
+            "memory_date",
+            {
+                ascending: false
+            }
+        );
+
 
     if (error) {
-        console.error("Memory error:", error);
+
+        console.error(
+            "Memory error:",
+            error
+        );
+
         return;
     }
 
-    if (!memories || memories.length === 0) {
+
+    if (
+        !memories ||
+        memories.length === 0
+    ) {
 
         memoryContainer.innerHTML = `
             <div class="universe-card">
@@ -120,32 +281,37 @@ async function loadMemories() {
         return;
     }
 
+
     memoryContainer.innerHTML = "";
+
 
     for (const memory of memories) {
 
         let photoUrl = null;
 
+
         const {
-            data: photos,
-            error: photoError
+            data: photos
         } = await supabaseClient
             .from("memory_photos")
             .select("*")
-            .eq("memory_id", memory.id)
-            .order("display_order", {
-                ascending: true
-            })
+            .eq(
+                "memory_id",
+                memory.id
+            )
+            .order(
+                "display_order",
+                {
+                    ascending: true
+                }
+            )
             .limit(1);
 
-        if (photoError) {
-            console.error(
-                "Photo error:",
-                photoError
-            );
-        }
 
-        if (photos && photos.length > 0) {
+        if (
+            photos &&
+            photos.length > 0
+        ) {
 
             const {
                 data: signedUrlData,
@@ -158,19 +324,29 @@ async function loadMemories() {
                     3600
                 );
 
+
             if (!signedError) {
+
                 photoUrl =
                     signedUrlData.signedUrl;
+
             }
+
         }
 
+
         const card =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         card.className =
             "universe-card";
 
-        card.style.overflow = "hidden";
+
+        card.style.overflow =
+            "hidden";
 
 
         card.innerHTML = `
@@ -182,11 +358,11 @@ async function loadMemories() {
                         src="${photoUrl}"
                         alt="${memory.title}"
                         style="
-                            width: 100%;
-                            height: 220px;
-                            object-fit: cover;
-                            border-radius: 14px;
-                            margin-bottom: 22px;
+                            width:100%;
+                            height:220px;
+                            object-fit:cover;
+                            border-radius:14px;
+                            margin-bottom:22px;
                         "
                     >
                 `
@@ -197,9 +373,11 @@ async function loadMemories() {
                 `
             }
 
+
             <h2>
                 ${memory.title}
             </h2>
+
 
             ${
                 memory.memory_date
@@ -213,6 +391,7 @@ async function loadMemories() {
                 : ""
             }
 
+
             ${
                 memory.location
                 ? `
@@ -223,13 +402,16 @@ async function loadMemories() {
                 : ""
             }
 
+
             ${
                 memory.description
                 ? `
-                    <p style="
-                        margin-top: 12px;
-                        line-height: 1.6;
-                    ">
+                    <p
+                        style="
+                            margin-top:12px;
+                            line-height:1.6;
+                        "
+                    >
                         ${memory.description}
                     </p>
                 `
@@ -238,30 +420,13 @@ async function loadMemories() {
 
         `;
 
-        memoryContainer.appendChild(card);
-    }
-}
 
-
-/* =========================
-   FORMAT DATE
-========================= */
-
-function formatDate(dateString) {
-
-    const date =
-        new Date(
-            dateString + "T00:00:00"
+        memoryContainer.appendChild(
+            card
         );
 
-    return date.toLocaleDateString(
-        "en-US",
-        {
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-        }
-    );
+    }
+
 }
 
 
@@ -277,25 +442,33 @@ if (memoryForm) {
 
             event.preventDefault();
 
+
             const user =
                 await getCurrentUser();
 
+
             if (!user) {
+
                 alert(
                     "Please login first."
                 );
+
                 return;
             }
+
 
             const universeId =
                 await getUniverseId(
                     user.id
                 );
 
+
             if (!universeId) {
+
                 alert(
                     "Your universe could not be found."
                 );
+
                 return;
             }
 
@@ -340,14 +513,17 @@ if (memoryForm) {
                     "memoryPhoto"
                 );
 
+
             const photo =
-                photoInput.files[0];
+                photoInput?.files?.[0];
 
 
             if (!title) {
+
                 alert(
                     "Please give this memory a title."
                 );
+
                 return;
             }
 
@@ -358,15 +534,15 @@ if (memoryForm) {
                 );
 
 
-            saveButton.disabled = true;
+            saveButton.disabled =
+                true;
+
 
             saveButton.textContent =
                 "Saving our memory...";
 
 
-            /* =========================
-               CREATE MEMORY
-            ========================= */
+            /* CREATE MEMORY */
 
             const {
                 data: memory,
@@ -382,13 +558,16 @@ if (memoryForm) {
                             title,
 
                         description:
-                            description || null,
+                            description ||
+                            null,
 
                         memory_date:
-                            date || null,
+                            date ||
+                            null,
 
                         location:
-                            location || null,
+                            location ||
+                            null,
 
                         created_by:
                             user.id
@@ -405,32 +584,37 @@ if (memoryForm) {
                     error
                 );
 
+
                 alert(
                     "Something went wrong while saving the memory."
                 );
 
-                saveButton.disabled = false;
+
+                saveButton.disabled =
+                    false;
+
 
                 saveButton.textContent =
                     "Save Memory ✦";
+
 
                 return;
             }
 
 
-            /* =========================
-               UPLOAD PHOTO
-            ========================= */
+            /* UPLOAD PHOTO */
 
             if (photo) {
 
-                const fileExtension =
+                const extension =
                     photo.name
                         .split(".")
                         .pop();
 
+
                 const fileName =
-                    `${crypto.randomUUID()}.${fileExtension}`;
+                    `${crypto.randomUUID()}.${extension}`;
+
 
                 const filePath =
                     `${universeId}/${user.id}/${fileName}`;
@@ -454,6 +638,7 @@ if (memoryForm) {
                         uploadError
                     );
 
+
                     alert(
                         "Memory saved, but the photo could not be uploaded."
                     );
@@ -461,9 +646,12 @@ if (memoryForm) {
                 } else {
 
                     const {
-                        error: photoInsertError
+                        error:
+                            photoInsertError
                     } = await supabaseClient
-                        .from("memory_photos")
+                        .from(
+                            "memory_photos"
+                        )
                         .insert([
                             {
                                 memory_id:
@@ -481,7 +669,9 @@ if (memoryForm) {
                         ]);
 
 
-                    if (photoInsertError) {
+                    if (
+                        photoInsertError
+                    ) {
 
                         console.error(
                             "Photo record error:",
@@ -489,36 +679,43 @@ if (memoryForm) {
                         );
 
                     }
+
                 }
+
             }
 
 
-            /* =========================
-               RESET
-            ========================= */
+            /* RESET */
 
             memoryForm.reset();
+
 
             memoryModal.classList.remove(
                 "active"
             );
 
-            saveButton.disabled = false;
+
+            saveButton.disabled =
+                false;
+
 
             saveButton.textContent =
                 "Save Memory ✦";
 
 
-            /* =========================
-               RELOAD
-            ========================= */
-
             await loadMemories();
 
         }
     );
+
 }
 
+
+/* =========================
+   START
+========================= */
+
+loadMemories();
 
 /* =========================
    START
