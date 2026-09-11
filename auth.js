@@ -26,11 +26,13 @@ if (loginForm) {
         loginMessage.textContent =
             "Entering our universe...";
 
+
         const { data, error } =
             await supabaseClient.auth.signInWithPassword({
                 email: email,
                 password: password
             });
+
 
         if (error) {
 
@@ -42,10 +44,12 @@ if (loginForm) {
             return;
         }
 
+
         console.log("Login successful:", data.user);
 
         loginMessage.textContent =
             "Welcome back ✦";
+
 
         window.location.href = "index.html";
 
@@ -63,6 +67,7 @@ async function checkUser() {
     const {
         data: { user }
     } = await supabaseClient.auth.getUser();
+
 
     console.log("Current user:", user);
 
@@ -87,32 +92,18 @@ async function checkUser() {
     }
 
 
-    /* GET PROFILE NAME */
+    /* USER NAME */
 
     if (user && userName) {
 
-        const { data: profile, error } =
-            await supabaseClient
-                .from("profiles")
-                .select("display_name")
-                .eq("id", user.id)
-                .single();
+        const emailName =
+            user.email.split("@")[0];
 
-        console.log("Profile:", profile);
-        console.log("Profile error:", error);
+        userName.textContent =
+            emailName;
 
-        if (profile && profile.display_name) {
-
-            userName.textContent =
-                profile.display_name;
-
-        } else {
-
-            userName.textContent =
-                user.email.split("@")[0];
-
-        }
     }
+
 }
 
 
@@ -127,12 +118,14 @@ if (logoutButton) {
         const { error } =
             await supabaseClient.auth.signOut();
 
+
         if (error) {
 
             console.error("Logout error:", error);
 
             return;
         }
+
 
         window.location.href = "login.html";
 
