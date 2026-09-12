@@ -27,24 +27,24 @@
 
         .memories-page {
             min-height: 100vh;
-            padding: 120px 30px 80px;
+            padding: 130px 30px 80px;
         }
-
 
         .memories-header {
             text-align: center;
-            margin-bottom: 45px;
+            margin-bottom: 35px;
         }
 
-
         .memories-header h1 {
-            font-size: 42px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 44px;
+            font-weight: 400;
             margin-bottom: 10px;
         }
 
-
         .memories-header p {
-            color: #aaa;
+            color: #aaa5bd;
+            font-size: 15px;
         }
 
 
@@ -57,16 +57,16 @@
             margin: 0 auto 55px;
 
             border: none;
+            border-radius: 999px;
 
             padding: 15px 28px;
 
-            border-radius: 999px;
-
-            background: linear-gradient(
-                135deg,
-                #6d70d8,
-                #8c61c7
-            );
+            background:
+                linear-gradient(
+                    135deg,
+                    #6d70d8,
+                    #8c61c7
+                );
 
             color: white;
 
@@ -75,9 +75,12 @@
 
             cursor: pointer;
 
+            box-shadow:
+                0 10px 30px
+                rgba(80, 70, 180, 0.25);
+
             transition: 0.2s ease;
         }
-
 
         .add-memory-button:hover {
             transform: translateY(-3px);
@@ -104,51 +107,59 @@
         }
 
 
+        /* =========================================
+           MEMORY CARD
+        ========================================= */
+
         .memory-card {
             overflow: hidden;
 
             border-radius: 24px;
 
-            background: rgba(
-                255,
-                255,
-                255,
-                0.045
-            );
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.045
+                );
 
-            border: 1px solid rgba(
-                255,
-                255,
-                255,
-                0.1
-            );
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.10
+                );
 
             cursor: pointer;
 
-            transition: 0.25s ease;
-
-            backdrop-filter: blur(10px);
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                background 0.25s ease;
         }
-
 
         .memory-card:hover {
             transform: translateY(-5px);
 
-            border-color: rgba(
-                145,
-                130,
-                255,
-                0.4
-            );
+            border-color:
+                rgba(
+                    145,
+                    130,
+                    255,
+                    0.40
+                );
 
-            background: rgba(
-                255,
-                255,
-                255,
-                0.065
-            );
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.065
+                );
         }
-
 
         .memory-card-image {
             display: block;
@@ -159,40 +170,40 @@
             object-fit: cover;
         }
 
-
         .memory-card-content {
             padding: 24px;
         }
 
-
         .memory-card-date {
+            color: #9690b0;
+
             font-size: 12px;
 
             letter-spacing: 1.5px;
 
-            color: #9690b0;
-
             margin-bottom: 10px;
         }
-
 
         .memory-card-title {
             margin: 0 0 10px;
 
-            font-family: Georgia, serif;
+            color: #f1eff8;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
 
             font-size: 27px;
 
-            color: #f1eff8;
+            font-weight: 400;
         }
-
 
         .memory-card-location {
             color: #999;
 
             font-size: 14px;
         }
-
 
         .memory-empty {
             grid-column: 1 / -1;
@@ -201,7 +212,7 @@
 
             color: #aaa;
 
-            padding: 60px 20px;
+            padding: 70px 20px;
         }
 
 
@@ -219,26 +230,25 @@
             display: none;
 
             align-items: center;
-
             justify-content: center;
 
             padding: 20px;
 
-            background: rgba(
-                5,
-                5,
-                20,
-                0.8
-            );
+            background:
+                rgba(
+                    5,
+                    5,
+                    20,
+                    0.82
+                );
 
-            backdrop-filter: blur(8px);
+            backdrop-filter:
+                blur(8px);
         }
-
 
         .memory-modal.active {
             display: flex;
         }
-
 
         .memory-box {
             position: relative;
@@ -258,24 +268,32 @@
 
             background: #17162d;
 
-            border: 1px solid rgba(
-                255,
-                255,
-                255,
-                0.12
-            );
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.12
+                );
 
             box-shadow:
                 0 30px 90px
-                rgba(0, 0, 0, 0.5);
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.55
+                );
         }
-
 
         .memory-close {
             position: absolute;
 
-            top: 12px;
-            right: 17px;
+            top: 10px;
+            right: 16px;
+
+            z-index: 5;
 
             border: none;
 
@@ -283,11 +301,15 @@
 
             color: #aaa;
 
-            font-size: 30px;
+            font-size: 31px;
+
+            line-height: 1;
 
             cursor: pointer;
+        }
 
-            z-index: 2;
+        .memory-close:hover {
+            color: white;
         }
 
 
@@ -309,7 +331,6 @@
             margin-bottom: 25px;
         }
 
-
         .memory-detail-date {
             color: #9189b0;
 
@@ -320,22 +341,28 @@
             margin-bottom: 10px;
         }
 
-
         .memory-detail-title {
-            font-family: Georgia, serif;
-
-            font-size: 34px;
-
             margin: 0 0 10px;
-        }
 
+            color: #f4f1ff;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 36px;
+
+            font-weight: 400;
+        }
 
         .memory-detail-location {
             color: #999;
 
+            font-size: 14px;
+
             margin-bottom: 22px;
         }
-
 
         .memory-detail-story {
             color: #d0cdd9;
@@ -360,14 +387,13 @@
             flex-wrap: wrap;
         }
 
-
         .memory-edit-button,
         .memory-delete-button {
             border: none;
 
-            padding: 12px 20px;
-
             border-radius: 999px;
+
+            padding: 12px 20px;
 
             font-size: 14px;
 
@@ -378,33 +404,41 @@
             transition: 0.2s ease;
         }
 
-
         .memory-edit-button {
-            background: linear-gradient(
-                135deg,
-                #7074db,
-                #8c62c7
-            );
+            background:
+                linear-gradient(
+                    135deg,
+                    #7074db,
+                    #8c62c7
+                );
 
             color: white;
         }
 
-
         .memory-delete-button {
-            background: rgba(
-                190,
-                70,
-                100,
-                0.16
-            );
+            background:
+                rgba(
+                    190,
+                    70,
+                    100,
+                    0.16
+                );
 
             color: #ff9aae;
         }
 
-
         .memory-edit-button:hover,
         .memory-delete-button:hover {
             transform: translateY(-2px);
+        }
+
+        .memory-edit-button:disabled,
+        .memory-delete-button:disabled {
+            opacity: 0.5;
+
+            cursor: not-allowed;
+
+            transform: none;
         }
 
 
@@ -420,39 +454,51 @@
             gap: 10px;
         }
 
+        .memory-form h2 {
+            margin-bottom: 10px;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-weight: 400;
+        }
 
         .memory-form label {
+            margin-top: 8px;
+
             color: #aaa;
 
             font-size: 13px;
-
-            margin-top: 8px;
         }
-
 
         .memory-form input,
         .memory-form textarea {
             width: 100%;
 
+            padding: 12px 14px;
+
             box-sizing: border-box;
 
-            padding: 12px 14px;
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.12
+                );
 
             border-radius: 10px;
 
-            border: 1px solid rgba(
-                255,
-                255,
-                255,
-                0.12
-            );
-
-            background: rgba(
-                255,
-                255,
-                255,
-                0.05
-            );
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.05
+                );
 
             color: white;
 
@@ -461,40 +507,44 @@
             outline: none;
         }
 
-
         .memory-form textarea {
-            resize: vertical;
-
             min-height: 150px;
-        }
 
+            resize: vertical;
+        }
 
         .memory-form input:focus,
         .memory-form textarea:focus {
             border-color: #8174dc;
         }
 
-
         .memory-save-button {
             margin-top: 15px;
 
             border: none;
 
-            padding: 13px 20px;
-
             border-radius: 999px;
 
-            background: linear-gradient(
-                135deg,
-                #7074db,
-                #8c62c7
-            );
+            padding: 13px 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7074db,
+                    #8c62c7
+                );
 
             color: white;
 
             font-weight: 600;
 
             cursor: pointer;
+        }
+
+        .memory-save-button:disabled {
+            opacity: 0.5;
+
+            cursor: not-allowed;
         }
 
 
@@ -505,7 +555,10 @@
         @media (max-width: 700px) {
 
             .memories-page {
-                padding: 100px 18px 60px;
+                padding:
+                    120px
+                    18px
+                    60px;
             }
 
             .memories-header h1 {
@@ -517,7 +570,7 @@
             }
 
             .memory-detail-title {
-                font-size: 28px;
+                font-size: 29px;
             }
 
         }
@@ -539,7 +592,6 @@
         <div class="logo">
             Our Little Universe ✦
         </div>
-
 
         <div class="nav-links">
 
@@ -564,7 +616,6 @@
 
         </div>
 
-
         <button
             id="logoutButton"
             class="logout-button"
@@ -577,7 +628,7 @@
 
 
     <!-- =========================================
-         PAGE
+         MAIN
     ========================================= -->
 
     <main class="memories-page">
@@ -596,14 +647,12 @@
         </header>
 
 
-
         <button
             id="addMemoryButton"
             class="add-memory-button"
         >
             + Add Memory
         </button>
-
 
 
         <section
@@ -642,17 +691,17 @@
             </button>
 
 
-            <h2>
-                Add a Memory ✦
-            </h2>
-
-
             <form
                 id="memoryForm"
                 class="memory-form"
             >
 
-                <label>
+                <h2>
+                    Add a Memory ✦
+                </h2>
+
+
+                <label for="memoryTitle">
                     Title
                 </label>
 
@@ -664,7 +713,7 @@
                 >
 
 
-                <label>
+                <label for="memoryDate">
                     Date
                 </label>
 
@@ -674,7 +723,7 @@
                 >
 
 
-                <label>
+                <label for="memoryLocation">
                     Location
                 </label>
 
@@ -685,7 +734,7 @@
                 >
 
 
-                <label>
+                <label for="memoryPhoto">
                     Photo
                 </label>
 
@@ -696,7 +745,7 @@
                 >
 
 
-                <label>
+                <label for="memoryDescription">
                     Story
                 </label>
 
@@ -741,7 +790,38 @@
             </button>
 
 
+            <!--
+                IMPORTANT:
+                Detail content and action buttons
+                are separated.
+            -->
+
             <div id="memoryDetailContent"></div>
+
+
+            <div
+                id="memoryDetailActions"
+                class="memory-detail-actions"
+            >
+
+                <button
+                    type="button"
+                    id="editMemoryButton"
+                    class="memory-edit-button"
+                >
+                    ✎ Edit Memory
+                </button>
+
+
+                <button
+                    type="button"
+                    id="deleteMemoryButton"
+                    class="memory-delete-button"
+                >
+                    🗑 Delete
+                </button>
+
+            </div>
 
         </div>
 
