@@ -9,59 +9,37 @@
 // =====================================================
 
 const lettersContainer =
-    document.getElementById(
-        "lettersContainer"
-    );
+    document.getElementById("lettersContainer");
 
 const createLetterButton =
-    document.getElementById(
-        "createLetterButton"
-    );
+    document.getElementById("createLetterButton");
 
 const letterModal =
-    document.getElementById(
-        "letterModal"
-    );
+    document.getElementById("letterModal");
 
 const closeLetterModal =
-    document.getElementById(
-        "closeLetterModal"
-    );
+    document.getElementById("closeLetterModal");
 
 const letterForm =
-    document.getElementById(
-        "letterForm"
-    );
+    document.getElementById("letterForm");
 
 const letterRecipient =
-    document.getElementById(
-        "letterRecipient"
-    );
+    document.getElementById("letterRecipient");
 
 const letterTitle =
-    document.getElementById(
-        "letterTitle"
-    );
+    document.getElementById("letterTitle");
 
 const letterContent =
-    document.getElementById(
-        "letterContent"
-    );
+    document.getElementById("letterContent");
 
 const letterDetailModal =
-    document.getElementById(
-        "letterDetailModal"
-    );
+    document.getElementById("letterDetailModal");
 
 const closeLetterDetail =
-    document.getElementById(
-        "closeLetterDetail"
-    );
+    document.getElementById("closeLetterDetail");
 
 const letterDetailContent =
-    document.getElementById(
-        "letterDetailContent"
-    );
+    document.getElementById("letterDetailContent");
 
 
 // =====================================================
@@ -72,7 +50,7 @@ let currentUser = null;
 
 
 // =====================================================
-// PERSON NAMES
+// PERSON NAME
 // =====================================================
 
 function getPersonName(userId) {
@@ -106,10 +84,9 @@ async function getCurrentUser() {
     const {
         data,
         error
-    } =
-        await supabaseClient
-            .auth
-            .getUser();
+    } = await supabaseClient
+        .auth
+        .getUser();
 
 
     if (error) {
@@ -123,36 +100,43 @@ async function getCurrentUser() {
     }
 
 
-    currentUser =
-        data.user;
-
+    currentUser = data.user;
 
     return currentUser;
 }
 
 
 // =====================================================
-// LOAD MEMBERS
+// LOAD UNIVERSE MEMBERS
 // =====================================================
 
 async function loadMembers() {
 
     if (!currentUser) {
+
+        await getCurrentUser();
+
+    }
+
+
+    if (!currentUser) {
+
+        console.error(
+            "No authenticated user."
+        );
+
         return;
+
     }
 
 
     const {
         data,
         error
-    } =
-        await supabaseClient
-            .from("universe_members")
-            .select("user_id")
-            .eq(
-                "universe_id",
-                "e6df9aea-780d-4784-a4ef-12710647444d"
-            );
+    } = await supabaseClient
+        .rpc(
+            "get_my_universe_members"
+        );
 
 
     if (error) {
@@ -169,6 +153,7 @@ async function loadMembers() {
 
 
         return;
+
     }
 
 
@@ -183,12 +168,14 @@ async function loadMembers() {
         const member of data || []
     ) {
 
-        // Jangan tampilkan diri sendiri
+        // Don't show yourself
         if (
             member.user_id ===
             currentUser.id
         ) {
+
             continue;
+
         }
 
 
@@ -211,6 +198,7 @@ async function loadMembers() {
         letterRecipient.appendChild(
             option
         );
+
     }
 }
 
@@ -222,7 +210,9 @@ async function loadMembers() {
 async function loadLetters() {
 
     if (!lettersContainer) {
+
         return;
+
     }
 
 
@@ -236,11 +226,10 @@ async function loadLetters() {
     const {
         data,
         error
-    } =
-        await supabaseClient
-            .rpc(
-                "get_my_letters"
-            );
+    } = await supabaseClient
+        .rpc(
+            "get_my_letters"
+        );
 
 
     if (error) {
@@ -259,6 +248,7 @@ async function loadLetters() {
 
 
         return;
+
     }
 
 
@@ -275,6 +265,7 @@ async function loadLetters() {
 
 
         return;
+
     }
 
 
@@ -407,7 +398,7 @@ function showLetterDetail(
         </div>
 
 
-        <div class="letter-detail-content">
+        <div class="letter-detail-body">
 
             ${escapeHTML(
                 letter.content
@@ -466,7 +457,7 @@ if (closeLetterModal) {
 
 
 // =====================================================
-// CLOSE DETAIL
+// CLOSE LETTER DETAIL
 // =====================================================
 
 if (closeLetterDetail) {
@@ -511,7 +502,7 @@ if (letterModal) {
 
 
 // =====================================================
-// CLICK OUTSIDE DETAIL MODAL
+// CLICK OUTSIDE DETAIL
 // =====================================================
 
 if (letterDetailModal) {
@@ -562,8 +553,8 @@ if (letterForm) {
                     "You are not logged in."
                 );
 
-
                 return;
+
             }
 
 
@@ -589,8 +580,8 @@ if (letterForm) {
                     "Please complete the letter."
                 );
 
-
                 return;
+
             }
 
 
@@ -613,21 +604,20 @@ if (letterForm) {
                 const {
                     data,
                     error
-                } =
-                    await supabaseClient
-                        .rpc(
-                            "create_my_letter",
-                            {
-                                p_recipient_id:
-                                    recipientId,
+                } = await supabaseClient
+                    .rpc(
+                        "create_my_letter",
+                        {
+                            p_recipient_id:
+                                recipientId,
 
-                                p_title:
-                                    title,
+                            p_title:
+                                title,
 
-                                p_content:
-                                    content
-                            }
-                        );
+                            p_content:
+                                content
+                        }
+                    );
 
 
                 if (error) {
@@ -652,11 +642,6 @@ if (letterForm) {
 
 
                 await loadLetters();
-
-
-                alert(
-                    "Letter saved 💌"
-                );
 
 
             } catch (error) {
@@ -689,7 +674,7 @@ if (letterForm) {
 
 
 // =====================================================
-// SECURITY
+// ESCAPE HTML
 // =====================================================
 
 function escapeHTML(
@@ -735,7 +720,7 @@ function escapeHTML(
 
 
 // =====================================================
-// START
+// INITIALIZE
 // =====================================================
 
 async function initLetters() {
