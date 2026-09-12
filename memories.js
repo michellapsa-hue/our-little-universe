@@ -47,6 +47,15 @@ const closeMemoryDetail =
 const memoryDetailContent =
     document.getElementById("memoryDetailContent");
 
+const memoryDetailActions =
+    document.getElementById("memoryDetailActions");
+
+const editMemoryButton =
+    document.getElementById("editMemoryButton");
+
+const deleteMemoryButton =
+    document.getElementById("deleteMemoryButton");
+
 
 // =====================================================
 // STATE
@@ -63,7 +72,9 @@ let currentMemoryImageUrl = "";
 
 async function loadMemories() {
 
-    if (!memoryContainer) return;
+    if (!memoryContainer) {
+        return;
+    }
 
 
     memoryContainer.innerHTML = `
@@ -76,9 +87,10 @@ async function loadMemories() {
     const {
         data,
         error
-    } = await supabaseClient.rpc(
-        "get_my_memories"
-    );
+    } =
+        await supabaseClient.rpc(
+            "get_my_memories"
+        );
 
 
     if (error) {
@@ -88,23 +100,29 @@ async function loadMemories() {
             error
         );
 
+
         memoryContainer.innerHTML = `
             <div class="memory-empty">
                 Failed to load memories.
             </div>
         `;
 
+
         return;
     }
 
 
-    if (!data || data.length === 0) {
+    if (
+        !data ||
+        data.length === 0
+    ) {
 
         memoryContainer.innerHTML = `
             <div class="memory-empty">
                 No memories yet ✦
             </div>
         `;
+
 
         return;
     }
@@ -113,7 +131,9 @@ async function loadMemories() {
     memoryContainer.innerHTML = "";
 
 
-    for (const memory of data) {
+    for (
+        const memory of data
+    ) {
 
         const imageUrl =
             await getMemoryImage(
@@ -133,25 +153,30 @@ async function loadMemories() {
 // GET MEMORY IMAGE
 // =====================================================
 
-async function getMemoryImage(memoryId) {
+async function getMemoryImage(
+    memoryId
+) {
 
     const {
         data: photos,
         error
-    } = await supabaseClient
-        .from("memory_photos")
-        .select("*")
-        .eq(
-            "memory_id",
-            memoryId
-        )
-        .order(
-            "display_order",
-            {
-                ascending: true
-            }
-        )
-        .limit(1);
+    } =
+        await supabaseClient
+            .from("memory_photos")
+            .select(
+                "id, file_path, display_order"
+            )
+            .eq(
+                "memory_id",
+                memoryId
+            )
+            .order(
+                "display_order",
+                {
+                    ascending: true
+                }
+            )
+            .limit(1);
 
 
     if (error) {
@@ -160,6 +185,7 @@ async function getMemoryImage(memoryId) {
             "Memory photo error:",
             error
         );
+
 
         return "";
     }
@@ -177,13 +203,14 @@ async function getMemoryImage(memoryId) {
     const {
         data,
         error: signedError
-    } = await supabaseClient
-        .storage
-        .from("memory-photos")
-        .createSignedUrl(
-            photos[0].file_path,
-            60 * 60
-        );
+    } =
+        await supabaseClient
+            .storage
+            .from("memory-photos")
+            .createSignedUrl(
+                photos[0].file_path,
+                60 * 60
+            );
 
 
     if (
@@ -196,6 +223,7 @@ async function getMemoryImage(memoryId) {
             signedError
         );
 
+
         return "";
     }
 
@@ -205,7 +233,7 @@ async function getMemoryImage(memoryId) {
 
 
 // =====================================================
-// CREATE CARD
+// CREATE MEMORY CARD
 // =====================================================
 
 function createMemoryCard(
@@ -214,7 +242,9 @@ function createMemoryCard(
 ) {
 
     const card =
-        document.createElement("article");
+        document.createElement(
+            "article"
+        );
 
 
     card.className =
@@ -225,15 +255,20 @@ function createMemoryCard(
 
         ${
             imageUrl
-            ? `
-                <img
-                    src="${imageUrl}"
-                    class="memory-card-image"
-                    alt="${escapeHTML(memory.title)}"
-                >
-            `
-            : ""
+                ? `
+                    <img
+                        src="${escapeHTML(
+                            imageUrl
+                        )}"
+                        class="memory-card-image"
+                        alt="${escapeHTML(
+                            memory.title
+                        )}"
+                    >
+                `
+                : ""
         }
+
 
         <div class="memory-card-content">
 
@@ -243,22 +278,24 @@ function createMemoryCard(
                 )}
             </div>
 
+
             <h2 class="memory-card-title">
                 ${escapeHTML(
                     memory.title
                 )}
             </h2>
 
+
             ${
                 memory.location
-                ? `
-                    <div class="memory-card-location">
-                        📍 ${escapeHTML(
-                            memory.location
-                        )}
-                    </div>
-                `
-                : ""
+                    ? `
+                        <div class="memory-card-location">
+                            📍 ${escapeHTML(
+                                memory.location
+                            )}
+                        </div>
+                    `
+                    : ""
             }
 
         </div>
@@ -278,12 +315,14 @@ function createMemoryCard(
     );
 
 
-    memoryContainer.appendChild(card);
+    memoryContainer.appendChild(
+        card
+    );
 }
 
 
 // =====================================================
-// SHOW DETAIL
+// SHOW MEMORY DETAIL
 // =====================================================
 
 function showMemoryDetail(
@@ -302,17 +341,20 @@ function showMemoryDetail(
 
         ${
             imageUrl
-            ? `
-                <img
-                    src="${imageUrl}"
-                    class="memory-detail-image"
-                    alt="${escapeHTML(
-                        memory.title
-                    )}"
-                >
-            `
-            : ""
+                ? `
+                    <img
+                        src="${escapeHTML(
+                            imageUrl
+                        )}"
+                        class="memory-detail-image"
+                        alt="${escapeHTML(
+                            memory.title
+                        )}"
+                    >
+                `
+                : ""
         }
+
 
         <div class="memory-detail-date">
             ${formatMemoryDate(
@@ -320,91 +362,94 @@ function showMemoryDetail(
             )}
         </div>
 
+
         <h2 class="memory-detail-title">
             ${escapeHTML(
                 memory.title
             )}
         </h2>
 
+
         ${
             memory.location
-            ? `
-                <div class="memory-detail-location">
-                    📍 ${escapeHTML(
-                        memory.location
-                    )}
-                </div>
-            `
-            : ""
+                ? `
+                    <div class="memory-detail-location">
+                        📍 ${escapeHTML(
+                            memory.location
+                        )}
+                    </div>
+                `
+                : ""
         }
+
 
         <div class="memory-detail-story">
             ${
                 memory.description
-                ? escapeHTML(
-                    memory.description
-                )
-                : "No story written yet."
+                    ? escapeHTML(
+                        memory.description
+                    )
+                    : "No story written yet."
             }
         </div>
-
-        <div class="memory-detail-actions">
-
-            <button
-                type="button"
-                id="editMemoryButton"
-                class="memory-edit-button"
-            >
-                ✎ Edit Memory
-            </button>
-
-            <button
-                type="button"
-                id="deleteMemoryButton"
-                class="memory-delete-button"
-            >
-                🗑 Delete
-            </button>
-
-        </div>
     `;
+
+
+    memoryDetailActions.style.display =
+        "flex";
 
 
     memoryDetailModal.classList.add(
         "active"
     );
+}
 
 
-    document
-        .getElementById(
-            "editMemoryButton"
-        )
-        .addEventListener(
-            "click",
-            () => {
+// =====================================================
+// EDIT BUTTON
+// =====================================================
 
-                showEditForm(
-                    memory
-                );
+if (editMemoryButton) {
 
+    editMemoryButton.addEventListener(
+        "click",
+        () => {
+
+            if (!currentMemory) {
+                return;
             }
-        );
 
 
-    document
-        .getElementById(
-            "deleteMemoryButton"
-        )
-        .addEventListener(
-            "click",
-            () => {
+            showEditForm(
+                currentMemory
+            );
 
-                deleteMemory(
-                    memory
-                );
+        }
+    );
+}
 
+
+// =====================================================
+// DELETE BUTTON
+// =====================================================
+
+if (deleteMemoryButton) {
+
+    deleteMemoryButton.addEventListener(
+        "click",
+        () => {
+
+            if (!currentMemory) {
+                return;
             }
-        );
+
+
+            deleteMemory(
+                currentMemory
+            );
+
+        }
+    );
 }
 
 
@@ -412,17 +457,27 @@ function showMemoryDetail(
 // EDIT FORM
 // =====================================================
 
-function showEditForm(memory) {
+function showEditForm(
+    memory
+) {
+
+    memoryDetailActions.style.display =
+        "none";
+
 
     memoryDetailContent.innerHTML = `
 
-        <div class="memory-form">
+        <form
+            id="editMemoryForm"
+            class="memory-form"
+        >
 
             <h2>
                 Edit Memory ✦
             </h2>
 
-            <label>
+
+            <label for="editTitle">
                 Title
             </label>
 
@@ -432,10 +487,11 @@ function showEditForm(memory) {
                 value="${escapeAttribute(
                     memory.title
                 )}"
+                required
             >
 
 
-            <label>
+            <label for="editDate">
                 Date
             </label>
 
@@ -446,7 +502,7 @@ function showEditForm(memory) {
             >
 
 
-            <label>
+            <label for="editLocation">
                 Location
             </label>
 
@@ -459,7 +515,7 @@ function showEditForm(memory) {
             >
 
 
-            <label>
+            <label for="editDescription">
                 Story
             </label>
 
@@ -473,41 +529,46 @@ function showEditForm(memory) {
             <div class="memory-detail-actions">
 
                 <button
-                    type="button"
-                    id="saveEditButton"
+                    type="submit"
                     class="memory-edit-button"
+                    id="saveEditButton"
                 >
                     Save Changes
                 </button>
 
+
                 <button
                     type="button"
-                    id="cancelEditButton"
                     class="memory-delete-button"
+                    id="cancelEditButton"
                 >
                     Cancel
                 </button>
 
             </div>
 
-        </div>
+        </form>
     `;
 
 
-    document
-        .getElementById(
-            "saveEditButton"
-        )
-        .addEventListener(
-            "click",
-            () => {
-
-                updateMemory(
-                    memory
-                );
-
-            }
+    const editForm =
+        document.getElementById(
+            "editMemoryForm"
         );
+
+
+    editForm.addEventListener(
+        "submit",
+        async (event) => {
+
+            event.preventDefault();
+
+            await updateMemory(
+                memory
+            );
+
+        }
+    );
 
 
     document
@@ -577,6 +638,7 @@ async function updateMemory(
             "Memory title cannot be empty."
         );
 
+
         return;
     }
 
@@ -596,25 +658,26 @@ async function updateMemory(
     const {
         data,
         error
-    } = await supabaseClient.rpc(
-        "update_my_memory",
-        {
-            p_memory_id:
-                memory.id,
+    } =
+        await supabaseClient.rpc(
+            "update_my_memory",
+            {
+                p_memory_id:
+                    memory.id,
 
-            p_title:
-                title,
+                p_title:
+                    title,
 
-            p_description:
-                description || null,
+                p_description:
+                    description || null,
 
-            p_memory_date:
-                date || null,
+                p_memory_date:
+                    date || null,
 
-            p_location:
-                location || null
-        }
-    );
+                p_location:
+                    location || null
+            }
+        );
 
 
     if (error) {
@@ -624,14 +687,17 @@ async function updateMemory(
             error
         );
 
+
         alert(
             "Failed to update memory."
         );
+
 
         button.disabled = false;
 
         button.textContent =
             "Save Changes";
+
 
         return;
     }
@@ -640,11 +706,6 @@ async function updateMemory(
     console.log(
         "Memory updated:",
         data
-    );
-
-
-    alert(
-        "Memory updated ✦"
     );
 
 
@@ -674,90 +735,49 @@ async function deleteMemory(
     }
 
 
+    deleteMemoryButton.disabled =
+        true;
+
+    deleteMemoryButton.textContent =
+        "Deleting...";
+
+
     try {
 
         // =============================================
-        // GET PHOTOS
+        // GET PHOTO PATHS
         // =============================================
 
         const {
             data: photos,
             error: photoError
-        } = await supabaseClient
-            .from("memory_photos")
-            .select(
-                "id, file_path"
-            )
-            .eq(
-                "memory_id",
-                memory.id
-            );
+        } =
+            await supabaseClient
+                .from("memory_photos")
+                .select(
+                    "id, file_path"
+                )
+                .eq(
+                    "memory_id",
+                    memory.id
+                );
 
 
         if (photoError) {
 
-            console.error(
-                "Get photos error:",
-                photoError
-            );
-
-            alert(
-                "Failed to prepare deletion."
-            );
-
-            return;
+            throw photoError;
         }
 
 
-        // =============================================
-        // DELETE STORAGE FILES
-        // =============================================
-
-        if (
-            photos &&
-            photos.length > 0
-        ) {
-
-            const paths =
-                photos
+        const paths =
+            photos
+                ? photos
                     .map(
                         photo =>
                             photo.file_path
                     )
-                    .filter(Boolean);
-
-
-            if (paths.length > 0) {
-
-                const {
-                    error:
-                        storageError
-                } =
-                    await supabaseClient
-                        .storage
-                        .from(
-                            "memory-photos"
-                        )
-                        .remove(
-                            paths
-                        );
-
-
-                if (storageError) {
-
-                    console.error(
-                        "Storage delete error:",
-                        storageError
-                    );
-
-                    alert(
-                        "Failed to delete memory photo."
-                    );
-
-                    return;
-                }
-            }
-        }
+                    .filter(Boolean)
+                : [];
 
 
         // =============================================
@@ -767,43 +787,59 @@ async function deleteMemory(
         const {
             data,
             error
-        } = await supabaseClient.rpc(
-            "delete_my_memory",
-            {
-                p_memory_id:
-                    memory.id
-            }
-        );
+        } =
+            await supabaseClient.rpc(
+                "delete_my_memory",
+                {
+                    p_memory_id:
+                        memory.id
+                }
+            );
 
 
         if (error) {
 
-            console.error(
-                "Delete memory error:",
-                error
-            );
-
-            alert(
-                "Failed to delete memory."
-            );
-
-            return;
+            throw error;
         }
 
 
-        if (!data) {
-
-            alert(
-                "Memory was not found."
-            );
-
-            return;
-        }
-
-
-        alert(
-            "Memory deleted ✦"
+        console.log(
+            "Memory deleted:",
+            data
         );
+
+
+        // =============================================
+        // DELETE STORAGE FILES
+        // =============================================
+
+        if (
+            paths.length > 0
+        ) {
+
+            const {
+                error:
+                    storageError
+            } =
+                await supabaseClient
+                    .storage
+                    .from(
+                        "memory-photos"
+                    )
+                    .remove(
+                        paths
+                    );
+
+
+            if (storageError) {
+
+                console.warn(
+                    "Storage cleanup warning:",
+                    storageError
+                );
+
+            }
+        }
 
 
         closeDetailModal();
@@ -815,19 +851,27 @@ async function deleteMemory(
     } catch (error) {
 
         console.error(
-            "Unexpected delete error:",
+            "Delete memory error:",
             error
         );
 
+
         alert(
-            "Something went wrong."
+            "Failed to delete memory."
         );
+
+
+        deleteMemoryButton.disabled =
+            false;
+
+        deleteMemoryButton.textContent =
+            "🗑 Delete";
     }
 }
 
 
 // =====================================================
-// ADD MEMORY
+// ADD MEMORY BUTTON
 // =====================================================
 
 if (addMemoryButton) {
@@ -846,7 +890,7 @@ if (addMemoryButton) {
 
 
 // =====================================================
-// CLOSE ADD MODAL
+// CLOSE ADD MEMORY
 // =====================================================
 
 if (closeMemoryModal) {
@@ -865,7 +909,7 @@ if (closeMemoryModal) {
 
 
 // =====================================================
-// ADD MEMORY FORM
+// ADD MEMORY
 // =====================================================
 
 if (memoryForm) {
@@ -880,14 +924,18 @@ if (memoryForm) {
             const title =
                 memoryTitle.value.trim();
 
+
             const date =
                 memoryDate.value;
+
 
             const location =
                 memoryLocation.value.trim();
 
+
             const description =
                 memoryDescription.value.trim();
+
 
             const photoFile =
                 memoryPhoto.files[0];
@@ -898,6 +946,7 @@ if (memoryForm) {
                 alert(
                     "Please enter a title."
                 );
+
 
                 return;
             }
@@ -950,6 +999,14 @@ if (memoryForm) {
                 }
 
 
+                if (!memory) {
+
+                    throw new Error(
+                        "Memory was not created."
+                    );
+                }
+
+
                 // =====================================
                 // UPLOAD PHOTO
                 // =====================================
@@ -969,7 +1026,7 @@ if (memoryForm) {
                     if (!user) {
 
                         throw new Error(
-                            "User not logged in"
+                            "User not logged in."
                         );
                     }
 
@@ -993,7 +1050,8 @@ if (memoryForm) {
                     const extension =
                         photoFile.name
                             .split(".")
-                            .pop();
+                            .pop()
+                            .toLowerCase();
 
 
                     const fileName =
@@ -1034,7 +1092,6 @@ if (memoryForm) {
                                 "memory_photos"
                             )
                             .insert({
-
                                 memory_id:
                                     memory.id,
 
@@ -1043,7 +1100,6 @@ if (memoryForm) {
 
                                 display_order:
                                     0
-
                             });
 
 
@@ -1064,11 +1120,6 @@ if (memoryForm) {
                 );
 
 
-                alert(
-                    "Memory saved ✦"
-                );
-
-
                 await loadMemories();
 
 
@@ -1079,9 +1130,11 @@ if (memoryForm) {
                     error
                 );
 
+
                 alert(
                     "Failed to save memory."
                 );
+
 
             } finally {
 
@@ -1113,6 +1166,14 @@ function closeDetailModal() {
     );
 
 
+    memoryDetailContent.innerHTML =
+        "";
+
+
+    memoryDetailActions.style.display =
+        "none";
+
+
     currentMemory = null;
 
     currentMemoryImageUrl = "";
@@ -1129,7 +1190,7 @@ if (closeMemoryDetail) {
 
 
 // =====================================================
-// CLOSE WHEN CLICK OUTSIDE
+// CLICK OUTSIDE MODAL
 // =====================================================
 
 if (memoryDetailModal) {
@@ -1175,7 +1236,7 @@ if (addMemoryModal) {
 
 
 // =====================================================
-// FORMAT DATE
+// DATE FORMAT
 // =====================================================
 
 function formatMemoryDate(
@@ -1194,14 +1255,16 @@ function formatMemoryDate(
         );
 
 
-    return date.toLocaleDateString(
-        "en-US",
-        {
-            month: "long",
-            day: "numeric",
-            year: "numeric"
-        }
-    ).toUpperCase();
+    return date
+        .toLocaleDateString(
+            "en-US",
+            {
+                month: "long",
+                day: "numeric",
+                year: "numeric"
+            }
+        )
+        .toUpperCase();
 }
 
 
@@ -1209,7 +1272,9 @@ function formatMemoryDate(
 // SECURITY
 // =====================================================
 
-function escapeHTML(value) {
+function escapeHTML(
+    value
+) {
 
     if (
         value === null ||
@@ -1244,9 +1309,13 @@ function escapeHTML(value) {
 }
 
 
-function escapeAttribute(value) {
+function escapeAttribute(
+    value
+) {
 
-    return escapeHTML(value);
+    return escapeHTML(
+        value
+    );
 }
 
 
