@@ -1,150 +1,345 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Our Letters — Our Little Universe</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="style.css">
+    <title>
+        Our Letters — Our Little Universe
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
     <style>
 
+        /* ==========================================
+           PAGE
+        ========================================== */
+
         .letters-page {
             min-height: 100vh;
-            padding: 120px 20px 80px;
+
+            padding:
+                130px
+                25px
+                80px;
         }
+
 
         .letters-header {
             text-align: center;
-            margin-bottom: 50px;
+
+            margin-bottom: 40px;
         }
+
 
         .letters-header h1 {
-            font-size: 42px;
-            margin-bottom: 10px;
+            margin: 0 0 12px;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 46px;
+
+            font-weight: 400;
+
+            color: #f4f1ff;
         }
+
 
         .letters-header p {
-            color: #aaa;
+            margin: 0;
+
+            color: #aaa5bd;
+
+            font-size: 15px;
         }
+
+
+        /* ==========================================
+           CREATE BUTTON
+        ========================================== */
 
         .letter-create-button {
+
             display: block;
-            margin: 0 auto 50px;
+
+            margin:
+                0
+                auto
+                50px;
 
             border: none;
-            padding: 13px 24px;
+
             border-radius: 999px;
 
-            background: linear-gradient(
-                135deg,
-                #7770dc,
-                #966bd0
-            );
+            padding:
+                14px
+                27px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7074db,
+                    #9464d0
+                );
 
             color: white;
+
+            font-size: 15px;
+
             font-weight: 600;
+
             cursor: pointer;
 
-            transition: 0.2s ease;
+            box-shadow:
+                0
+                10px
+                30px
+                rgba(
+                    90,
+                    75,
+                    190,
+                    0.22
+                );
+
+            transition:
+                transform
+                0.2s ease,
+                box-shadow
+                0.2s ease;
         }
+
 
         .letter-create-button:hover {
-            transform: translateY(-2px);
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0
+                14px
+                35px
+                rgba(
+                    90,
+                    75,
+                    190,
+                    0.30
+                );
         }
+
+
+        /* ==========================================
+           LETTERS CONTAINER
+        ========================================== */
 
         .letters-container {
-            max-width: 900px;
-            margin: auto;
+
+            max-width:
+                1000px;
+
+            margin:
+                0
+                auto;
 
             display: grid;
-            grid-template-columns:
-                repeat(2, minmax(0, 1fr));
 
-            gap: 24px;
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap: 25px;
         }
 
+
+        /* ==========================================
+           LETTER CARD
+        ========================================== */
+
         .letter-card {
+
             position: relative;
 
-            padding: 26px;
+            padding: 28px;
 
-            border-radius: 22px;
+            min-height: 220px;
 
-            background: rgba(
-                255,
-                255,
-                255,
-                0.055
-            );
+            box-sizing: border-box;
 
-            border: 1px solid rgba(
-                255,
-                255,
-                255,
-                0.1
-            );
+            border-radius: 23px;
 
-            backdrop-filter: blur(12px);
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.045
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.10
+                );
+
+            backdrop-filter:
+                blur(12px);
+
+            -webkit-backdrop-filter:
+                blur(12px);
 
             cursor: pointer;
 
-            transition: 0.25s ease;
+            transition:
+                transform
+                0.25s ease,
+                border-color
+                0.25s ease,
+                background
+                0.25s ease;
         }
+
 
         .letter-card:hover {
-            transform: translateY(-4px);
 
-            border-color: rgba(
-                155,
-                140,
-                255,
-                0.4
-            );
+            transform:
+                translateY(-5px);
+
+            border-color:
+                rgba(
+                    145,
+                    130,
+                    255,
+                    0.40
+                );
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.065
+                );
         }
 
+
         .letter-envelope {
-            font-size: 30px;
+
+            font-size: 31px;
+
             margin-bottom: 15px;
         }
 
+
         .letter-to {
-            font-size: 12px;
-            color: #9d91ff;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+
+            margin-bottom: 7px;
+
+            color:
+                #a29aff;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            letter-spacing:
+                1.4px;
+
+            text-transform:
+                uppercase;
         }
+
 
         .letter-title {
-            font-size: 21px;
-            margin: 8px 0;
+
+            margin:
+                0
+                0
+                12px;
+
+            color:
+                #f2effa;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 25px;
+
+            font-weight: 400;
         }
 
-        .letter-preview {
-            color: #bbb;
-            line-height: 1.6;
 
-            display: -webkit-box;
+        .letter-preview {
+
+            color:
+                #aaa7b7;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            display:
+                -webkit-box;
+
             -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
+
+            -webkit-box-orient:
+                vertical;
 
             overflow: hidden;
         }
 
-        .letter-from {
-            margin-top: 18px;
 
-            color: #888;
+        .letter-from {
+
+            margin-top: 20px;
+
+            color:
+                #817d92;
+
             font-size: 13px;
         }
 
-        .letters-empty {
-            grid-column: 1 / -1;
 
-            text-align: center;
-            color: #aaa;
-            padding: 60px 20px;
+        /* ==========================================
+           EMPTY STATE
+        ========================================== */
+
+        .letters-empty {
+
+            grid-column:
+                1 / -1;
+
+            text-align:
+                center;
+
+            padding:
+                70px
+                20px;
+
+            color:
+                #9995aa;
         }
 
 
@@ -153,198 +348,497 @@
         ========================================== */
 
         .letter-modal {
+
             position: fixed;
+
             inset: 0;
 
+            z-index: 1000;
+
             display: none;
+
             align-items: center;
+
             justify-content: center;
 
             padding: 20px;
 
-            background: rgba(
-                5,
-                5,
-                20,
-                0.78
-            );
+            box-sizing: border-box;
 
-            backdrop-filter: blur(8px);
+            background:
+                rgba(
+                    5,
+                    5,
+                    20,
+                    0.80
+                );
 
-            z-index: 999;
+            backdrop-filter:
+                blur(9px);
+
+            -webkit-backdrop-filter:
+                blur(9px);
         }
 
+
         .letter-modal.active {
+
             display: flex;
         }
 
+
         .letter-box {
+
             position: relative;
 
-            width: min(
-                600px,
-                100%
-            );
+            width:
+                min(
+                    820px,
+                    100%
+                );
 
-            max-height: 90vh;
-            overflow-y: auto;
+            max-height:
+                88vh;
 
-            padding: 32px;
+            overflow-y:
+                auto;
 
-            border-radius: 24px;
+            box-sizing:
+                border-box;
 
-            background: #17162d;
+            padding:
+                34px;
 
-            border: 1px solid rgba(
-                255,
-                255,
-                255,
-                0.12
-            );
+            border-radius:
+                25px;
+
+            background:
+                #18172f;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.12
+                );
 
             box-shadow:
-                0 25px 80px rgba(
+                0
+                30px
+                90px
+                rgba(
                     0,
                     0,
                     0,
-                    0.45
+                    0.55
                 );
         }
 
+
         .letter-close {
+
             position: absolute;
 
-            top: 15px;
-            right: 18px;
+            top: 16px;
+
+            right: 20px;
+
+            z-index: 5;
+
+            width: 35px;
+
+            height: 35px;
 
             border: none;
-            background: none;
 
-            color: #aaa;
+            background:
+                transparent;
 
-            font-size: 28px;
+            color:
+                #aaa;
+
+            font-size:
+                29px;
+
+            line-height: 1;
+
             cursor: pointer;
         }
 
-        .letter-box h2 {
-            margin-top: 0;
+
+        .letter-close:hover {
+
+            color: white;
         }
 
+
+        /* ==========================================
+           FORM
+        ========================================== */
+
         .letter-form {
+
             display: flex;
-            flex-direction: column;
+
+            flex-direction:
+                column;
+
             gap: 10px;
         }
 
-        .letter-form label {
-            margin-top: 8px;
 
-            font-size: 13px;
-            color: #aaa;
+        .letter-form h2 {
+
+            margin:
+                0
+                0
+                15px;
+
+            color:
+                #f4f1ff;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size:
+                32px;
+
+            font-weight:
+                400;
         }
 
-        .letter-form input,
+
+        .letter-form label {
+
+            margin-top:
+                9px;
+
+            color:
+                #aaa6b9;
+
+            font-size:
+                14px;
+        }
+
+
         .letter-form select,
+        .letter-form input,
         .letter-form textarea {
 
             width: 100%;
-            box-sizing: border-box;
 
-            padding: 12px 14px;
+            box-sizing:
+                border-box;
 
-            border-radius: 10px;
+            padding:
+                13px
+                15px;
 
-            border: 1px solid rgba(
-                255,
-                255,
-                255,
-                0.12
-            );
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.11
+                );
 
-            background: rgba(
-                255,
-                255,
-                255,
-                0.05
-            );
+            border-radius:
+                11px;
 
-            color: white;
+            outline:
+                none;
 
-            font-family: inherit;
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.055
+                );
 
-            outline: none;
+            color:
+                #eee;
+
+            font-family:
+                inherit;
+
+            font-size:
+                14px;
         }
+
+
+        .letter-form select:focus,
+        .letter-form input:focus,
+        .letter-form textarea:focus {
+
+            border-color:
+                #8175df;
+        }
+
 
         .letter-form select option {
-            background: #17162d;
-            color: white;
+
+            background:
+                #211f3a;
+
+            color:
+                white;
         }
+
 
         .letter-form textarea {
-            resize: vertical;
-            min-height: 180px;
+
+            min-height:
+                250px;
+
+            resize:
+                vertical;
+
+            line-height:
+                1.7;
         }
+
 
         .letter-save-button {
-            margin-top: 15px;
 
-            border: none;
+            width: 100%;
 
-            padding: 13px 20px;
+            margin-top:
+                18px;
 
-            border-radius: 999px;
+            border:
+                none;
 
-            background: linear-gradient(
-                135deg,
-                #7770dc,
-                #966bd0
-            );
+            border-radius:
+                999px;
 
-            color: white;
+            padding:
+                15px
+                20px;
 
-            font-weight: 600;
+            background:
+                linear-gradient(
+                    135deg,
+                    #7074db,
+                    #9665d0
+                );
 
-            cursor: pointer;
+            color:
+                white;
+
+            font-size:
+                15px;
+
+            font-weight:
+                600;
+
+            cursor:
+                pointer;
+
+            transition:
+                transform
+                0.2s ease,
+                opacity
+                0.2s ease;
         }
+
+
+        .letter-save-button:hover {
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        .letter-save-button:disabled {
+
+            opacity:
+                0.5;
+
+            cursor:
+                not-allowed;
+
+            transform:
+                none;
+        }
+
+
+        /* ==========================================
+           LETTER DETAIL
+        ========================================== */
 
         .letter-detail-content {
-            white-space: pre-wrap;
 
-            line-height: 1.9;
+            max-width:
+                720px;
 
-            color: #ddd;
+            margin:
+                0
+                auto;
 
-            margin-top: 25px;
+            text-align:
+                center;
         }
+
+
+        .letter-detail-content
+        .letter-envelope {
+
+            font-size:
+                48px;
+
+            margin-bottom:
+                20px;
+        }
+
+
+        .letter-detail-content h2 {
+
+            margin:
+                0
+                0
+                15px;
+
+            color:
+                #f4f1ff;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size:
+                38px;
+
+            font-weight:
+                400;
+        }
+
 
         .letter-detail-meta {
-            color: #9d91ff;
-            font-size: 13px;
-            margin-top: 8px;
+
+            margin-bottom:
+                30px;
+
+            color:
+                #928da5;
+
+            font-size:
+                13px;
+
+            line-height:
+                1.7;
         }
 
+
+        .letter-detail-body {
+
+            text-align:
+                left;
+
+            padding:
+                28px;
+
+            border-radius:
+                18px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.035
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.07
+                );
+
+            color:
+                #d5d1df;
+
+            font-size:
+                15px;
+
+            line-height:
+                1.9;
+
+            white-space:
+                pre-wrap;
+        }
+
+
+        /* ==========================================
+           MOBILE
+        ========================================== */
 
         @media (max-width: 700px) {
 
             .letters-page {
-                padding-top: 100px;
+
+                padding:
+                    120px
+                    18px
+                    60px;
             }
+
 
             .letters-header h1 {
-                font-size: 32px;
+
+                font-size:
+                    35px;
             }
 
+
             .letters-container {
-                grid-template-columns: 1fr;
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .letter-box {
+
+                padding:
+                    25px;
+
+                max-height:
+                    90vh;
+            }
+
+
+            .letter-form h2 {
+
+                font-size:
+                    28px;
+            }
+
+
+            .letter-detail-content h2 {
+
+                font-size:
+                    30px;
             }
 
         }
 
     </style>
+
 </head>
 
 
 <body>
+
 
     <!-- ==========================================
          NAVBAR
@@ -355,6 +849,7 @@
         <div class="logo">
             Our Little Universe ✦
         </div>
+
 
         <div class="nav-links">
 
@@ -370,21 +865,33 @@
                 Timeline
             </a>
 
-            <a href="letters.html"
-               class="active">
+            <a
+                href="letters.html"
+                class="active"
+            >
                 Letters
             </a>
 
         </div>
 
+
+        <button
+            id="logoutButton"
+            class="logout-button"
+        >
+            Logout
+        </button>
+
     </nav>
 
 
+
     <!-- ==========================================
-         PAGE
+         MAIN
     ========================================== -->
 
     <main class="letters-page">
+
 
         <header class="letters-header">
 
@@ -393,19 +900,22 @@
             </h1>
 
             <p>
-                little words we don't always say out loud
+                little words we want to keep forever
             </p>
 
         </header>
 
 
         <button
+            type="button"
             id="createLetterButton"
             class="letter-create-button"
         >
-            ✦ Write a Letter
+            + Write a Letter
         </button>
 
+
+        <!-- LETTER LIST -->
 
         <section
             id="lettersContainer"
@@ -418,7 +928,9 @@
 
         </section>
 
+
     </main>
+
 
 
     <!-- ==========================================
@@ -432,7 +944,9 @@
 
         <div class="letter-box">
 
+
             <button
+                type="button"
                 id="closeLetterModal"
                 class="letter-close"
             >
@@ -440,33 +954,41 @@
             </button>
 
 
-            <h2>
-                Write a Letter 💌
-            </h2>
-
-
             <form
                 id="letterForm"
                 class="letter-form"
             >
 
-                <label>
+                <h2>
+                    Write a Letter 💌
+                </h2>
+
+
+                <label
+                    for="letterRecipient"
+                >
                     To
                 </label>
+
 
                 <select
                     id="letterRecipient"
                     required
                 >
+
                     <option value="">
                         Choose someone...
                     </option>
+
                 </select>
 
 
-                <label>
+                <label
+                    for="letterTitle"
+                >
                     Title
                 </label>
+
 
                 <input
                     type="text"
@@ -476,9 +998,12 @@
                 >
 
 
-                <label>
+                <label
+                    for="letterContent"
+                >
                     Your letter
                 </label>
+
 
                 <textarea
                     id="letterContent"
@@ -501,8 +1026,9 @@
     </div>
 
 
+
     <!-- ==========================================
-         DETAIL LETTER MODAL
+         LETTER DETAIL MODAL
     ========================================== -->
 
     <div
@@ -512,24 +1038,30 @@
 
         <div class="letter-box">
 
+
             <button
+                type="button"
                 id="closeLetterDetail"
                 class="letter-close"
             >
                 ×
             </button>
 
+
             <div
                 id="letterDetailContent"
+                class="letter-detail-content"
             ></div>
+
 
         </div>
 
     </div>
 
 
+
     <!-- ==========================================
-         SUPABASE
+         SCRIPTS
     ========================================== -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -538,632 +1070,9 @@
 
     <script src="auth.js"></script>
 
+    <script src="letters.js"></script>
 
-    <!-- ==========================================
-         LETTER SCRIPT
-    ========================================== -->
-
-    <script>
-
-        const lettersContainer =
-            document.getElementById(
-                "lettersContainer"
-            );
-
-        const createLetterButton =
-            document.getElementById(
-                "createLetterButton"
-            );
-
-        const letterModal =
-            document.getElementById(
-                "letterModal"
-            );
-
-        const closeLetterModal =
-            document.getElementById(
-                "closeLetterModal"
-            );
-
-        const letterForm =
-            document.getElementById(
-                "letterForm"
-            );
-
-        const letterRecipient =
-            document.getElementById(
-                "letterRecipient"
-            );
-
-        const letterTitle =
-            document.getElementById(
-                "letterTitle"
-            );
-
-        const letterContent =
-            document.getElementById(
-                "letterContent"
-            );
-
-        const letterDetailModal =
-            document.getElementById(
-                "letterDetailModal"
-            );
-
-        const closeLetterDetail =
-            document.getElementById(
-                "closeLetterDetail"
-            );
-
-        const letterDetailContent =
-            document.getElementById(
-                "letterDetailContent"
-            );
-
-
-        let currentUser = null;
-
-
-        // ==========================================
-        // GET CURRENT USER
-        // ==========================================
-
-        async function getCurrentUser() {
-
-            const {
-                data: {
-                    user
-                }
-            } =
-                await supabaseClient
-                    .auth
-                    .getUser();
-
-
-            currentUser = user;
-
-            return user;
-        }
-
-
-        // ==========================================
-        // LOAD MEMBERS
-        // ==========================================
-
-        async function loadMembers() {
-
-            if (!currentUser) {
-                return;
-            }
-
-
-            const {
-                data,
-                error
-            } = await supabaseClient
-                .from("universe_members")
-                .select("user_id")
-                .eq(
-                    "universe_id",
-                    "e6df9aea-780d-4784-a4ef-12710647444d"
-                );
-
-
-            if (error) {
-
-                console.error(
-                    "Members error:",
-                    error
-                );
-
-                return;
-            }
-
-
-            letterRecipient.innerHTML = `
-                <option value="">
-                    Choose someone...
-                </option>
-            `;
-
-
-            for (const member of data) {
-
-                if (
-                    member.user_id ===
-                    currentUser.id
-                ) {
-                    continue;
-                }
-
-
-                const option =
-                    document.createElement(
-                        "option"
-                    );
-
-                option.value =
-                    member.user_id;
-
-                option.textContent =
-                    getPersonName(
-                        member.user_id
-                    );
-
-                letterRecipient.appendChild(
-                    option
-                );
-            }
-        }
-
-
-        // ==========================================
-        // PERSON NAME
-        // ==========================================
-
-        function getPersonName(userId) {
-
-            if (
-                userId ===
-                "81cb9fd4-d4e4-40ae-93f2-f78e8054e34e"
-            ) {
-
-                return "Mey 💜";
-
-            }
-
-
-            if (
-                userId ===
-                "b6e48bbd-6547-4df3-a2d4-468507a78994"
-            ) {
-
-                return "Ian 💙";
-
-            }
-
-
-            return "My favorite person ✦";
-        }
-
-
-        // ==========================================
-        // LOAD LETTERS
-        // ==========================================
-
-        async function loadLetters() {
-
-            const {
-                data,
-                error
-            } = await supabaseClient
-                .from("letters")
-                .select("*")
-                .order(
-                    "created_at",
-                    {
-                        ascending: false
-                    }
-                );
-
-
-            if (error) {
-
-                console.error(
-                    "Letters error:",
-                    error
-                );
-
-                lettersContainer.innerHTML = `
-                    <div class="letters-empty">
-                        Failed to load our letters.
-                    </div>
-                `;
-
-                return;
-            }
-
-
-            if (
-                !data ||
-                data.length === 0
-            ) {
-
-                lettersContainer.innerHTML = `
-                    <div class="letters-empty">
-                        No letters yet 💌
-                    </div>
-                `;
-
-                return;
-            }
-
-
-            lettersContainer.innerHTML = "";
-
-
-            data.forEach(
-                createLetterCard
-            );
-        }
-
-
-        // ==========================================
-        // CREATE LETTER CARD
-        // ==========================================
-
-        function createLetterCard(letter) {
-
-            const card =
-                document.createElement(
-                    "article"
-                );
-
-
-            card.className =
-                "letter-card";
-
-
-            card.innerHTML = `
-
-                <div class="letter-envelope">
-                    💌
-                </div>
-
-                <div class="letter-to">
-                    To ${escapeHTML(
-                        getPersonName(
-                            letter.recipient_id
-                        )
-                    )}
-                </div>
-
-                <h2 class="letter-title">
-                    ${escapeHTML(
-                        letter.title
-                    )}
-                </h2>
-
-                <div class="letter-preview">
-                    ${escapeHTML(
-                        letter.content
-                    )}
-                </div>
-
-                <div class="letter-from">
-                    — ${escapeHTML(
-                        getPersonName(
-                            letter.sender_id
-                        )
-                    )}
-                </div>
-            `;
-
-
-            card.addEventListener(
-                "click",
-                () => {
-
-                    showLetterDetail(
-                        letter
-                    );
-
-                }
-            );
-
-
-            lettersContainer.appendChild(
-                card
-            );
-        }
-
-
-        // ==========================================
-        // DETAIL
-        // ==========================================
-
-        function showLetterDetail(letter) {
-
-            letterDetailContent.innerHTML = `
-
-                <div class="letter-envelope">
-                    💌
-                </div>
-
-                <h2>
-                    ${escapeHTML(
-                        letter.title
-                    )}
-                </h2>
-
-                <div class="letter-detail-meta">
-                    From ${escapeHTML(
-                        getPersonName(
-                            letter.sender_id
-                        )
-                    )}
-                    ·
-                    To ${escapeHTML(
-                        getPersonName(
-                            letter.recipient_id
-                        )
-                    )}
-                </div>
-
-                <div class="letter-detail-content">
-                    ${escapeHTML(
-                        letter.content
-                    )}
-                </div>
-
-            `;
-
-
-            letterDetailModal.classList.add(
-                "active"
-            );
-        }
-
-
-        // ==========================================
-        // CREATE LETTER
-        // ==========================================
-
-        createLetterButton.addEventListener(
-            "click",
-            async () => {
-
-                await loadMembers();
-
-                letterModal.classList.add(
-                    "active"
-                );
-
-            }
-        );
-
-
-        // ==========================================
-        // CLOSE CREATE MODAL
-        // ==========================================
-
-        closeLetterModal.addEventListener(
-            "click",
-            () => {
-
-                letterModal.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-        // ==========================================
-        // CLOSE DETAIL
-        // ==========================================
-
-        closeLetterDetail.addEventListener(
-            "click",
-            () => {
-
-                letterDetailModal.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-        // ==========================================
-        // CREATE LETTER SUBMIT
-        // ==========================================
-
-        letterForm.addEventListener(
-            "submit",
-            async (event) => {
-
-                event.preventDefault();
-
-
-                if (!currentUser) {
-
-                    alert(
-                        "You are not logged in."
-                    );
-
-                    return;
-                }
-
-
-                const recipientId =
-                    letterRecipient.value;
-
-                const title =
-                    letterTitle.value.trim();
-
-                const content =
-                    letterContent.value.trim();
-
-
-                if (
-                    !recipientId ||
-                    !title ||
-                    !content
-                ) {
-
-                    alert(
-                        "Please complete the letter."
-                    );
-
-                    return;
-                }
-
-
-                const button =
-                    letterForm.querySelector(
-                        'button[type="submit"]'
-                    );
-
-
-                button.disabled = true;
-
-                button.textContent =
-                    "Saving...";
-
-
-                try {
-
-                    // ==================================
-                    // GET UNIVERSE
-                    // ==================================
-
-                    const {
-                        data: universeId,
-                        error: universeError
-                    } =
-                        await supabaseClient
-                            .rpc(
-                                "get_my_universe_id"
-                            );
-
-
-                    if (universeError) {
-
-                        throw universeError;
-
-                    }
-
-
-                    // ==================================
-                    // INSERT
-                    // ==================================
-
-                    const {
-                        error
-                    } =
-                        await supabaseClient
-                            .from("letters")
-                            .insert({
-
-                                universe_id:
-                                    universeId,
-
-                                sender_id:
-                                    currentUser.id,
-
-                                recipient_id:
-                                    recipientId,
-
-                                title:
-                                    title,
-
-                                content:
-                                    content
-
-                            });
-
-
-                    if (error) {
-
-                        throw error;
-
-                    }
-
-
-                    letterForm.reset();
-
-                    letterModal.classList.remove(
-                        "active"
-                    );
-
-
-                    alert(
-                        "Letter saved 💌"
-                    );
-
-
-                    await loadLetters();
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Create letter error:",
-                        error
-                    );
-
-                    alert(
-                        "Failed to save letter."
-                    );
-
-                } finally {
-
-                    button.disabled = false;
-
-                    button.textContent =
-                        "Save Letter ✦";
-
-                }
-
-            }
-        );
-
-
-        // ==========================================
-        // SECURITY HELPER
-        // ==========================================
-
-        function escapeHTML(value) {
-
-            if (
-                value === null ||
-                value === undefined
-            ) {
-                return "";
-            }
-
-
-            return String(value)
-                .replaceAll(
-                    "&",
-                    "&amp;"
-                )
-                .replaceAll(
-                    "<",
-                    "&lt;"
-                )
-                .replaceAll(
-                    ">",
-                    "&gt;"
-                )
-                .replaceAll(
-                    '"',
-                    "&quot;"
-                )
-                .replaceAll(
-                    "'",
-                    "&#039;"
-                );
-        }
-
-
-        // ==========================================
-        // START
-        // ==========================================
-
-        async function initLetters() {
-
-            await getCurrentUser();
-
-            await loadLetters();
-
-        }
-
-
-        initLetters();
-
-    </script>
 
 </body>
+
 </html>
