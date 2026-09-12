@@ -990,3 +990,157 @@ main {
         font-size: 15px;
     }
 }
+/* =========================================
+   OPEN LETTER ANIMATION
+========================================= */
+
+.open-letter-animation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 420px;
+}
+
+.big-envelope {
+    position: relative;
+    width: min(500px, 90vw);
+    min-height: 300px;
+}
+
+/* Envelope */
+
+.envelope-back {
+    position: absolute;
+    inset: 0;
+
+    border-radius: 18px;
+
+    background: linear-gradient(
+        145deg,
+        #5d4aa8,
+        #354f9c
+    );
+
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.35),
+        0 0 35px rgba(120, 100, 255, 0.18);
+}
+
+/* Paper */
+
+.envelope-paper {
+    position: relative;
+    z-index: 3;
+
+    width: 88%;
+    margin: auto;
+
+    padding: 35px;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    color: #302b52;
+
+    border-radius: 12px;
+
+    transform: translateY(35px);
+
+    animation: paperRise 0.7s ease forwards;
+}
+
+@keyframes paperRise {
+    from {
+        transform: translateY(80px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(35px);
+        opacity: 1;
+    }
+}
+
+.paper-content {
+    text-align: center;
+}
+
+.paper-heart {
+    font-size: 38px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.paper-content h2 {
+    color: #302b52;
+    margin-bottom: 12px;
+}
+
+.paper-content .letter-detail-meta {
+    color: #77728e;
+}
+
+.paper-content .letter-detail-body {
+    background: rgba(70, 60, 130, 0.06);
+    border: 1px solid rgba(70, 60, 130, 0.08);
+
+    color: #403b5f;
+
+    margin-top: 20px;
+}
+
+/* Flap */
+
+.envelope-flap {
+    position: absolute;
+    z-index: 5;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 150px;
+
+    background: linear-gradient(
+        135deg,
+        #6d58bb,
+        #4059a5
+    );
+
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        50% 100%
+    );
+
+    transform-origin: top center;
+
+    animation: flapOpen 0.7s ease forwards;
+}
+
+@keyframes flapOpen {
+    0% {
+        transform: rotateX(0deg);
+    }
+
+    100% {
+        transform: rotateX(180deg);
+        opacity: 0;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .open-letter-animation {
+        min-height: 350px;
+    }
+
+    .envelope-paper {
+        padding: 25px;
+    }
+
+    .envelope-flap {
+        height: 110px;
+    }
+}
