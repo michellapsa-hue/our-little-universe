@@ -1,306 +1,672 @@
+/* =====================================================
+   OUR LITTLE UNIVERSE
+   MAIN STYLE
+===================================================== */
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
+
+
+html {
+    scroll-behavior: smooth;
+}
+
 
 body {
     min-height: 100vh;
 
-    font-family: Arial, sans-serif;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
-    color: #f7f5ff;
+    color: #f4f1ff;
 
     background:
         radial-gradient(
-            circle at 20% 10%,
-            rgba(107, 83, 190, 0.35),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 80% 80%,
-            rgba(52, 83, 170, 0.35),
-            transparent 35%
-        ),
-        #080b24;
+            circle at 20% 15%,
+            #29245c 0%,
+            #17163d 32%,
+            #090b25 75%,
+            #07091c 100%
+        );
+
+    background-attachment: fixed;
 }
 
 
-/* =========================
+/* =====================================================
    NAVBAR
-========================= */
+===================================================== */
 
 .navbar {
-    width: 100%;
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 100;
+
+    height: 86px;
+
+    padding:
+        0
+        6%;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
-    padding: 25px 6%;
+    gap: 30px;
 
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background:
+        rgba(
+            9,
+            10,
+            35,
+            0.72
+        );
+
+    border-bottom:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.08
+        );
+
+    backdrop-filter:
+        blur(14px);
 }
+
+
+/* =====================================================
+   LOGO
+===================================================== */
 
 .logo {
-    color: white;
-    text-decoration: none;
+    color: #f5f2ff;
 
-    font-family: Georgia, serif;
-    font-size: 20px;
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 25px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
 }
 
-.navbar nav {
+
+/* =====================================================
+   NAV LINKS
+===================================================== */
+
+.nav-links {
     display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
     gap: 28px;
 }
 
-.navbar nav a {
-    color: rgba(255,255,255,0.65);
+
+.nav-links a {
+    color: #aaa4c8;
 
     text-decoration: none;
 
+    font-size: 14px;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.nav-links a:hover {
+    color: #ffffff;
+
+    transform:
+        translateY(-1px);
+}
+
+
+.nav-links a.active {
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+.logout-button {
+    border: 1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.16
+        );
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.06
+        );
+
+    color: #eeeaff;
+
+    padding:
+        9px
+        17px;
+
+    border-radius: 999px;
+
     font-size: 13px;
 
-    transition: 0.3s;
-}
-
-.navbar nav a:hover {
-    color: white;
-}
-
-.logout-btn {
-    border: 1px solid rgba(255,255,255,0.15);
-
-    background: rgba(255,255,255,0.05);
-
-    color: white;
-
-    padding: 9px 15px;
-
-    border-radius: 10px;
-
     cursor: pointer;
+
+    transition:
+        0.2s ease;
 }
 
 
-/* =========================
-   HOME
-========================= */
+.logout-button:hover {
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.12
+        );
 
-.home {
-    max-width: 1150px;
-
-    margin: auto;
-
-    padding: 80px 30px;
+    transform:
+        translateY(-2px);
 }
 
 
-/* =========================
+/* =====================================================
+   MAIN
+===================================================== */
+
+main {
+    width: 100%;
+}
+
+
+/* =====================================================
    HERO
-========================= */
+===================================================== */
 
 .hero {
-    max-width: 750px;
+    min-height: 650px;
 
-    margin: 50px auto 100px;
+    padding:
+        170px
+        30px
+        100px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
 
     text-align: center;
 }
 
-.small-title {
-    font-size: 11px;
 
-    letter-spacing: 5px;
+.hero-small {
+    margin-bottom: 14px;
 
-    color: #aaa2df;
+    color: #aaa5c4;
 
-    margin-bottom: 20px;
+    font-size: 14px;
+
+    letter-spacing: 3px;
 }
+
 
 .hero h1 {
-    font-family: Georgia, serif;
+    max-width: 1000px;
 
-    font-size: clamp(45px, 7vw, 78px);
+    margin-bottom: 25px;
 
-    font-weight: normal;
+    color: #f7f5ff;
 
-    line-height: 1.05;
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
-    margin-bottom: 30px;
+    font-size:
+        clamp(
+            55px,
+            8vw,
+            110px
+        );
+
+    font-weight: 400;
+
+    line-height: 0.95;
 }
 
-.hero-text {
-    max-width: 580px;
 
-    margin: auto;
+.hero-subtitle {
+    max-width: 600px;
 
-    color: rgba(255,255,255,0.65);
+    margin-bottom: 12px;
 
-    font-size: 16px;
+    color: #d0cde0;
 
-    line-height: 1.8;
+    font-size: 18px;
+
+    line-height: 1.6;
 }
 
-.enter-button {
-    display: inline-block;
 
-    margin-top: 65px;
+.hero-greeting {
+    margin-bottom: 25px;
 
-    padding: 14px 24px;
+    color: #aaa6c2;
 
-    border: 1px solid rgba(255,255,255,0.15);
+    font-size: 15px;
+}
 
-    border-radius: 30px;
 
-    background: linear-gradient(
-        135deg,
-        #5d69c9,
-        #8062bd
-    );
+#userName {
+    color: #eeeaff;
 
-    color: white;
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   HERO BUTTON
+===================================================== */
+
+.hero-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding:
+        14px
+        25px;
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6d70d8,
+            #8b61c7
+        );
+
+    color: #ffffff;
 
     text-decoration: none;
 
-    cursor: pointer;
+    font-size: 14px;
 
-    font-size: 13px;
+    font-weight: 600;
 
-    position: relative;
-    z-index: 10;
+    box-shadow:
+        0 10px 30px
+        rgba(
+            75,
+            65,
+            170,
+            0.25
+        );
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-/* =========================
-   CARDS
-========================= */
 
-.universe-menu {
+.hero-button:hover {
+    transform:
+        translateY(-3px);
 
+    box-shadow:
+        0 15px 35px
+        rgba(
+            75,
+            65,
+            170,
+            0.4
+        );
+}
+
+
+/* =====================================================
+   UNIVERSE SECTION
+===================================================== */
+
+.universe-section {
+    max-width: 1150px;
+
+    margin:
+        0 auto;
+
+    padding:
+        50px
+        30px
+        100px;
+}
+
+
+.universe-grid {
     display: grid;
 
     grid-template-columns:
-        repeat(3, 1fr);
+        repeat(
+            3,
+            1fr
+        );
 
-    gap: 18px;
+    gap: 25px;
 }
 
+
+/* =====================================================
+   UNIVERSE CARD
+===================================================== */
+
 .universe-card {
+    min-height: 220px;
 
-    min-height: 190px;
+    padding: 30px;
 
-    padding: 28px;
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    justify-content: center;
+
+    border-radius: 24px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.09
+        );
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                255,
+                255,
+                255,
+                0.06
+            ),
+            rgba(
+                255,
+                255,
+                255,
+                0.025
+            )
+        );
+
+    color: #ffffff;
 
     text-decoration: none;
 
-    color: white;
-
-    border: 1px solid rgba(255,255,255,0.09);
-
-    border-radius: 20px;
-
-    background: rgba(255,255,255,0.045);
-
-    backdrop-filter: blur(12px);
+    backdrop-filter:
+        blur(10px);
 
     transition:
-        transform 0.3s ease,
-        background 0.3s ease;
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
 }
+
 
 .universe-card:hover {
+    transform:
+        translateY(-7px);
 
-    transform: translateY(-6px);
+    border-color:
+        rgba(
+            145,
+            130,
+            240,
+            0.35
+        );
 
-    background: rgba(255,255,255,0.08);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                120,
+                110,
+                220,
+                0.13
+            ),
+            rgba(
+                255,
+                255,
+                255,
+                0.045
+            )
+        );
 }
+
 
 .card-icon {
-    display: block;
+    margin-bottom: 18px;
 
-    font-size: 27px;
-
-    margin-bottom: 25px;
+    font-size: 32px;
 }
+
 
 .universe-card h2 {
+    margin-bottom: 10px;
 
-    font-family: Georgia, serif;
+    color: #f5f2ff;
 
-    font-size: 22px;
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
-    font-weight: normal;
+    font-size: 26px;
 
-    margin-bottom: 9px;
+    font-weight: 400;
 }
+
 
 .universe-card p {
+    color: #9d9ab0;
 
-    color: rgba(255,255,255,0.5);
+    font-size: 14px;
 
-    font-size: 13px;
+    line-height: 1.6;
 }
 
 
-/* =========================
+/* =====================================================
    CLOSING
-========================= */
+===================================================== */
 
 .closing {
+    padding:
+        40px
+        20px
+        100px;
 
     text-align: center;
 
-    margin-top: 120px;
-
-    padding-bottom: 60px;
+    color: #89859e;
 }
 
-.closing span {
-
-    display: block;
-
-    color: #aaa2df;
-
-    margin-bottom: 20px;
-}
 
 .closing p {
+    margin-bottom: 18px;
 
-    font-family: Georgia, serif;
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
-    font-size: 24px;
+    font-size: 18px;
 
-    margin-bottom: 10px;
-}
-
-.closing small {
-
-    color: rgba(255,255,255,0.4);
-
-    font-size: 12px;
+    font-style: italic;
 }
 
 
-/* =========================
-   MOBILE
-========================= */
+.closing span {
+    color: #8c7ed9;
 
-@media (max-width: 800px) {
+    font-size: 20px;
+}
 
-    .navbar nav {
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .navbar {
+        padding:
+            0
+            30px;
+    }
+
+
+    .nav-links {
+        gap: 16px;
+    }
+
+
+    .universe-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                1fr
+            );
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .navbar {
+        height: auto;
+
+        min-height: 75px;
+
+        padding:
+            15px
+            18px;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+
+    .logo {
+        width: 100%;
+
+        text-align: center;
+
+        font-size: 21px;
+    }
+
+
+    .nav-links {
+        gap: 14px;
+
+        flex-wrap: wrap;
+    }
+
+
+    .nav-links a {
+        font-size: 13px;
+    }
+
+
+    .logout-button {
         display: none;
     }
 
-    .universe-menu {
-        grid-template-columns: 1fr;
-    }
-
-    .home {
-        padding: 50px 20px;
-    }
 
     .hero {
-        margin-top: 30px;
+        min-height: 600px;
+
+        padding:
+            150px
+            20px
+            80px;
     }
+
+
+    .hero h1 {
+        font-size:
+            clamp(
+                45px,
+                13vw,
+                70px
+            );
+    }
+
+
+    .hero-subtitle {
+        font-size: 16px;
+    }
+
+
+    .universe-section {
+        padding:
+            30px
+            18px
+            70px;
+    }
+
+
+    .universe-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .universe-card {
+        min-height: 190px;
+    }
+
 }
