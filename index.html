@@ -1,27 +1,309 @@
-<nav class="navbar">
+<!DOCTYPE html>
+<html lang="en">
 
-    <div class="logo">
-        Our Little Universe ✦
-    </div>
+<head>
 
-    <div class="nav-links">
+    <meta charset="UTF-8">
 
-        <a href="index.html">
-            Home
-        </a>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-        <a href="memories.html">
-            Memories
-        </a>
+    <title>
+        Our Little Universe
+    </title>
 
-        <a href="timeline.html">
-            Timeline
-        </a>
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
-        <a href="letters.html">
-            Letters
-        </a>
+</head>
 
-    </div>
 
-</nav>
+<body>
+
+
+    <!-- ==========================================
+         NAVBAR
+    ========================================== -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Our Little Universe ✦
+        </div>
+
+
+        <div class="nav-links">
+
+            <a
+                href="index.html"
+                class="active"
+            >
+                Home
+            </a>
+
+            <a href="memories.html">
+                Memories
+            </a>
+
+            <a href="timeline.html">
+                Timeline
+            </a>
+
+            <a href="letters.html">
+                Letters
+            </a>
+
+        </div>
+
+
+        <button
+            id="logoutButton"
+            class="logout-button"
+        >
+            Logout
+        </button>
+
+    </nav>
+
+
+
+    <!-- ==========================================
+         HERO
+    ========================================== -->
+
+    <main>
+
+        <section class="hero">
+
+            <p class="hero-small">
+                WELCOME TO
+            </p>
+
+
+            <h1>
+                Our Little Universe
+            </h1>
+
+
+            <p class="hero-subtitle">
+                A little place for everything
+                that is us.
+            </p>
+
+
+            <p class="hero-greeting">
+                Welcome back,
+                <span id="userName">
+                    You
+                </span>
+                ✦
+            </p>
+
+
+            <a
+                href="memories.html"
+                class="hero-button"
+            >
+                Explore our universe ✦
+            </a>
+
+        </section>
+
+
+
+        <!-- ======================================
+             UNIVERSE CARDS
+        ====================================== -->
+
+        <section class="universe-section">
+
+            <div class="universe-grid">
+
+
+                <!-- OUR STORY -->
+
+                <a
+                    href="#"
+                    class="universe-card"
+                >
+
+                    <div class="card-icon">
+                        📖
+                    </div>
+
+                    <h2>
+                        Our Story
+                    </h2>
+
+                    <p>
+                        How our little universe
+                        began.
+                    </p>
+
+                </a>
+
+
+
+                <!-- MEMORIES -->
+
+                <a
+                    href="memories.html"
+                    class="universe-card"
+                >
+
+                    <div class="card-icon">
+                        📸
+                    </div>
+
+                    <h2>
+                        Memories
+                    </h2>
+
+                    <p>
+                        Little moments worth
+                        remembering.
+                    </p>
+
+                </a>
+
+
+
+                <!-- TIMELINE -->
+
+                <a
+                    href="timeline.html"
+                    class="universe-card"
+                >
+
+                    <div class="card-icon">
+                        🕰️
+                    </div>
+
+                    <h2>
+                        Timeline
+                    </h2>
+
+                    <p>
+                        Our journey,
+                        one moment at a time.
+                    </p>
+
+                </a>
+
+
+
+                <!-- LETTERS -->
+
+                <a
+                    href="letters.html"
+                    class="universe-card"
+                >
+
+                    <div class="card-icon">
+                        💌
+                    </div>
+
+                    <h2>
+                        Letters
+                    </h2>
+
+                    <p>
+                        Words we don't always
+                        say out loud.
+                    </p>
+
+                </a>
+
+
+
+                <!-- DIARY -->
+
+                <a
+                    href="#"
+                    class="universe-card"
+                >
+
+                    <div class="card-icon">
+                        📔
+                    </div>
+
+                    <h2>
+                        Diary
+                    </h2>
+
+                    <p>
+                        A little space for
+                        our everyday thoughts.
+                    </p>
+
+                </a>
+
+
+
+                <!-- OUR SONGS -->
+
+                <a
+                    href="#"
+                    class="universe-card"
+                >
+
+                    <div class="card-icon">
+                        🎧
+                    </div>
+
+                    <h2>
+                        Our Songs
+                    </h2>
+
+                    <p>
+                        Songs that remind us
+                        of each other.
+                    </p>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ======================================
+             CLOSING
+        ====================================== -->
+
+        <section class="closing">
+
+            <p>
+                Just you, me,
+                and our little universe.
+            </p>
+
+            <span>
+                ✦
+            </span>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ==========================================
+         SUPABASE
+    ========================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase.js"></script>
+
+    <script src="auth.js"></script>
+
+
+</body>
+
+</html>
