@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Diary — Our Little Universe</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ==============================
+         NAVBAR
+    =============================== -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Our Little Universe ✦
+        </div>
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="memories.html">
+                Memories
+            </a>
+
+            <a href="timeline.html">
+                Timeline
+            </a>
+
+            <a href="letters.html">
+                Letters
+            </a>
+
+            <a href="diary.html" class="active">
+                Diary
+            </a>
+
+        </div>
+
+        <button
+            id="logoutButton"
+            class="logout-button"
+        >
+            Logout
+        </button>
+
+    </nav>
+
+
+    <!-- ==============================
+         DIARY PAGE
+    =============================== -->
+
+    <main class="diary-page">
+
+        <section class="diary-header">
+
+            <div class="diary-icon">
+                📔
+            </div>
+
+            <h1>
+                Our Diary
+            </h1>
+
+            <p>
+                Little thoughts, stories, and moments
+                we want to keep forever.
+            </p>
+
+        </section>
+
+
+        <!-- WRITE DIARY BUTTON -->
+
+        <button
+            id="createDiaryButton"
+            class="create-diary-button"
+        >
+            Write a Diary ✦
+        </button>
+
+
+        <!-- DIARY LIST -->
+
+        <section
+            id="diaryContainer"
+            class="diary-container"
+        >
+
+            <div class="diary-empty">
+                Loading our diary...
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ==============================
+         WRITE DIARY MODAL
+    =============================== -->
+
+    <div
+        id="diaryModal"
+        class="diary-modal"
+    >
+
+        <div class="diary-modal-content">
+
+            <button
+                id="closeDiaryModal"
+                class="modal-close"
+                type="button"
+            >
+                ×
+            </button>
+
+            <div class="modal-icon">
+                📔
+            </div>
+
+            <h2>
+                Write a Diary
+            </h2>
+
+            <p class="modal-subtitle">
+                A little piece of today, saved forever.
+            </p>
+
+
+            <form id="diaryForm">
+
+                <!-- DATE -->
+
+                <label for="diaryDate">
+                    Date
+                </label>
+
+                <input
+                    type="date"
+                    id="diaryDate"
+                    required
+                >
+
+
+                <!-- TITLE -->
+
+                <label for="diaryTitle">
+                    Title
+                </label>
+
+                <input
+                    type="text"
+                    id="diaryTitle"
+                    placeholder="Give this day a little title..."
+                    required
+                >
+
+
+                <!-- CONTENT -->
+
+                <label for="diaryContent">
+                    Your diary
+                </label>
+
+                <textarea
+                    id="diaryContent"
+                    rows="8"
+                    placeholder="Tell your story..."
+                    required
+                ></textarea>
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="save-diary-button"
+                >
+                    Save Diary ✦
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         DIARY DETAIL MODAL
+    =============================== -->
+
+    <div
+        id="diaryDetailModal"
+        class="diary-modal"
+    >
+
+        <div class="diary-detail-content">
+
+            <button
+                id="closeDiaryDetail"
+                class="modal-close"
+                type="button"
+            >
+                ×
+            </button>
+
+            <div
+                id="diaryDetailContent"
+                class="diary-detail-inner"
+            >
+                <!-- JS will insert diary detail here -->
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         SCRIPTS
+    =============================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase.js"></script>
+
+    <script src="auth.js"></script>
+
+    <script src="diary.js"></script>
+
+</body>
+
+</html>
