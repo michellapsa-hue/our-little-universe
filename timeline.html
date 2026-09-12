@@ -1,194 +1,401 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Our Timeline — Our Little Universe</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="style.css">
+    <title>
+        Our Timeline — Our Little Universe
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
     <style>
+
+        /* =========================================
+           PAGE
+        ========================================= */
+
         .timeline-page {
             min-height: 100vh;
-            padding: 120px 20px 80px;
+
+            padding:
+                120px
+                20px
+                80px;
         }
+
 
         .timeline-header {
             text-align: center;
+
             margin-bottom: 70px;
         }
 
+
         .timeline-header h1 {
             font-size: 42px;
+
             margin-bottom: 10px;
         }
 
+
         .timeline-header p {
             color: #aaa;
-            font-size: 16px;
         }
+
+
+        /* =========================================
+           TIMELINE
+        ========================================= */
 
         .timeline {
             position: relative;
-            max-width: 850px;
+
+            max-width: 900px;
+
             margin: 0 auto;
         }
 
+
         .timeline::before {
             content: "";
+
             position: absolute;
-            left: 50%;
+
             top: 0;
             bottom: 0;
+
+            left: 50%;
+
             width: 2px;
-            background: linear-gradient(
-                to bottom,
-                transparent,
-                rgba(140, 120, 220, 0.7),
-                transparent
-            );
-            transform: translateX(-50%);
+
+            transform:
+                translateX(-50%);
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    transparent,
+                    rgba(
+                        145,
+                        130,
+                        230,
+                        0.7
+                    ),
+                    transparent
+                );
         }
+
+
+        /* =========================================
+           ITEM
+        ========================================= */
 
         .timeline-item {
             position: relative;
+
             width: 50%;
-            padding: 0 40px 60px;
+
+            padding:
+                0
+                45px
+                65px;
+
             box-sizing: border-box;
         }
 
+
         .timeline-item:nth-child(odd) {
             left: 0;
+
             text-align: right;
         }
 
+
         .timeline-item:nth-child(even) {
             left: 50%;
+
             text-align: left;
         }
 
+
+        /* =========================================
+           DOT
+        ========================================= */
+
         .timeline-dot {
             position: absolute;
-            top: 5px;
+
+            top: 6px;
+
             width: 14px;
             height: 14px;
+
             border-radius: 50%;
-            background: #9b8cff;
+
+            background: #9589e9;
+
             box-shadow:
-                0 0 0 5px rgba(155, 140, 255, 0.12),
-                0 0 20px rgba(155, 140, 255, 0.5);
+                0 0 0 5px
+                rgba(
+                    149,
+                    137,
+                    233,
+                    0.12
+                ),
+
+                0 0 20px
+                rgba(
+                    149,
+                    137,
+                    233,
+                    0.5
+                );
         }
 
-        .timeline-item:nth-child(odd) .timeline-dot {
+
+        .timeline-item:nth-child(odd)
+        .timeline-dot {
+
             right: -7px;
         }
 
-        .timeline-item:nth-child(even) .timeline-dot {
+
+        .timeline-item:nth-child(even)
+        .timeline-dot {
+
             left: -7px;
         }
 
+
+        /* =========================================
+           CARD
+        ========================================= */
+
         .timeline-card {
-            background: rgba(255, 255, 255, 0.055);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
+            overflow: hidden;
+
             padding: 18px;
+
+            border-radius: 22px;
+
+            background: rgba(
+                255,
+                255,
+                255,
+                0.055
+            );
+
+            border: 1px solid rgba(
+                255,
+                255,
+                255,
+                0.1
+            );
+
             cursor: pointer;
-            transition: 0.25s ease;
+
             backdrop-filter: blur(10px);
+
+            transition: 0.25s ease;
         }
+
 
         .timeline-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(155, 140, 255, 0.4);
-            background: rgba(255, 255, 255, 0.08);
+
+            transform:
+                translateY(-4px);
+
+            border-color: rgba(
+                145,
+                130,
+                230,
+                0.4
+            );
         }
 
-        .timeline-card img {
+
+        .timeline-card-image {
+
+            display: block;
+
             width: 100%;
-            max-height: 220px;
+
+            max-height: 230px;
+
             object-fit: cover;
-            border-radius: 14px;
-            margin-bottom: 14px;
+
+            border-radius: 15px;
+
+            margin-bottom: 15px;
         }
+
 
         .timeline-date {
+
+            color: #9589e9;
+
             font-size: 12px;
-            letter-spacing: 1px;
-            color: #9d91ff;
-            margin-bottom: 7px;
-            font-weight: 600;
+
+            letter-spacing: 1.4px;
+
+            margin-bottom: 8px;
         }
+
 
         .timeline-title {
-            font-size: 20px;
+
             margin: 0 0 8px;
+
+            font-family:
+                Georgia,
+                serif;
+
+            font-size: 23px;
         }
 
+
         .timeline-location {
-            color: #aaa;
+
+            color: #999;
+
             font-size: 13px;
         }
 
+
         .timeline-empty {
+
             text-align: center;
+
             color: #aaa;
+
             padding: 60px 20px;
         }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
 
         @media (max-width: 700px) {
 
             .timeline-page {
+
                 padding-top: 100px;
             }
 
+
             .timeline-header h1 {
-                font-size: 32px;
+
+                font-size: 34px;
             }
 
+
             .timeline::before {
+
                 left: 10px;
             }
 
+
             .timeline-item,
-            .timeline-item:nth-child(even),
-            .timeline-item:nth-child(odd) {
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+
                 width: 100%;
+
                 left: 0;
+
                 text-align: left;
+
                 padding-left: 40px;
+
                 padding-right: 0;
             }
 
-            .timeline-item:nth-child(odd) .timeline-dot,
-            .timeline-item:nth-child(even) .timeline-dot {
+
+            .timeline-item:nth-child(odd)
+            .timeline-dot,
+
+            .timeline-item:nth-child(even)
+            .timeline-dot {
+
                 left: 3px;
+
                 right: auto;
             }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
-    <!-- NAVBAR -->
+
+    <!-- =========================================
+         NAVBAR
+    ========================================= -->
+
     <nav class="navbar">
 
         <div class="logo">
             Our Little Universe ✦
         </div>
 
+
         <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="memories.html">Memories</a>
-            <a href="timeline.html" class="active">Timeline</a>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="memories.html">
+                Memories
+            </a>
+
+            <a
+                href="timeline.html"
+                class="active"
+            >
+                Timeline
+            </a>
+
+            <a href="letters.html">
+                Letters
+            </a>
+
         </div>
+
+
+        <button
+            id="logoutButton"
+            class="logout-button"
+        >
+            Logout
+        </button>
 
     </nav>
 
 
-    <!-- TIMELINE -->
+
+    <!-- =========================================
+         TIMELINE PAGE
+    ========================================= -->
+
     <main class="timeline-page">
+
 
         <header class="timeline-header">
 
@@ -203,6 +410,7 @@
         </header>
 
 
+
         <section
             id="timelineContainer"
             class="timeline"
@@ -214,10 +422,14 @@
 
         </section>
 
+
     </main>
 
 
-    <!-- SCRIPTS -->
+
+    <!-- =========================================
+         SUPABASE
+    ========================================= -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -225,6 +437,11 @@
 
     <script src="auth.js"></script>
 
+
+
+    <!-- =========================================
+         TIMELINE SCRIPT
+    ========================================= -->
 
     <script>
 
@@ -234,18 +451,26 @@
             );
 
 
-        // =============================================
+        // =========================================
         // LOAD TIMELINE
-        // =============================================
+        // =========================================
 
         async function loadTimeline() {
+
+            timelineContainer.innerHTML = `
+                <div class="timeline-empty">
+                    Loading our story...
+                </div>
+            `;
+
 
             const {
                 data,
                 error
-            } = await supabaseClient.rpc(
-                "get_my_memories"
-            );
+            } =
+                await supabaseClient.rpc(
+                    "get_my_memories"
+                );
 
 
             if (error) {
@@ -255,17 +480,22 @@
                     error
                 );
 
+
                 timelineContainer.innerHTML = `
                     <div class="timeline-empty">
                         Failed to load our timeline.
                     </div>
                 `;
 
+
                 return;
             }
 
 
-            if (!data || data.length === 0) {
+            if (
+                !data ||
+                data.length === 0
+            ) {
 
                 timelineContainer.innerHTML = `
                     <div class="timeline-empty">
@@ -273,94 +503,53 @@
                     </div>
                 `;
 
+
                 return;
             }
 
 
-            // =========================================
+            // =====================================
             // SORT OLDEST → NEWEST
-            // =========================================
+            // =====================================
 
-            data.sort((a, b) => {
+            data.sort(
+                (a, b) => {
 
-                if (!a.memory_date) return 1;
+                    if (!a.memory_date) {
+                        return 1;
+                    }
 
-                if (!b.memory_date) return -1;
+                    if (!b.memory_date) {
+                        return -1;
+                    }
 
-                return new Date(a.memory_date)
-                    - new Date(b.memory_date);
+                    return new Date(
+                        a.memory_date
+                    )
+                    -
+                    new Date(
+                        b.memory_date
+                    );
 
-            });
+                }
+            );
 
 
             timelineContainer.innerHTML = "";
 
 
-            // =========================================
-            // CREATE ITEMS
-            // =========================================
+            // =====================================
+            // CREATE TIMELINE
+            // =====================================
 
-            for (const memory of data) {
+            for (
+                const memory of data
+            ) {
 
-                let imageUrl = "";
-
-
-                const {
-                    data: photos,
-                    error: photoError
-                } = await supabaseClient
-                    .from("memory_photos")
-                    .select("*")
-                    .eq(
-                        "memory_id",
+                const imageUrl =
+                    await getTimelineImage(
                         memory.id
-                    )
-                    .order(
-                        "display_order",
-                        {
-                            ascending: true
-                        }
-                    )
-                    .limit(1);
-
-
-                if (photoError) {
-
-                    console.error(
-                        "Timeline photo error:",
-                        photoError
                     );
-
-                }
-
-
-                if (
-                    photos &&
-                    photos.length > 0
-                ) {
-
-                    const {
-                        data: signedUrlData,
-                        error: signedUrlError
-                    } = await supabaseClient
-                        .storage
-                        .from("memory-photos")
-                        .createSignedUrl(
-                            photos[0].file_path,
-                            60 * 60
-                        );
-
-
-                    if (
-                        !signedUrlError &&
-                        signedUrlData
-                    ) {
-
-                        imageUrl =
-                            signedUrlData.signedUrl;
-
-                    }
-                }
 
 
                 createTimelineItem(
@@ -371,9 +560,88 @@
         }
 
 
-        // =============================================
-        // CREATE TIMELINE ITEM
-        // =============================================
+        // =========================================
+        // GET PHOTO
+        // =========================================
+
+        async function getTimelineImage(
+            memoryId
+        ) {
+
+            const {
+                data: photos,
+                error
+            } =
+                await supabaseClient
+                    .from(
+                        "memory_photos"
+                    )
+                    .select("*")
+                    .eq(
+                        "memory_id",
+                        memoryId
+                    )
+                    .order(
+                        "display_order",
+                        {
+                            ascending: true
+                        }
+                    )
+                    .limit(1);
+
+
+            if (error) {
+
+                console.error(
+                    "Timeline photo error:",
+                    error
+                );
+
+                return "";
+            }
+
+
+            if (
+                !photos ||
+                photos.length === 0
+            ) {
+
+                return "";
+            }
+
+
+            const {
+                data,
+                error:
+                    signedError
+            } =
+                await supabaseClient
+                    .storage
+                    .from(
+                        "memory-photos"
+                    )
+                    .createSignedUrl(
+                        photos[0].file_path,
+                        60 * 60
+                    );
+
+
+            if (
+                signedError ||
+                !data
+            ) {
+
+                return "";
+            }
+
+
+            return data.signedUrl;
+        }
+
+
+        // =========================================
+        // CREATE ITEM
+        // =========================================
 
         function createTimelineItem(
             memory,
@@ -390,12 +658,6 @@
                 "timeline-item";
 
 
-            const date =
-                formatDate(
-                    memory.memory_date
-                );
-
-
             item.innerHTML = `
 
                 <div class="timeline-dot"></div>
@@ -407,25 +669,34 @@
                         ? `
                             <img
                                 src="${imageUrl}"
-                                alt="${escapeHTML(memory.title)}"
+                                class="timeline-card-image"
+                                alt="${escapeHTML(
+                                    memory.title
+                                )}"
                             >
                         `
                         : ""
                     }
 
                     <div class="timeline-date">
-                        ${date}
+                        ${formatDate(
+                            memory.memory_date
+                        )}
                     </div>
 
                     <h2 class="timeline-title">
-                        ${escapeHTML(memory.title)}
+                        ${escapeHTML(
+                            memory.title
+                        )}
                     </h2>
 
                     ${
                         memory.location
                         ? `
                             <div class="timeline-location">
-                                📍 ${escapeHTML(memory.location)}
+                                📍 ${escapeHTML(
+                                    memory.location
+                                )}
                             </div>
                         `
                         : ""
@@ -435,18 +706,20 @@
             `;
 
 
-            // =========================================
-            // CLICK → MEMORY DETAIL
-            // =========================================
+            // =====================================
+            // CLICK → MEMORIES
+            // =====================================
 
             item
-                .querySelector(".timeline-card")
+                .querySelector(
+                    ".timeline-card"
+                )
                 .addEventListener(
                     "click",
                     () => {
 
                         window.location.href =
-                            `memories.html?memory=${memory.id}`;
+                            "memories.html";
 
                     }
                 );
@@ -458,13 +731,16 @@
         }
 
 
-        // =============================================
+        // =========================================
         // DATE
-        // =============================================
+        // =========================================
 
-        function formatDate(dateString) {
+        function formatDate(
+            dateString
+        ) {
 
             if (!dateString) {
+
                 return "DATE UNKNOWN";
             }
 
@@ -486,9 +762,9 @@
         }
 
 
-        // =============================================
+        // =========================================
         // SECURITY
-        // =============================================
+        // =========================================
 
         function escapeHTML(value) {
 
@@ -496,6 +772,7 @@
                 value === null ||
                 value === undefined
             ) {
+
                 return "";
             }
 
@@ -524,13 +801,15 @@
         }
 
 
-        // =============================================
+        // =========================================
         // START
-        // =============================================
+        // =========================================
 
         loadTimeline();
 
     </script>
 
+
 </body>
+
 </html>
