@@ -1,15 +1,8 @@
-// =====================================================
-// OUR LITTLE UNIVERSE
-// letters.js
-// =====================================================
+/* =========================================
+   OUR LITTLE UNIVERSE — LETTERS
+========================================= */
 
-
-// =====================================================
-// ELEMENTS
-// =====================================================
-
-const lettersContainer =
-    document.getElementById("lettersContainer");
+const lettersContainer = document.getElementById("lettersContainer");
 
 const createLetterButton =
     document.getElementById("createLetterButton");
@@ -42,16 +35,16 @@ const letterDetailContent =
     document.getElementById("letterDetailContent");
 
 
-// =====================================================
-// STATE
-// =====================================================
+/* =========================================
+   CURRENT USER
+========================================= */
 
 let currentUser = null;
 
 
-// =====================================================
-// PERSON NAME
-// =====================================================
+/* =========================================
+   PERSON NAME
+========================================= */
 
 function getPersonName(userId) {
 
@@ -62,7 +55,6 @@ function getPersonName(userId) {
         return "Mey 💜";
     }
 
-
     if (
         userId ===
         "b6e48bbd-6547-4df3-a2d4-468507a78994"
@@ -70,24 +62,20 @@ function getPersonName(userId) {
         return "Ian 💙";
     }
 
-
     return "My favorite person ✦";
 }
 
 
-// =====================================================
-// GET CURRENT USER
-// =====================================================
+/* =========================================
+   GET CURRENT USER
+========================================= */
 
 async function getCurrentUser() {
 
     const {
         data,
         error
-    } = await supabaseClient
-        .auth
-        .getUser();
-
+    } = await supabaseClient.auth.getUser();
 
     if (error) {
 
@@ -99,25 +87,21 @@ async function getCurrentUser() {
         return null;
     }
 
-
     currentUser = data.user;
 
     return currentUser;
 }
 
 
-// =====================================================
-// LOAD UNIVERSE MEMBERS
-// =====================================================
+/* =========================================
+   LOAD UNIVERSE MEMBERS
+========================================= */
 
 async function loadMembers() {
 
     if (!currentUser) {
-
         await getCurrentUser();
-
     }
-
 
     if (!currentUser) {
 
@@ -126,18 +110,13 @@ async function loadMembers() {
         );
 
         return;
-
     }
-
 
     const {
         data,
         error
     } = await supabaseClient
-        .rpc(
-            "get_my_universe_members"
-        );
-
+        .rpc("get_my_universe_members");
 
     if (error) {
 
@@ -146,16 +125,12 @@ async function loadMembers() {
             error
         );
 
-
         alert(
             "Failed to load universe members."
         );
 
-
         return;
-
     }
-
 
     letterRecipient.innerHTML = `
         <option value="">
@@ -163,58 +138,43 @@ async function loadMembers() {
         </option>
     `;
 
+    for (const member of data || []) {
 
-    for (
-        const member of data || []
-    ) {
-
-        // Don't show yourself
+        // Don't show yourself as recipient
         if (
             member.user_id ===
             currentUser.id
         ) {
-
             continue;
-
         }
 
-
         const option =
-            document.createElement(
-                "option"
-            );
-
+            document.createElement("option");
 
         option.value =
             member.user_id;
-
 
         option.textContent =
             getPersonName(
                 member.user_id
             );
 
-
         letterRecipient.appendChild(
             option
         );
-
     }
 }
 
 
-// =====================================================
-// LOAD LETTERS
-// =====================================================
+/* =========================================
+   LOAD LETTERS
+========================================= */
 
 async function loadLetters() {
 
     if (!lettersContainer) {
-
         return;
-
     }
-
 
     lettersContainer.innerHTML = `
         <div class="letters-empty">
@@ -222,15 +182,11 @@ async function loadLetters() {
         </div>
     `;
 
-
     const {
         data,
         error
     } = await supabaseClient
-        .rpc(
-            "get_my_letters"
-        );
-
+        .rpc("get_my_letters");
 
     if (error) {
 
@@ -239,18 +195,14 @@ async function loadLetters() {
             error
         );
 
-
         lettersContainer.innerHTML = `
             <div class="letters-empty">
                 Failed to load our letters.
             </div>
         `;
 
-
         return;
-
     }
-
 
     if (
         !data ||
@@ -263,14 +215,10 @@ async function loadLetters() {
             </div>
         `;
 
-
         return;
-
     }
 
-
     lettersContainer.innerHTML = "";
-
 
     data.forEach(
         createLetterCard
@@ -278,30 +226,22 @@ async function loadLetters() {
 }
 
 
-// =====================================================
-// CREATE LETTER CARD
-// =====================================================
+/* =========================================
+   CREATE LETTER CARD
+========================================= */
 
-function createLetterCard(
-    letter
-) {
+function createLetterCard(letter) {
 
     const card =
-        document.createElement(
-            "article"
-        );
-
+        document.createElement("article");
 
     card.className =
         "letter-card";
 
-
     card.innerHTML = `
-
         <div class="letter-envelope">
             💌
         </div>
-
 
         <div class="letter-to">
             To ${escapeHTML(
@@ -311,20 +251,17 @@ function createLetterCard(
             )}
         </div>
 
-
         <h2 class="letter-title">
             ${escapeHTML(
                 letter.title
             )}
         </h2>
 
-
         <div class="letter-preview">
             ${escapeHTML(
                 letter.content
             )}
         </div>
-
 
         <div class="letter-from">
             — ${escapeHTML(
@@ -333,9 +270,7 @@ function createLetterCard(
                 )
             )}
         </div>
-
     `;
-
 
     card.addEventListener(
         "click",
@@ -348,66 +283,85 @@ function createLetterCard(
         }
     );
 
-
     lettersContainer.appendChild(
         card
     );
 }
 
 
-// =====================================================
-// SHOW LETTER DETAIL
-// =====================================================
+/* =========================================
+   SHOW LETTER DETAIL
+========================================= */
 
-function showLetterDetail(
-    letter
-) {
+function showLetterDetail(letter) {
 
     letterDetailContent.innerHTML = `
 
-        <div class="letter-envelope">
-            💌
+        <div class="open-letter-animation">
+
+            <div class="big-envelope">
+
+                <!-- Envelope back -->
+                <div class="envelope-back"></div>
+
+
+                <!-- Letter paper -->
+                <div class="envelope-paper">
+
+                    <div class="paper-content">
+
+                        <span class="paper-heart">
+                            💌
+                        </span>
+
+                        <h2>
+                            ${escapeHTML(
+                                letter.title
+                            )}
+                        </h2>
+
+
+                        <div class="letter-detail-meta">
+
+                            From
+                            ${escapeHTML(
+                                getPersonName(
+                                    letter.sender_id
+                                )
+                            )}
+
+                            <br>
+
+                            To
+                            ${escapeHTML(
+                                getPersonName(
+                                    letter.recipient_id
+                                )
+                            )}
+
+                        </div>
+
+
+                        <div class="letter-detail-body">
+
+                            ${escapeHTML(
+                                letter.content
+                            )}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Envelope flap -->
+                <div class="envelope-flap"></div>
+
+            </div>
+
         </div>
-
-
-        <h2>
-            ${escapeHTML(
-                letter.title
-            )}
-        </h2>
-
-
-        <div class="letter-detail-meta">
-
-            From
-            ${escapeHTML(
-                getPersonName(
-                    letter.sender_id
-                )
-            )}
-
-            ·
-
-            To
-            ${escapeHTML(
-                getPersonName(
-                    letter.recipient_id
-                )
-            )}
-
-        </div>
-
-
-        <div class="letter-detail-body">
-
-            ${escapeHTML(
-                letter.content
-            )}
-
-        </div>
-
     `;
-
 
     letterDetailModal.classList.add(
         "active"
@@ -415,9 +369,9 @@ function showLetterDetail(
 }
 
 
-// =====================================================
-// OPEN WRITE LETTER
-// =====================================================
+/* =========================================
+   OPEN WRITE LETTER MODAL
+========================================= */
 
 if (createLetterButton) {
 
@@ -427,19 +381,19 @@ if (createLetterButton) {
 
             await loadMembers();
 
-
             letterModal.classList.add(
                 "active"
             );
 
         }
     );
+
 }
 
 
-// =====================================================
-// CLOSE WRITE LETTER
-// =====================================================
+/* =========================================
+   CLOSE WRITE LETTER MODAL
+========================================= */
 
 if (closeLetterModal) {
 
@@ -453,12 +407,13 @@ if (closeLetterModal) {
 
         }
     );
+
 }
 
 
-// =====================================================
-// CLOSE LETTER DETAIL
-// =====================================================
+/* =========================================
+   CLOSE LETTER DETAIL
+========================================= */
 
 if (closeLetterDetail) {
 
@@ -472,12 +427,13 @@ if (closeLetterDetail) {
 
         }
     );
+
 }
 
 
-// =====================================================
-// CLICK OUTSIDE WRITE MODAL
-// =====================================================
+/* =========================================
+   CLICK OUTSIDE WRITE MODAL
+========================================= */
 
 if (letterModal) {
 
@@ -498,12 +454,13 @@ if (letterModal) {
 
         }
     );
+
 }
 
 
-// =====================================================
-// CLICK OUTSIDE DETAIL
-// =====================================================
+/* =========================================
+   CLICK OUTSIDE DETAIL MODAL
+========================================= */
 
 if (letterDetailModal) {
 
@@ -524,12 +481,13 @@ if (letterDetailModal) {
 
         }
     );
+
 }
 
 
-// =====================================================
-// SAVE LETTER
-// =====================================================
+/* =========================================
+   SAVE LETTER
+========================================= */
 
 if (letterForm) {
 
@@ -540,12 +498,11 @@ if (letterForm) {
             event.preventDefault();
 
 
+            /* Make sure user exists */
+
             if (!currentUser) {
-
                 await getCurrentUser();
-
             }
-
 
             if (!currentUser) {
 
@@ -554,21 +511,22 @@ if (letterForm) {
                 );
 
                 return;
-
             }
 
+
+            /* Get form values */
 
             const recipientId =
                 letterRecipient.value;
 
-
             const title =
                 letterTitle.value.trim();
-
 
             const content =
                 letterContent.value.trim();
 
+
+            /* Validation */
 
             if (
                 !recipientId ||
@@ -581,9 +539,10 @@ if (letterForm) {
                 );
 
                 return;
-
             }
 
+
+            /* Button */
 
             const button =
                 letterForm.querySelector(
@@ -591,9 +550,7 @@ if (letterForm) {
                 );
 
 
-            button.disabled =
-                true;
-
+            button.disabled = true;
 
             button.textContent =
                 "Saving...";
@@ -621,9 +578,7 @@ if (letterForm) {
 
 
                 if (error) {
-
                     throw error;
-
                 }
 
 
@@ -633,13 +588,19 @@ if (letterForm) {
                 );
 
 
+                /* Reset form */
+
                 letterForm.reset();
 
+
+                /* Close modal */
 
                 letterModal.classList.remove(
                     "active"
                 );
 
+
+                /* Reload letters */
 
                 await loadLetters();
 
@@ -651,7 +612,6 @@ if (letterForm) {
                     error
                 );
 
-
                 alert(
                     "Failed to save letter."
                 );
@@ -662,7 +622,6 @@ if (letterForm) {
                 button.disabled =
                     false;
 
-
                 button.textContent =
                     "Save Letter ✦";
 
@@ -670,16 +629,16 @@ if (letterForm) {
 
         }
     );
+
 }
 
 
-// =====================================================
-// ESCAPE HTML
-// =====================================================
+/* =========================================
+   ESCAPE HTML
+   Security protection
+========================================= */
 
-function escapeHTML(
-    value
-) {
+function escapeHTML(value) {
 
     if (
         value === null ||
@@ -687,6 +646,7 @@ function escapeHTML(
     ) {
 
         return "";
+
     }
 
 
@@ -719,9 +679,9 @@ function escapeHTML(
 }
 
 
-// =====================================================
-// INITIALIZE
-// =====================================================
+/* =========================================
+   INITIALIZE LETTERS
+========================================= */
 
 async function initLetters() {
 
@@ -731,5 +691,9 @@ async function initLetters() {
 
 }
 
+
+/* =========================================
+   START
+========================================= */
 
 initLetters();
