@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -10,22 +9,14 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>
-        Our Little Universe
-    </title>
+    <title>Our Little Universe</title>
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
+    <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
-
-    <!-- ==========================================
+    <!-- =========================================
          NAVBAR
     ========================================== -->
 
@@ -35,13 +26,9 @@
             Our Little Universe ✦
         </div>
 
-
         <div class="nav-links">
 
-            <a
-                href="index.html"
-                class="active"
-            >
+            <a href="index.html">
                 Home
             </a>
 
@@ -57,12 +44,16 @@
                 Letters
             </a>
 
-        </div>
+            <a href="diary.html">
+                Diary
+            </a>
 
+        </div>
 
         <button
             id="logoutButton"
             class="logout-button"
+            type="button"
         >
             Logout
         </button>
@@ -70,8 +61,7 @@
     </nav>
 
 
-
-    <!-- ==========================================
+    <!-- =========================================
          HERO
     ========================================== -->
 
@@ -79,50 +69,61 @@
 
         <section class="hero">
 
-            <p class="hero-small">
-                WELCOME TO
-            </p>
+            <div class="hero-content">
 
+                <p class="eyebrow">
+                    Welcome to
+                </p>
 
-            <h1>
-                Our Little Universe
-            </h1>
+                <h1>
+                    Our Little Universe
+                </h1>
 
+                <p class="hero-text">
+                    A little place for everything
+                    that is us.
+                </p>
 
-            <p class="hero-subtitle">
-                A little place for everything
-                that is us.
-            </p>
+                <p class="hero-greeting">
+                    Welcome back,
+                    <span id="userName">
+                        You
+                    </span>
+                    💜
+                </p>
 
+                <a
+                    href="memories.html"
+                    class="hero-button"
+                >
+                    Explore our universe ✦
+                </a>
 
-            <p class="hero-greeting">
-                Welcome back,
-                <span id="userName">
-                    You
-                </span>
-                ✦
-            </p>
-
-
-            <a
-                href="memories.html"
-                class="hero-button"
-            >
-                Explore our universe ✦
-            </a>
+            </div>
 
         </section>
 
 
-
-        <!-- ======================================
+        <!-- =========================================
              UNIVERSE CARDS
-        ====================================== -->
+        ========================================== -->
 
         <section class="universe-section">
 
-            <div class="universe-grid">
+            <div class="section-heading">
 
+                <p class="eyebrow">
+                    A place for us
+                </p>
+
+                <h2>
+                    Everything we want to remember
+                </h2>
+
+            </div>
+
+
+            <div class="universe-grid">
 
                 <!-- OUR STORY -->
 
@@ -135,17 +136,16 @@
                         📖
                     </div>
 
-                    <h2>
+                    <h3>
                         Our Story
-                    </h2>
+                    </h3>
 
                     <p>
-                        How our little universe
-                        began.
+                        The story of how our little
+                        universe began.
                     </p>
 
                 </a>
-
 
 
                 <!-- MEMORIES -->
@@ -159,17 +159,16 @@
                         📸
                     </div>
 
-                    <h2>
+                    <h3>
                         Memories
-                    </h2>
+                    </h3>
 
                     <p>
-                        Little moments worth
-                        remembering.
+                        Little moments we never
+                        want to forget.
                     </p>
 
                 </a>
-
 
 
                 <!-- TIMELINE -->
@@ -183,17 +182,16 @@
                         🕰️
                     </div>
 
-                    <h2>
+                    <h3>
                         Timeline
-                    </h2>
+                    </h3>
 
                     <p>
-                        Our journey,
-                        one moment at a time.
+                        The moments that became
+                        our story.
                     </p>
 
                 </a>
-
 
 
                 <!-- LETTERS -->
@@ -207,23 +205,22 @@
                         💌
                     </div>
 
-                    <h2>
+                    <h3>
                         Letters
-                    </h2>
+                    </h3>
 
                     <p>
-                        Words we don't always
-                        say out loud.
+                        Words from my heart,
+                        saved just for you.
                     </p>
 
                 </a>
 
 
-
                 <!-- DIARY -->
 
                 <a
-                    href="#"
+                    href="diary.html"
                     class="universe-card"
                 >
 
@@ -231,17 +228,16 @@
                         📔
                     </div>
 
-                    <h2>
+                    <h3>
                         Diary
-                    </h2>
+                    </h3>
 
                     <p>
-                        A little space for
-                        our everyday thoughts.
+                        Little thoughts, stories,
+                        and ordinary days.
                     </p>
 
                 </a>
-
 
 
                 <!-- OUR SONGS -->
@@ -255,13 +251,13 @@
                         🎧
                     </div>
 
-                    <h2>
+                    <h3>
                         Our Songs
-                    </h2>
+                    </h3>
 
                     <p>
-                        Songs that remind us
-                        of each other.
+                        Songs that somehow
+                        sound like us.
                     </p>
 
                 </a>
@@ -271,30 +267,37 @@
         </section>
 
 
-
-        <!-- ======================================
+        <!-- =========================================
              CLOSING
-        ====================================== -->
+        ========================================== -->
 
         <section class="closing">
 
-            <p>
-                Just you, me,
-                and our little universe.
-            </p>
+            <div class="closing-content">
 
-            <span>
-                ✦
-            </span>
+                <div class="closing-heart">
+                    ✦
+                </div>
+
+                <h2>
+                    Just you, me,
+                    and our little universe.
+                </h2>
+
+                <p>
+                    More memories are waiting
+                    to be written.
+                </p>
+
+            </div>
 
         </section>
 
     </main>
 
 
-
-    <!-- ==========================================
-         SUPABASE
+    <!-- =========================================
+         SCRIPTS
     ========================================== -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -302,7 +305,6 @@
     <script src="supabase.js"></script>
 
     <script src="auth.js"></script>
-
 
 </body>
 
