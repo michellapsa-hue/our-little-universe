@@ -58,37 +58,20 @@ body {
 
     height: 86px;
 
-    padding:
-        0
-        6%;
+    padding: 0 6%;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     gap: 30px;
 
-    background:
-        rgba(
-            9,
-            10,
-            35,
-            0.72
-        );
+    /* menyatu dengan background utama */
+    background: rgba(23, 22, 61, 0.38);
 
-    border-bottom:
-        1px solid
-        rgba(
-            255,
-            255,
-            255,
-            0.08
-        );
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 
-    backdrop-filter:
-        blur(14px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 
